@@ -64,6 +64,29 @@ export const FormContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  border: 1px solid white;
   margin-top: 2rem;
+
+  @media (${BreakPoints.xs}) {
+    h2 {
+      color: #fff;
+      text-align: center;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 2.5rem;
+      line-height: 63px;
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media (${BreakPoints.large}) {
+    h2 {
+      color: #fff;
+      text-align: center;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 54px;
+      line-height: 63px;
+      margin-bottom: 4rem;
+    }
+  }
 `;
