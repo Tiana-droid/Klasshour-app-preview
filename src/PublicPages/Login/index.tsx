@@ -14,6 +14,7 @@ import {
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
+import userOBJ from "../../classes/user.class";
 
 export default function Login() {
   const [isLoading, setisLoading] = useState(false);
@@ -21,6 +22,8 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("hello");
+
+    //mimick request to klasshour server as example
     setisLoading(true);
     setTimeout(() => {
       toast.success("Login successful");
@@ -37,6 +40,7 @@ export default function Login() {
             <img src={Logo} />
           </FormHeader>
           <FormContainer>
+            {/* Todo: Do input validations and connect to state */}
             <Form>
               <h2>Welcome Back</h2>
               <Input
