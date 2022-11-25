@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import SignupBanner from "../../Assets/images/SignupBanner.svg";
 import Logo from "../../Assets/images/Logo.svg";
@@ -14,6 +15,7 @@ import {
   PageLayout,
   RoleButton,
   RoleButtonContainer,
+  FormErrorRequired,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
@@ -23,10 +25,46 @@ import { AppColors } from "../../utils/constants";
 export default function Signup() {
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
+  const [formData, setformData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
+
+  const [formErrorRequired, setformErrorRequired] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
 
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hello");
+    if (!formData.fullname) {
+      setformErrorRequired({
+        ...formErrorRequired,
+        fullname: "required",
+      });
+    }
+    if (!formData.email) {
+      setformErrorRequired({
+        ...formErrorRequired,
+        email: "required",
+      });
+    }
+    if (!formData.password) {
+      setformErrorRequired({
+        ...formErrorRequired,
+        password: "required",
+      });
+    }
+    if (!formData.confirmpassword) {
+      setformErrorRequired({
+        ...formErrorRequired,
+        confirmpassword: "required",
+      });
+    }
 
     //mimick request to klasshour server as example
     setisLoading(true);
@@ -50,16 +88,16 @@ export default function Signup() {
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
-            <Form>
+            <Form onSubmit={handleRegistration}>
               <h2>Welcome</h2>
               <RoleButtonContainer>
                 <RoleButton
                   style={{
                     background: `${
-                      userRole != "Tutor" ? AppColors.primary : "#fff"
+                      userRole !== "Tutor" ? AppColors.primary : "#fff"
                     } `,
                     color: `${
-                      userRole != "Tutor" ? "#fff" : AppColors.primary
+                      userRole !== "Tutor" ? "#fff" : AppColors.primary
                     } `,
                   }}
                   onClick={(e) => {
@@ -72,10 +110,10 @@ export default function Signup() {
                 <RoleButton
                   style={{
                     background: `${
-                      userRole != "Student" ? AppColors.primary : "#fff"
+                      userRole !== "Student" ? AppColors.primary : "#fff"
                     } `,
                     color: `${
-                      userRole != "Student" ? "#fff" : AppColors.primary
+                      userRole !== "Student" ? "#fff" : AppColors.primary
                     } `,
                   }}
                   onClick={(e) => {
@@ -87,18 +125,15 @@ export default function Signup() {
                 </RoleButton>
               </RoleButtonContainer>
 
-              <Input
-                Icon={UserIcon}
-                type="text"
-                placeHolder="Full Name"
-                onChange={() => ""}
-              />
+              <Input Icon={UserIcon} type="text" placeHolder="Full Name" />
+              {formErrorRequired.fullname && <FormError>err</FormError>}
               <Input
                 Icon={MailIcon}
                 type="email"
                 placeHolder="Email"
                 onChange={() => ""}
               />
+
               <Input
                 Icon={LockIcon}
                 type="password"
@@ -114,9 +149,9 @@ export default function Signup() {
               <PrimaryBtn
                 isLoading={isLoading}
                 title="Register"
-                onBtnClick={(e: React.FormEvent<HTMLFormElement>) =>
-                  handleRegistration(e)
-                }
+                btnType="submit"
+                onChange={() => ""}
+                onBtnClick={null}
               />
             </Form>
           </FormContainer>

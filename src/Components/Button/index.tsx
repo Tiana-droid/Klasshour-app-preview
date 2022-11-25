@@ -29,18 +29,20 @@ const OutlinedButton = styled.button`
 
 type btnPropT = {
   title: string;
-  onBtnClick: Function;
+  btnType: "button" | "submit" | "reset" | undefined;
+  onBtnClick: Function | null;
   isLoading?: boolean;
 };
 
 export function PrimaryBtn({
   title,
+  btnType,
   onBtnClick,
   isLoading,
   ...rest
 }: btnPropT) {
   return (
-    <PrimaryButton onClick={(e) => onBtnClick(e)}>
+    <PrimaryButton type={btnType} onClick={(e) => onBtnClick && onBtnClick(e)}>
       {isLoading ? <Spinner isLoading={isLoading} /> : title}
     </PrimaryButton>
   );

@@ -58,6 +58,7 @@ export default function Login() {
               <PrimaryBtn
                 isLoading={isLoading}
                 title="Login"
+                btnType="submit"
                 onBtnClick={(e: React.FormEvent<HTMLFormElement>) =>
                   handleLogin(e)
                 }

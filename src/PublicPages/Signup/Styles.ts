@@ -106,3 +106,8 @@ export const RoleButtonContainer = styled.div`
   align-items: center;
   gap: 10px;
 `;
+
+export const FormError = styled.span`
+  color: red;
+  padding: 10px;
+`;
