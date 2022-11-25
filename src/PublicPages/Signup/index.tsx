@@ -15,7 +15,7 @@ import {
   PageLayout,
   RoleButton,
   RoleButtonContainer,
-  FormErrorRequired,
+  FormError,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
@@ -41,37 +41,56 @@ export default function Signup() {
 
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.fullname) {
-      setformErrorRequired({
-        ...formErrorRequired,
-        fullname: "required",
-      });
+    if(!formData.fullname){
+      setformErrorRequired((err)=>{
+        return(
+          {
+            ...err,
+            fullname:"required"
+          }
+        )
+      })
+      setisLoading(false)
     }
-    if (!formData.email) {
-      setformErrorRequired({
-        ...formErrorRequired,
-        email: "required",
-      });
+    if(!formData.email){
+      setformErrorRequired((err)=>{
+        return(
+          {
+            ...err,
+            email:"required"
+          }
+        )
+      })
+      setisLoading(false)
     }
-    if (!formData.password) {
-      setformErrorRequired({
-        ...formErrorRequired,
-        password: "required",
-      });
+    if(!formData.password){
+      setformErrorRequired((err)=>{
+        return(
+          {
+            ...err,
+            password:"required"
+          }
+        )
+      })
+      setisLoading(false)
     }
-    if (!formData.confirmpassword) {
-      setformErrorRequired({
-        ...formErrorRequired,
-        confirmpassword: "required",
-      });
+    if(!formData.confirmpassword){
+      setformErrorRequired((err)=>{
+        return(
+          {
+            ...err,
+            confirmpassword:"required"
+          }
+        )
+      })
+      setisLoading(false)
     }
-
     //mimick request to klasshour server as example
-    setisLoading(true);
-    setTimeout(() => {
-      toast.success("Registration successful");
-      setisLoading(false);
-    }, 2000);
+    // setisLoading(true);
+    // // setTimeout(() => {
+    //   toast.success("Registration successful");
+    //   setisLoading(false);
+    // }, 2000);
   };
   //handle Role Selection
   const handleRoleSelection = (role: string) => {
@@ -125,7 +144,7 @@ export default function Signup() {
                 </RoleButton>
               </RoleButtonContainer>
 
-              <Input Icon={UserIcon} type="text" placeHolder="Full Name" />
+              <Input Icon={UserIcon} type="text" placeHolder="Full Name" onChange={undefined} />
               {formErrorRequired.fullname && <FormError>err</FormError>}
               <Input
                 Icon={MailIcon}
