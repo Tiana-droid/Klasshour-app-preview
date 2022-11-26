@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import LoginBanner from "../../Assets/images/LoginBanner.svg";
 import Logo from "../../Assets/images/Logo.svg";
 import MailIcon from "../../Assets/icons/MailIcon.svg";
-import LockIcon from "../../Assets/icons/LockIcon.svg";
 import Input from "../../Components/Input";
 import {
   BannerCont,
@@ -12,15 +11,14 @@ import {
   FormHeader,
   PageLayout,
   FormError,
-  FormFoter,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
-import { AppColors } from "../../utils/constants";
+
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 
 type Inputs = {
@@ -28,15 +26,14 @@ type Inputs = {
   password: string;
 };
 
-export default function Login() {
+export default function ForgetPassword() {
   const [isLoading, setisLoading] = useState(false);
 
-  const handleLogin = async (values: any) => {
+  const handlePasswordReset = async (values: any) => {
     setisLoading(true);
     userOBJ
-      .user_login({
+      .user_reset({
         email: values.email,
-        password: values.password,
       })
       .then((res: any) => {
         if (res) {
@@ -57,13 +54,6 @@ export default function Login() {
 
   const schema = Yup.object({
     email: Yup.string().email("Invalid email format").required("Required!"),
-    password: Yup.string()
-      .required("No password provided.")
-      .min(8, "Password is too short - should be 8 chars minimum.")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*.,])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-      ),
   }).required();
 
   const {
@@ -85,8 +75,8 @@ export default function Login() {
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
-            <Form onSubmit={handleSubmit(handleLogin)}>
-              <h2>Welcome Back</h2>
+            <Form onSubmit={handleSubmit(handlePasswordReset)}>
+              <h2>Reset Password</h2>
               {errors.email && <FormError>{errors.email.message}</FormError>}
               <Input
                 Icon={MailIcon}
@@ -97,44 +87,14 @@ export default function Login() {
               {errors.password && (
                 <FormError>{errors.password.message}</FormError>
               )}
-              <Input
-                Icon={LockIcon}
-                type="password"
-                placeHolder="Enter Password"
-                validation={{ ...register("password", { required: true }) }}
-              />
+
               <PrimaryBtn
                 isLoading={isLoading}
-                title="Login"
+                title="Reset"
                 btnType="submit"
                 onBtnClick={(e: React.FormEvent<HTMLFormElement>) => ""}
               />
             </Form>
-            <FormFoter>
-              <Link
-                style={{
-                  color: "#fff",
-                  textDecoration: "none",
-                  marginLeft: 5,
-                }}
-                to="/reset-password"
-              >
-                Forgot password?
-              </Link>
-            </FormFoter>
-            <FormFoter>
-              Already have an account?{" "}
-              <Link
-                style={{
-                  color: `${AppColors.brandRed}`,
-                  textDecoration: "none",
-                  marginLeft: 5,
-                }}
-                to="/signup"
-              >
-                Register
-              </Link>
-            </FormFoter>
           </FormContainer>
         </FormCont>
       </PageLayout>

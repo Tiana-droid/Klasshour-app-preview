@@ -76,7 +76,7 @@ export default function Signup() {
       .then((res: any) => {
         console.log(res, "response");
         if (res) {
-          if (res?.status == true) {
+          if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
           } else {

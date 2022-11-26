@@ -35,6 +35,7 @@ type InputPropT = {
   placeHolder?: string;
   required?: boolean;
   validation?: any;
+  onChange?: any;
   value?: string | number | readonly string[] | undefined;
 };
 
@@ -44,6 +45,7 @@ export default function Input({
   placeHolder,
   required,
   value,
+  onChange,
   validation,
 }: InputPropT) {
   const WithIcon = () => {
