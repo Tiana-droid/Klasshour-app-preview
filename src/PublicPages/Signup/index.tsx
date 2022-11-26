@@ -19,11 +19,12 @@ import {
   FormFoter,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
-import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type Inputs = {
   fullName: string;
@@ -35,12 +36,29 @@ export default function Signup() {
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
 
+  const schema = Yup.object({
+    fullName: Yup.string().required("Required!"),
+    email: Yup.string().email("Invalid email format").required("Required!"),
+    password: Yup.string()
+      .required("No password provided.")
+      .min(8, "Password is too short - should be 8 chars minimum.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*.,])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
+    confirmpassword: Yup.string()
+      .required("Please confirm password.")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  }).required();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
 
   const handleRegistration = async (values: any) => {
     console.log(values, "from submoitted form");
@@ -109,12 +127,10 @@ export default function Signup() {
                   Student
                 </RoleButton>
               </RoleButtonContainer>
-              {errors.fullName?.type === "required" && (
-                <FormError>This field is required</FormError>
+              {errors.fullName && (
+                <FormError>{errors.fullName.message}</FormError>
               )}
-              {errors?.fullName?.type === "pattern" && (
-                <FormError>Alphabetical characters only</FormError>
-              )}
+
               <Input
                 Icon={UserIcon}
                 type="text"
@@ -127,14 +143,16 @@ export default function Signup() {
                 }}
               />
 
-              {errors.email && <FormError>This field is required</FormError>}
+              {errors.email && <FormError>{errors.email.message}</FormError>}
               <Input
                 Icon={MailIcon}
                 type="email"
                 placeHolder="Email"
                 validation={{ ...register("email", { required: true }) }}
               />
-              {errors.password && <FormError>This field is required</FormError>}
+              {errors.password && (
+                <FormError>{errors.password.message}</FormError>
+              )}
               <Input
                 Icon={LockIcon}
                 type="password"
@@ -142,7 +160,7 @@ export default function Signup() {
                 validation={{ ...register("password", { required: true }) }}
               />
               {errors.confirmpassword && (
-                <FormError>This field is required</FormError>
+                <FormError>{errors.confirmpassword.message}</FormError>
               )}
               <Input
                 Icon={LockIcon}
