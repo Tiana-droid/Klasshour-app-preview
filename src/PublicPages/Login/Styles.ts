@@ -7,7 +7,7 @@ type LoginPropT = {
 };
 export const PageLayout = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
 `;
 
@@ -89,4 +89,15 @@ export const Form = styled.form`
       margin-bottom: 4rem;
     }
   }
+`;
+
+export const FormError = styled.span`
+  color: red;
+  padding: 10px;
+`;
+export const FormFoter = styled.span`
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  margin-top: 24px;
 `;

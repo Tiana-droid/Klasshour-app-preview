@@ -21,7 +21,7 @@ import {
 import { PrimaryBtn } from "../../Components/Button";
 import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";

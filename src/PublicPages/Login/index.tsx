@@ -11,25 +11,53 @@ import {
   FormContainer,
   FormHeader,
   PageLayout,
+  FormError,
+  FormFoter,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
+import { AppColors } from "../../utils/constants";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Login() {
   const [isLoading, setisLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("hello");
-
-    //mimick request to klasshour server as example
+  const handleLogin = async (values: any) => {
+    console.log(values, "from the login page");
     setisLoading(true);
-    setTimeout(() => {
-      toast.success("Login successful");
-      setisLoading(false);
-    }, 2000);
+    userOBJ
+      .user_login({
+        email: values.email,
+        password: values.password,
+      })
+      .then((res: any) => {
+        setisLoading(false);
+      });
   };
+
+  const schema = Yup.object({
+    email: Yup.string().email("Invalid email format").required("Required!"),
+    password: Yup.string()
+      .required("No password provided.")
+      .min(8, "Password is too short - should be 8 chars minimum.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*.,])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
+  }).required();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <div>
@@ -41,29 +69,44 @@ export default function Login() {
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
-            <Form>
+            <Form onSubmit={handleSubmit(handleLogin)}>
               <h2>Welcome Back</h2>
+              {errors.email && <FormError>{errors.email.message}</FormError>}
               <Input
                 Icon={MailIcon}
                 type="email"
                 placeHolder="Email"
-                onChange={() => ""}
+                validation={{ ...register("email", { required: true }) }}
               />
+              {errors.password && (
+                <FormError>{errors.password.message}</FormError>
+              )}
               <Input
                 Icon={LockIcon}
                 type="password"
                 placeHolder="Enter Password"
-                onChange={() => ""}
+                validation={{ ...register("password", { required: true }) }}
               />
               <PrimaryBtn
                 isLoading={isLoading}
                 title="Login"
                 btnType="submit"
-                onBtnClick={(e: React.FormEvent<HTMLFormElement>) =>
-                  handleLogin(e)
-                }
+                onBtnClick={(e: React.FormEvent<HTMLFormElement>) => ""}
               />
             </Form>
+            <FormFoter>
+              Already have an account?{" "}
+              <Link
+                style={{
+                  color: `${AppColors.brandRed}`,
+                  textDecoration: "none",
+                  marginLeft: 5,
+                }}
+                to="/signup"
+              >
+                Register
+              </Link>
+            </FormFoter>
           </FormContainer>
         </FormCont>
       </PageLayout>

@@ -6,6 +6,15 @@ class USER {
   user_login = async (data: any) => {
     try {
       const response = await api.post("/user/login", data);
+      if (response) {
+        if (response?.status == true) {
+          toast.success(response?.message);
+        } else {
+          toast.error(response?.message);
+        }
+      } else {
+        toast.error(response?.message);
+      }
       console.log("response from login", response);
     } catch (error) {
       console.log("error in login", error);
