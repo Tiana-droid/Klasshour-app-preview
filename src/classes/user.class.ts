@@ -5,7 +5,7 @@ class USER {
   //login user
   user_login = async (data: any) => {
     try {
-      const response = await api.post("/user/login", data);
+      const response: any = await api.post("/user/login", data);
       if (response) {
         if (response?.status == true) {
           toast.success(response?.message);
@@ -23,7 +23,7 @@ class USER {
   //signup new user
   user_signup = async (data: any) => {
     try {
-      const response = await api.post("/user/signup", data);
+      const response: any = await api.post("/user/signup", data);
       if (response) {
         if (response?.status == true) {
           toast.success(response?.message);

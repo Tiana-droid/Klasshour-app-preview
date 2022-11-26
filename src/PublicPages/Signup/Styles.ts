@@ -93,7 +93,7 @@ export const Form = styled.form`
 
 export const RoleButton = styled.button`
   border: 2px solid ${AppColors.brandRed};
-  width: 216px;
+  width: 48%;
   height: 50px;
   border-radius: 6px;
   font-weight: 800;
@@ -102,7 +102,7 @@ export const RoleButton = styled.button`
 `;
 export const RoleButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
 `;
