@@ -16,12 +16,14 @@ import {
   RoleButton,
   RoleButtonContainer,
   FormError,
+  FormFoter,
 } from "./Styles";
 import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 type Inputs = {
   fullName: string;
@@ -45,10 +47,16 @@ export default function Signup() {
 
     //mimick request to klasshour server as example
     setisLoading(true);
-    setTimeout(() => {
-      toast.success("Registration successful");
-      setisLoading(false);
-    }, 2000);
+    userOBJ
+      .user_signup({
+        fullname: values.fullName,
+        email: values.email,
+        password: values.password,
+        userType: userRole,
+      })
+      .then((res: any) => {
+        setisLoading(false);
+      });
   };
   //handle Role Selection
   const handleRoleSelection = (role: string) => {
@@ -101,15 +109,24 @@ export default function Signup() {
                   Student
                 </RoleButton>
               </RoleButtonContainer>
-              {errors.fullName && <FormError>This field is required</FormError>}
+              {errors.fullName?.type === "required" && (
+                <FormError>This field is required</FormError>
+              )}
+              {errors?.fullName?.type === "pattern" && (
+                <FormError>Alphabetical characters only</FormError>
+              )}
               <Input
                 Icon={UserIcon}
                 type="text"
                 placeHolder="Full Name"
                 validation={{
-                  ...register("fullName", { required: true }),
+                  ...register("fullName", {
+                    required: true,
+                    pattern: /^[A-Za-z]+$/i,
+                  }),
                 }}
               />
+
               {errors.email && <FormError>This field is required</FormError>}
               <Input
                 Icon={MailIcon}
@@ -142,6 +159,19 @@ export default function Signup() {
                 btnType="submit"
               />
             </Form>
+            <FormFoter>
+              Already have an account?{" "}
+              <Link
+                style={{
+                  color: `${AppColors.brandRed}`,
+                  textDecoration: "none",
+                  marginLeft: 5,
+                }}
+                to="/"
+              >
+                Login
+              </Link>
+            </FormFoter>
           </FormContainer>
         </FormCont>
       </PageLayout>

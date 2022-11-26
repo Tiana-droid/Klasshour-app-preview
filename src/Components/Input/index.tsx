@@ -49,7 +49,7 @@ export default function Input({
   const WithIcon = () => {
     return (
       <InputGroup>
-        <img src={Icon} />
+        <img src={Icon} alt={""} />
         <InputField
           type={type}
           placeholder={placeHolder}
