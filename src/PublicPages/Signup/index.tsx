@@ -21,76 +21,34 @@ import { PrimaryBtn } from "../../Components/Button";
 import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
+import { useForm, SubmitHandler } from "react-hook-form";
 
+type Inputs = {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmpassword: string;
+};
 export default function Signup() {
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
-  const [formData, setformData] = useState({
-    fullname: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
 
-  const [formErrorRequired, setformErrorRequired] = useState({
-    fullname: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if(!formData.fullname){
-      setformErrorRequired((err)=>{
-        return(
-          {
-            ...err,
-            fullname:"required"
-          }
-        )
-      })
-      setisLoading(false)
-    }
-    if(!formData.email){
-      setformErrorRequired((err)=>{
-        return(
-          {
-            ...err,
-            email:"required"
-          }
-        )
-      })
-      setisLoading(false)
-    }
-    if(!formData.password){
-      setformErrorRequired((err)=>{
-        return(
-          {
-            ...err,
-            password:"required"
-          }
-        )
-      })
-      setisLoading(false)
-    }
-    if(!formData.confirmpassword){
-      setformErrorRequired((err)=>{
-        return(
-          {
-            ...err,
-            confirmpassword:"required"
-          }
-        )
-      })
-      setisLoading(false)
-    }
+  const handleRegistration = async (values: any) => {
+    console.log(values, "from submoitted form");
+
     //mimick request to klasshour server as example
-    // setisLoading(true);
-    // // setTimeout(() => {
-    //   toast.success("Registration successful");
-    //   setisLoading(false);
-    // }, 2000);
+    setisLoading(true);
+    setTimeout(() => {
+      toast.success("Registration successful");
+      setisLoading(false);
+    }, 2000);
   };
   //handle Role Selection
   const handleRoleSelection = (role: string) => {
@@ -107,7 +65,7 @@ export default function Signup() {
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
-            <Form onSubmit={handleRegistration}>
+            <Form onSubmit={handleSubmit(handleRegistration)}>
               <h2>Welcome</h2>
               <RoleButtonContainer>
                 <RoleButton
@@ -143,34 +101,45 @@ export default function Signup() {
                   Student
                 </RoleButton>
               </RoleButtonContainer>
-
-              <Input Icon={UserIcon} type="text" placeHolder="Full Name" onChange={undefined} />
-              {formErrorRequired.fullname && <FormError>err</FormError>}
+              {errors.fullName && <FormError>This field is required</FormError>}
+              <Input
+                Icon={UserIcon}
+                type="text"
+                placeHolder="Full Name"
+                validation={{
+                  ...register("fullName", { required: true }),
+                }}
+              />
+              {errors.email && <FormError>This field is required</FormError>}
               <Input
                 Icon={MailIcon}
                 type="email"
                 placeHolder="Email"
-                onChange={() => ""}
+                validation={{ ...register("email", { required: true }) }}
               />
-
+              {errors.password && <FormError>This field is required</FormError>}
               <Input
                 Icon={LockIcon}
                 type="password"
                 placeHolder="Enter Password"
-                onChange={() => ""}
+                validation={{ ...register("password", { required: true }) }}
               />
+              {errors.confirmpassword && (
+                <FormError>This field is required</FormError>
+              )}
               <Input
                 Icon={LockIcon}
                 type="password"
                 placeHolder="Confirm password"
-                onChange={() => ""}
+                validation={{
+                  ...register("confirmpassword", { required: true }),
+                }}
               />
               <PrimaryBtn
                 isLoading={isLoading}
                 title="Register"
+                onBtnClick={(e: React.FormEvent<HTMLFormElement>) => ""}
                 btnType="submit"
-                onChange={() => ""}
-                onBtnClick={null}
               />
             </Form>
           </FormContainer>

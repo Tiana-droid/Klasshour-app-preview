@@ -33,16 +33,18 @@ type InputPropT = {
   Icon?: any;
   type: string;
   placeHolder?: string;
-  onChange: Function;
   required?: boolean;
+  validation?: any;
+  value?: string | number | readonly string[] | undefined;
 };
 
 export default function Input({
   Icon,
   type,
   placeHolder,
-  onChange,
   required,
+  value,
+  validation,
 }: InputPropT) {
   const WithIcon = () => {
     return (
@@ -52,10 +54,9 @@ export default function Input({
           type={type}
           placeholder={placeHolder}
           width="80%"
+          value={value}
           required={required}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            onChange(event.target.value)
-          }
+          {...validation}
         />
       </InputGroup>
     );
