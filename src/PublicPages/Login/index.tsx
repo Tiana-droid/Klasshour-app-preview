@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-type Inputs = {
+type InputsPropT = {
   email: string;
   password: string;
 };
@@ -43,6 +43,7 @@ export default function Login() {
           if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
+            window.location.reload();
           } else {
             toast.error(res?.message);
             setisLoading(false);
@@ -62,7 +63,7 @@ export default function Login() {
       .min(8, "Password is too short - should be 8 chars minimum.")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*.,])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "Atleast 8 Characters is needed, One Uppercase, One Lowercase, One Number and One Special Case Character"
       ),
   }).required();
 
@@ -71,7 +72,7 @@ export default function Login() {
     handleSubmit,
 
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<InputsPropT>({
     resolver: yupResolver(schema),
   });
 

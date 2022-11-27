@@ -14,6 +14,11 @@ const InputGroup = styled.div`
   padding: 0 0.4rem;
   border-radius: 9px;
   margin-bottom: 1rem;
+
+  img {
+    width: 18px;
+    margin-right: 0.4rem;
+  }
 `;
 const InputField = styled.input`
   width: ${(prop) => (prop.width ? prop.width : "100%")};
@@ -71,9 +76,9 @@ export default function Input({
           type={type}
           placeholder={placeHolder}
           required={required}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            onChange(event.target.value)
-          }
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          //   onChange(event.target.value)
+          // }
         />
       )}
     </>

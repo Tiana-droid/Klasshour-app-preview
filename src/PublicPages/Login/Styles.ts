@@ -7,7 +7,7 @@ type LoginPropT = {
 };
 export const PageLayout = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
 `;
 
@@ -93,7 +93,8 @@ export const Form = styled.form`
 
 export const FormError = styled.span`
   color: red;
-  padding: 10px;
+  font-size: 0.8rem;
+  margin: 1rem 0;
 `;
 export const FormFoter = styled.span`
   display: flex;

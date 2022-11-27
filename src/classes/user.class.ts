@@ -1,12 +1,17 @@
-/* eslint-disable eqeqeq */
 import api from "../API";
+import { storeAuthToken, storeClientUser } from "../utils/LS";
 
 class USER {
   //login user
   user_login = async (data: any) => {
     try {
-      const response = await api.post("/user/login", data);
-      return response;
+      const response: any = await api.post("/user/login", data);
+      console.log(response, "response");
+      if (response?.status && response?.payload?.data) {
+        storeAuthToken(response.token);
+        storeClientUser(response?.payload?.data);
+        return response;
+      }
     } catch (error) {
       return error;
     }
