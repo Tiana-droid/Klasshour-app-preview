@@ -40,4 +40,5 @@ export const ProtectRoute = () => {
 export const Logout = () => {
   removeStoredAuthToken();
   window.location.reload();
+  window.location.href = "/";
 };

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const modules = [
   { id: 1, name: "Timeline", icon: TimelineIcon, path: "/timeline" },
   { id: 2, name: "Profile Settings", icon: ProfileSettings, path: "/settings" },
-  { id: 3, name: "Post Request", icon: RequestIcon, path: "/request" },
+  { id: 3, name: "Post Request", icon: RequestIcon, path: "/post-request" },
   { id: 4, name: "Wallet", icon: WalletIcon, path: "/wallet" },
 ];
 

@@ -15,7 +15,7 @@ export default function DashboardHeader() {
           style={{
             display: "flex",
             gap: "0.5rem",
-            padding: "0 1rem",
+            padding: "0 0.2rem",
             cursor: "pointer",
           }}
           onClick={() => setshowDropdown(!showDropdown)}
