@@ -38,3 +38,26 @@ export const ContentArea = styled.div`
     width: 80%;
   }
 `;
+
+export const FAB = styled.div`
+  width: 50px;
+  height: 50px;
+  background: ${AppColors.brandRed};
+  border-radius: 20rem;
+  position: fixed;
+  bottom: 4rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 40%;
+  }
+  @media (${BreakPoints.xs}) {
+    right: 1rem;
+  }
+
+  @media (${BreakPoints.large}) {
+    right: 9rem;
+  }
+`;

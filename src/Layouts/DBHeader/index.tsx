@@ -4,6 +4,7 @@ import { DBHeader, DispayDesktop, DropDownContainer } from "./Styles";
 import Avatar from "../../Components/Avatar";
 import ArrowDown from "../../Assets/icons/ArrowDown.svg";
 import { Logout } from "../../utils/some";
+import { Link } from "react-router-dom";
 
 export default function DashboardHeader() {
   const [showDropdown, setshowDropdown] = useState(false);
@@ -40,11 +41,15 @@ export default function DashboardHeader() {
     );
   };
   return (
-    <DBHeader>
-      <div>
-        <img src={Logo} />
-      </div>
-      <div>{UserAvater()}</div>
-    </DBHeader>
+    <>
+      <DBHeader>
+        <div>
+          <Link to="/">
+            <img src={Logo} />
+          </Link>
+        </div>
+        <div>{UserAvater()}</div>
+      </DBHeader>
+    </>
   );
 }
