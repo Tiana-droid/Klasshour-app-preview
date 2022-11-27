@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import ErrorPage from "../ErrorPage";
 import Login from "./Login";
 import Signup from "./Signup";
-import ForgetPassword from "./Reset-password/index";
+import ForgetPassword from "./Reset-password";
 import ResetPassword from "./Reset-password/ChangePassword";
 
 export default function PublicRoutes() {
