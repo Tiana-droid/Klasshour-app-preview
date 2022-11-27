@@ -40,6 +40,19 @@ export default function Login() {
         password: values.password,
       })
       .then((res: any) => {
+        if (res) {
+          if (res?.status == true) {
+            toast.success(res?.message);
+            setisLoading(false);
+            window.location.reload();
+          } else {
+            toast.error(res?.message);
+            setisLoading(false);
+          }
+        } else {
+          toast.error(res?.message);
+          setisLoading(false);
+        }
         setisLoading(false);
       });
   };

@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import AuthRoutes from "../PrivatePages/index";
 import PublicRoutes from "../PublicPages/index";
+import { getStoredAuthToken, getStoredClientUser } from "../utils/LS";
 
 export default function AppLayout() {
-  const [isLoggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(true);
+
+  useLayoutEffect(() => {
+    if (getStoredAuthToken() && getStoredClientUser()) setisLoggedIn(true);
+    if (!getStoredAuthToken() && !getStoredClientUser()) setisLoggedIn(false);
+  }, [getStoredAuthToken(), getStoredClientUser()]);
 
   return <>{isLoggedIn ? <AuthRoutes /> : <PublicRoutes />}</>;
 }

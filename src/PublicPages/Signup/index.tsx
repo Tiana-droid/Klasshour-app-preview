@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
 type Inputs = {
   fullName: string;
@@ -73,6 +74,19 @@ export default function Signup() {
         userType: userRole,
       })
       .then((res: any) => {
+        console.log(res, "response");
+        if (res) {
+          if (res?.status == true) {
+            toast.success(res?.message);
+            setisLoading(false);
+          } else {
+            toast.error(res?.message);
+            setisLoading(false);
+          }
+        } else {
+          toast.error(res?.message);
+          setisLoading(false);
+        }
         setisLoading(false);
       });
   };
