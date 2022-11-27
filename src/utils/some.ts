@@ -1,3 +1,9 @@
+import {
+  getStoredAuthToken,
+  getStoredClientUser,
+  removeStoredAuthToken,
+} from "./LS";
+
 export function numFormatter(x: number) {
   if (isNaN(x)) return x;
 
@@ -22,3 +28,16 @@ export function numFormatter(x: number) {
 
   return "1T+";
 }
+
+export const ProtectRoute = () => {
+  if (getStoredAuthToken() && getStoredClientUser()) {
+    window.location.reload();
+  } else {
+    window.location.reload(); //This route is dynamic, based on isLoggedin state
+  }
+};
+
+export const Logout = () => {
+  removeStoredAuthToken();
+  window.location.reload();
+};

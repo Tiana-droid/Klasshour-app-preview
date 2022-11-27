@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import SignupBanner from "../../Assets/images/SignupBanner.svg";
 import Logo from "../../Assets/images/Logo.svg";
 import MailIcon from "../../Assets/icons/MailIcon.svg";
@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { ProtectRoute } from "../../utils/some";
 
 type Inputs = {
   fullName: string;
@@ -95,6 +96,12 @@ export default function Signup() {
     console.log(role, "from role selection");
     setuserRole(role);
   };
+
+  useLayoutEffect(() => {
+    // ProtectRoute();
+    console.log("hello");
+  }, []);
+
   return (
     <div>
       <PageLayout>
