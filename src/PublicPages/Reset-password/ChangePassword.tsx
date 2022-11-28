@@ -4,7 +4,7 @@ import SignupBanner from "../../Assets/images/SignupBanner.svg";
 import Logo from "../../Assets/images/Logo.svg";
 
 import LockIcon from "../../Assets/icons/LockIcon.svg";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Input from "../../Components/Input";
 import {
   BannerCont,
@@ -31,7 +31,7 @@ type Inputs = {
 };
 export default function ChangePassword() {
   const [isLoading, setisLoading] = useState(false);
-
+  let navigate = useNavigate();
   const { token } = useParams();
   const schema = Yup.object({
     password: Yup.string()
@@ -69,6 +69,9 @@ export default function ChangePassword() {
           if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
           } else {
             toast.error(res?.message);
             setisLoading(false);
