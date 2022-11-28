@@ -5,15 +5,20 @@ import Login from "./Login";
 import Signup from "./Signup";
 import ForgetPassword from "./Reset-password";
 import ResetPassword from "./Reset-password/ChangePassword";
+import OTP from "./Otp";
+import UserContext from "./context/userContext";
 
 export default function PublicRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={<ErrorPage />} />
-      <Route path="/reset-password" element={<ForgetPassword />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
-    </Routes>
+    <UserContext>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/reset-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/otp" element={<OTP />} />
+      </Routes>
+    </UserContext>
   );
 }

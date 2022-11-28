@@ -44,6 +44,14 @@ class USER {
       return error;
     }
   };
+  user_verify_account = async (data: any) => {
+    try {
+      const response = await api.post(`/user/verify-account`, data);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 const userOBJ = new USER();

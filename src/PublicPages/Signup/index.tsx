@@ -22,11 +22,11 @@ import { PrimaryBtn } from "../../Components/Button";
 import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { ProtectRoute } from "../../utils/some";
+import { SetEmail } from "../context/userContext";
 
 type Inputs = {
   fullName: string;
@@ -35,9 +35,10 @@ type Inputs = {
   confirmpassword: string;
 };
 export default function Signup() {
+  const setEmailContext = SetEmail();
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
-
+  const navigate = useNavigate();
   const schema = Yup.object({
     fullName: Yup.string().required("Required!"),
     email: Yup.string().email("Invalid email format").required("Required!"),
@@ -65,7 +66,6 @@ export default function Signup() {
   const handleRegistration = async (values: any) => {
     console.log(values, "from submoitted form");
 
-    //mimick request to klasshour server as example
     setisLoading(true);
     userOBJ
       .user_signup({
@@ -80,6 +80,11 @@ export default function Signup() {
           if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
+            //set user email to context
+            setEmailContext(values.email);
+            setTimeout(() => {
+              navigate("/otp");
+            }, 1000);
           } else {
             toast.error(res?.message);
             setisLoading(false);

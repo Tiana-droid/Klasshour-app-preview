@@ -84,9 +84,6 @@ export default function ForgetPassword() {
                 placeHolder="Email"
                 validation={{ ...register("email", { required: true }) }}
               />
-              {errors.password && (
-                <FormError>{errors.password.message}</FormError>
-              )}
 
               <PrimaryBtn
                 isLoading={isLoading}
