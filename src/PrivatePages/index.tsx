@@ -6,6 +6,7 @@ import MyKlass from "./klass";
 import PastKlass from "./PastKlass";
 import PostRequest from "./PostRequest";
 import ErrorPage from "../ErrorPage";
+import TutourProfile from "./TutorRequest";
 
 export default function AuthRoutes() {
   return (
@@ -14,6 +15,7 @@ export default function AuthRoutes() {
       <Route path="/post-request" element={<PostRequest />} />
       <Route path="/timeline" element={<TimeLine />} />
       <Route path="/class" element={<MyKlass />} />
+      <Route path="/tutor-request" element={<TutourProfile />} />
       <Route path="/past-class" element={<PastKlass />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
