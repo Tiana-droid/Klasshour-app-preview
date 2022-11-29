@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Card,
@@ -9,6 +9,8 @@ import {
   BoldText,
 } from "./Style";
 import Avatar from "../../Assets/icons/Image.png";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../Components/Spinner";
 
 type cardProp = {
   price: string;
@@ -16,14 +18,26 @@ type cardProp = {
   desc: string;
   subject: string;
   language: string;
+  tutorId: any;
 };
-export default function index({
+export default function Index({
   price,
   name,
   desc,
   subject,
   language,
+  tutorId,
 }: cardProp) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOnclickEvent = () => {
+    // fake request to tutor page
+    setIsLoading(true);
+    setTimeout(() => {
+      navigate("/tutor-request");
+    }, 3000);
+  };
   return (
     <Card>
       <FlexHeader>
@@ -48,7 +62,13 @@ export default function index({
         <BoldText>{language}</BoldText>
       </Flex>
       <ButtonContainer>
-        <Button>veiw profile</Button>
+        <Button
+          onClick={() => {
+            handleOnclickEvent();
+          }}
+        >
+          {isLoading ? <Spinner isLoading={isLoading} /> : "veiw profile"}
+        </Button>
       </ButtonContainer>
     </Card>
   );
