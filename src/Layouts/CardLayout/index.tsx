@@ -10,30 +10,46 @@ import {
 } from "./Style";
 import Avatar from "../../Assets/icons/Image.png";
 
-export default function index() {
+type cardProp = {
+  price: string;
+  name: string;
+  desc: string;
+  subject: string;
+  language: string;
+};
+export default function index({
+  price,
+  name,
+  desc,
+  subject,
+  language,
+}: cardProp) {
   return (
     <Card>
       <FlexHeader>
         <img src={Avatar} alt="image" />
-        <div>NGN 250.00 perhour</div>
+        <div>NGN{price} perhour</div>
       </FlexHeader>
-        <h5>name</h5>
-        <LightText>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi,
-          mollitia.
-        </LightText>
-        <Flex>
-          <LightText>subject: </LightText>
-          <BoldText>physics</BoldText>
-        </Flex>
-        <Flex>
-          <LightText>language:</LightText>
-          <BoldText>English</BoldText>
-        </Flex>
-        <ButtonContainer>
-          <Button>veiw profile</Button>
-        </ButtonContainer>
-      
+      <h3
+        style={{
+          fontSize: "20px",
+          fontWeight: 400,
+        }}
+      >
+        {name}
+      </h3>
+      <LightText>{desc}</LightText>
+      <Flex>
+        <LightText>subject: </LightText>
+        <BoldText>{subject}</BoldText>
+      </Flex>
+      <Flex>
+        <LightText>language:</LightText>
+        <BoldText>{language}</BoldText>
+      </Flex>
+      <ButtonContainer>
+        <Button>veiw profile</Button>
+      </ButtonContainer>
     </Card>
   );
 }

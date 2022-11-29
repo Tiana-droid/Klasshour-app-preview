@@ -29,6 +29,9 @@ export const Button = styled.button`
   height: 47px;
   border-radius: 6px;
   font-size: 15px;
+  &:hover {
+    background-color: #a9a9a9;
+  }
 `;
 export const LightText = styled.span`
   font-weight: 300;
