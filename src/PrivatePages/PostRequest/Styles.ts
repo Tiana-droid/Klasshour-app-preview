@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BreakPoints } from "../../utils/breakpoints";
+import { AppColors } from "../../utils/constants";
 
 export const RequestFormPageLayout = styled.div`
   width: 100%;
@@ -14,10 +15,41 @@ export const RequestFormPageLayout = styled.div`
   }
 `;
 
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+export const Input = styled.input`
+  width: 304px;
+  height: 44px;
+  border: 0.2px solid #84848469;
+  border-radius: 6px;
+  padding: 10px;
+  color: ${AppColors.brandBlack};
+`;
+export const TextArea = styled.textarea`
+  width: 304px;
+  height: 100px;
+  border: 0.2px solid #84848469;
+  border-radius: 6px;
+  padding: 10px;
+  color: ${AppColors.brandBlack};
+`;
+export const FormInnerContainer = styled.div`
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 13px;
+`;
 export const RequestForm = styled.form`
   width: 60%;
   margin: auto;
-  border: 1px solid red;
+  border: 1px solid ${AppColors.brandGray};
   margin-top: 4rem;
 
   @media (${BreakPoints.xs}) {
