@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SetuserData } from "../context/userContext";
 
 type InputsPropT = {
   email: string;
@@ -30,7 +31,7 @@ type InputsPropT = {
 
 export default function Login() {
   const [isLoading, setisLoading] = useState(false);
-
+  const setuserData = SetuserData();
   const handleLogin = async (values: any) => {
     setisLoading(true);
     userOBJ
@@ -43,6 +44,7 @@ export default function Login() {
           if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
+            setuserData(res.payload.data);
             window.location.reload();
           } else {
             toast.error(res?.message);
