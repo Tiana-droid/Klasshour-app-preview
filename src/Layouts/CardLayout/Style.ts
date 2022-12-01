@@ -14,6 +14,7 @@ export const Card = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 15px;
+  border: 0.2px solid #848484;
   border-radius: 10px;
 `;
 export const ButtonContainer = styled.div`

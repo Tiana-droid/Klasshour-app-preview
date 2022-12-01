@@ -2,6 +2,7 @@ import React from "react";
 import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import Card from "../../Layouts/CardLayout";
+import RequestCard from "../../Components/RequestCard";
 
 export default function TimeLine() {
   const testData = [
@@ -41,14 +42,7 @@ export default function TimeLine() {
         {testData.map((a, i) => {
           return (
             <React.Fragment key={i}>
-              <Card
-                price={a.price}
-                name={a.name}
-                desc={a.desc}
-                subject={a.subject}
-                language={a.language}
-                tutorId={1}
-              />
+              <RequestCard />
             </React.Fragment>
           );
         })}
