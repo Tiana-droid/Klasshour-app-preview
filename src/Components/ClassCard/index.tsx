@@ -1,5 +1,5 @@
 import React from "react";
-import pencil from "../../Assets/icons/pencil.svg";
+import teacher from "../../Assets/icons/teacher.svg";
 import {
   Card,
   CardButton,
@@ -21,19 +21,24 @@ type RequestPropT = {
     subject: string;
     language: any;
     desc: any;
-    interactions: number;
+    tutor: any;
   };
+  isPast?: boolean;
 };
 
-export default function RequestCard({ data }: RequestPropT) {
+export default function ClassCard({ data, isPast }: RequestPropT) {
   return (
     <div>
-      <Card>
+      <Card isPast={isPast}>
         <CardHeader>
-          <CardStatus isActive={data.status === "OPEN" ? true : false}>
-            {data.status}
-          </CardStatus>
-          <CardDate>Date Posted: {data.date}</CardDate>
+          {!isPast && (
+            <CardStatus isActive={data.status === "OPEN" ? true : false}>
+              {data.status}
+            </CardStatus>
+          )}
+          {isPast && <CardStatus isActive={false}>Closed</CardStatus>}
+
+          <CardDate isPast={isPast}>Date Posted: {data.date}</CardDate>
         </CardHeader>
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem;" }} />
         <CardContent>
@@ -51,10 +56,11 @@ export default function RequestCard({ data }: RequestPropT) {
         </CardContent>
         <CardButtonContainer>
           <Interactions>
-            <img src={pencil} />
-            <span>{data.interactions}</span>
+            <img src={teacher} />
+            <span>{data.tutor}</span>
           </Interactions>
-          <CardButton>View applications</CardButton>
+          {}
+          {!isPast && <CardButton>Join Class</CardButton>}
         </CardButtonContainer>
       </Card>
     </div>

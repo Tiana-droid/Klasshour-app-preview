@@ -5,7 +5,11 @@ import { AppColors } from "../../utils/constants";
 type CardStatusPropT = {
   isActive: boolean;
 };
-export const Card = styled.div`
+
+type CardDatePropT = {
+  isPast?: boolean;
+};
+export const Card = styled.div<CardDatePropT>`
   width: 100%;
   position: relative;
   font-size: 1.2rem;
@@ -15,6 +19,8 @@ export const Card = styled.div`
   border-radius: 5px;
   margin-bottom: 1.4rem;
   height: 300px;
+  border-bottom: ${(prop) =>
+    prop.isPast ? `2px solid ${AppColors.brandRed}` : ""};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   @media (${BreakPoints.xs}) {
     width: 100%;
@@ -53,11 +59,13 @@ export const CardStatus = styled.span<CardStatusPropT>`
   }
 `;
 
-export const CardDate = styled.span`
+export const CardDate = styled.span<CardDatePropT>`
   display: inline-block;
   display: flex;
   justify-content: end;
-  width: 45%;
+  width: ${(prop) => (prop.isPast ? "100%" : "45%")};
+  display: flex;
+  justify-content: end;
 `;
 
 export const CardContent = styled.div`
@@ -135,7 +143,7 @@ export const Interactions = styled.div`
   gap: 0.4rem;
   cursor: pointer;
   img {
-    width: 14px;
+    width: 18px;
   }
   span {
     font-size: 0.8rem;
@@ -146,7 +154,7 @@ export const CardButton = styled.button`
   height: 40px;
   padding: 0 4rem;
   color: #fff;
-  background: ${AppColors.brandRed};
+  background: ${AppColors.primary};
   outline-style: none;
   border: none;
   border-radius: 5px;

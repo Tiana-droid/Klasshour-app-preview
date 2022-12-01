@@ -10,7 +10,7 @@ import {
 } from "./Style";
 import Avatar from "../../Assets/icons/Image.png";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../../Components/Spinner";
+import Spinner from "../Spinner";
 
 type cardProp = {
   price: string;
