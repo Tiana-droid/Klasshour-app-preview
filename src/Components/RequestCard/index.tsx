@@ -14,31 +14,44 @@ import {
   SubjectCont,
 } from "./Styles";
 
-export default function RequestCard() {
-  const desc =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rutrum ullamcorper lacus tincidunt nibh molestie. Eu placerat lacus, sed arcu elit neque turpis";
+type RequestPropT = {
+  data: {
+    date: any;
+    status: string;
+    subject: string;
+    language: any;
+    desc: any;
+    interactions: number;
+  };
+};
+
+export default function RequestCard({ data }: RequestPropT) {
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardStatus isActive={true}>open</CardStatus>
-          <CardDate>Date Posted: 18/02/2022</CardDate>
+          <CardStatus isActive={data.status === "OPEN" ? true : false}>
+            {data.status}
+          </CardStatus>
+          <CardDate>Date Posted: {data.date}</CardDate>
         </CardHeader>
         <CardContent>
           <SubjectCont>
-            Subject:<span>Physics</span>
+            Subject:<span>{data.subject}</span>
           </SubjectCont>
           <CardDescription>
-            {desc.length > 80 ? desc.slice(0, 200) + "...." : desc}
+            {data.desc.length > 80
+              ? data.desc.slice(0, 200) + "...."
+              : data.desc}
           </CardDescription>
           <CardLang>
-            Language: <span>English, Yoruba, French</span>
+            Language: <span>{data.language}</span>
           </CardLang>
         </CardContent>
         <CardButtonContainer>
           <Interactions>
             <img src={pencil} />
-            <span>110</span>
+            <span>{data.interactions}</span>
           </Interactions>
           <CardButton>View applications</CardButton>
         </CardButtonContainer>

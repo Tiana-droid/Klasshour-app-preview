@@ -7,25 +7,28 @@ import RequestCard from "../../Components/RequestCard";
 export default function TimeLine() {
   const testData = [
     {
-      price: "250",
-      name: "Daniel lawson",
-      desc: "lorem dfgjfgdlfmw te",
+      date: "250",
+      status: "OPEN",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rutrum ullamcorper lacus tincidunt nibh molestie. Eu placerat lacus, sed arcu elit neque turpis",
       subject: "physics",
       language: "english",
+      interactions: 122,
     },
     {
-      price: "250",
-      name: "Daniel lawson",
-      desc: "lorem dfgjfgdlfmw te",
+      date: "250",
+      status: "OPEN",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rutrum ullamcorper lacus tincidunt nibh molestie. Eu placerat lacus, sed arcu elit neque turpis",
       subject: "physics",
       language: "english",
+      interactions: 122,
     },
     {
-      price: "250",
-      name: "Daniel lawson",
-      desc: "lorem dfgjfgdlfmw te",
+      date: "250",
+      status: "OPEN",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rutrum ullamcorper lacus tincidunt nibh molestie. Eu placerat lacus, sed arcu elit neque turpis",
       subject: "physics",
       language: "english",
+      interactions: 122,
     },
   ];
   return (
@@ -39,10 +42,10 @@ export default function TimeLine() {
           gap: "10px",
         }}
       >
-        {testData.map((a, i) => {
+        {testData.map((obj, index) => {
           return (
-            <React.Fragment key={i}>
-              <RequestCard />
+            <React.Fragment key={index}>
+              <RequestCard data={obj} />
             </React.Fragment>
           );
         })}
