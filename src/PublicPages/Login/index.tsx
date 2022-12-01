@@ -45,6 +45,7 @@ export default function Login() {
             setisLoading(false);
             window.location.reload();
           } else {
+            console.log("component", res);
             toast.error(res?.message);
             setisLoading(false);
           }

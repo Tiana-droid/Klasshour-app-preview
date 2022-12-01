@@ -6,13 +6,15 @@ class USER {
   user_login = async (data: any) => {
     try {
       const response: any = await api.post("/user/login", data);
-      console.log(response, "response");
       if (response?.status && response?.payload?.data) {
         storeAuthToken(response.token);
         storeClientUser(response?.payload?.data);
         return response;
+      } else {
+        return response;
       }
     } catch (error) {
+      // console.log("error", error);
       return error;
     }
   };
