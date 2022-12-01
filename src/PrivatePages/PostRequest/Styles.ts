@@ -46,11 +46,17 @@ export const FormInnerContainer = styled.div`
   gap: 16px;
   padding: 13px;
 `;
+export const FormError = styled.span`
+  color: red;
+  font-size: 0.8rem;
+`;
+
 export const RequestForm = styled.form`
   width: 60%;
   margin: auto;
-  border: 1px solid ${AppColors.brandGray};
+  border: 1px solid #5e697724;
   margin-top: 4rem;
+  border-radius: 5px;
 
   @media (${BreakPoints.xs}) {
     width: 100%;
