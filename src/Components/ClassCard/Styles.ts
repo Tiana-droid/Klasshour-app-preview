@@ -22,6 +22,11 @@ export const Card = styled.div<CardDatePropT>`
   border-bottom: ${(prop) =>
     prop.isPast ? `2px solid ${AppColors.brandRed}` : ""};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  top: 0;
+  transition: all ease 0.6s;
+  :hover {
+    top: -0.6rem;
+  }
   @media (${BreakPoints.xs}) {
     width: 100%;
     padding: 1rem;

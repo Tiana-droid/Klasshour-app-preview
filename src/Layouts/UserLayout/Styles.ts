@@ -100,6 +100,7 @@ export const NavButton = styled.button<NavBtnPropT>`
   color: ${(prop) => (prop.isActive ? "#fff" : AppColors.brandBlack)};
   cursor: pointer;
   /* border: 1px solid red; */
+  border-radius: 5px;
 
   @media (${BreakPoints.xs}) {
     font-size: 1rem;
