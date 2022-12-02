@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pencil from "../../Assets/icons/pencil.svg";
+import studentRequest from "../../classes/request.class";
 import {
   Card,
   CardButton,
@@ -20,12 +22,20 @@ type RequestPropT = {
     status: string;
     subject: string;
     language: any;
-    desc: any;
-    interactions: number;
+    description: any;
+    appliedTutors: any;
+    createdAt: string;
+    _id:string
   };
 };
 
 export default function RequestCard({ data }: RequestPropT) {
+  const navigate = useNavigate()
+  const getTutorApplication = (requestID:string) => {
+    studentRequest.get_all_tutor_request(requestID).then((response) => {
+      navigate("/tutor-applications",{state:response})
+    })
+  }
   return (
     <div>
       <Card>
@@ -33,7 +43,7 @@ export default function RequestCard({ data }: RequestPropT) {
           <CardStatus isActive={data.status === "OPEN" ? true : false}>
             {data.status}
           </CardStatus>
-          <CardDate>Date Posted: {data.date}</CardDate>
+          <CardDate>Date Posted: {new Date(data.createdAt).toLocaleDateString()}</CardDate>
         </CardHeader>
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem;" }} />
         <CardContent>
@@ -41,20 +51,20 @@ export default function RequestCard({ data }: RequestPropT) {
             Subject:<span>{data.subject}</span>
           </SubjectCont>
           <CardDescription>
-            {data.desc.length > 80
-              ? data.desc.slice(0, 200) + "...."
-              : data.desc}
+            {data?.description?.length > 80
+              ? data.description.slice(0, 200) + "...."
+              : data.description}
           </CardDescription>
           <CardLang>
-            Language: <span>{data.language}</span>
+            Language: <span>{data.language || "English"}</span>
           </CardLang>
         </CardContent>
         <CardButtonContainer>
           <Interactions>
             <img src={pencil} />
-            <span>{data.interactions}</span>
+            <span>{data?.appliedTutors?.length}</span>
           </Interactions>
-          <CardButton>View applications</CardButton>
+          <CardButton onClick={()=>getTutorApplication(data?._id)}>View applications</CardButton>
         </CardButtonContainer>
       </Card>
     </div>

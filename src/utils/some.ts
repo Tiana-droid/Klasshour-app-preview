@@ -42,3 +42,7 @@ export const Logout = () => {
   window.location.reload();
   window.location.href = "/";
 };
+
+export  const truncateText = (str:string, size:number) => {
+    return str.length > size ? str.substring(0, size - 3) + "..." : str;
+  };
