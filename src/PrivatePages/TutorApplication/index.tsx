@@ -6,6 +6,7 @@ import Avatar from "../../Assets/icons/Image.png";
 
 
 import {   ButtonLeft, ButtonRight, Card, LeftAligned, NextButton, PaginationContainer, PrevButton } from "./Styles";
+import { truncateText } from "../../utils/some";
 
 export default function Index() {
     const location = useLocation();
@@ -23,7 +24,7 @@ export default function Index() {
                     <p>NGN {el.chargePerHour} per/hour</p>
                     </div>
                   <h1>{el.fullName}</h1>
-                    <div>  {el.bio}</div>
+                    <div> { truncateText(el.bio,80)}</div>
                   
                     <div> Subject: {el.subject}</div>
                     <div>Language : {el.language}</div>
