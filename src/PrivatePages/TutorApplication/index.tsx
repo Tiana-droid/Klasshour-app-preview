@@ -22,7 +22,9 @@ export default function Index() {
                          <img width={60} src={Avatar} alt="image" />
                     <p>NGN {el.chargePerHour} per/hour</p>
                     </div>
-                    <h1>{el.fullName}</h1>
+                  <h1>{el.fullName}</h1>
+                    <div>  {el.bio}</div>
+                  
                     <div> Subject: {el.subject}</div>
                     <div>Language : {el.language}</div>
                     
