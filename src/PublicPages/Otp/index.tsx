@@ -1,7 +1,6 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginBanner from "../../Assets/images/LoginBanner.svg";
 import Logo from "../../Assets/images/Logo.svg";
-import { Email } from "../context/userContext";
 import "./styles.css";
 import {
   BannerCont,
@@ -17,15 +16,16 @@ import {
 
 import { toast } from "react-toastify";
 import userOBJ from "../../classes/user.class";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 export default function OTP() {
   const [isLoading, setisLoading] = useState(false);
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [activeOtpIndex, setactiveOtpIndex] = useState<number>(0);
+  const { state } = useLocation();
+  const { email } = state; // Read values passed on state
   // ref for the input
   const inputRef = useRef<HTMLInputElement>(null);
   let navigate = useNavigate();
-  const Emailcon = Email();
   // check if the user has enter all the values for the otp
   useEffect(() => {
     let key = 0;
@@ -35,7 +35,7 @@ export default function OTP() {
       }
       if (key === otp.length) {
         let value = {
-          email: Emailcon,
+          email: email,
           OTPCode: Number(otp.join("")),
         };
         handleOTP(value);
