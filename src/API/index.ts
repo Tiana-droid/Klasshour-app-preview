@@ -13,7 +13,6 @@ api.interceptors.request.use(
   (request) => {
     request.headers = {
       "Content-Type": "application/json",
-      // Authorization: "",
       Authorization: getStoredAuthToken()
         ? `Bearer ${getStoredAuthToken()}`
         : "",
