@@ -15,9 +15,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/ApplicationCard/Style";
 import { useForm } from "react-hook-form";
 import Spinner from "../../Components/Spinner";
-import { UserData } from "../../PublicPages/context/userContext";
 import StudentOBJ from "../../classes/student.class";
 import { toast } from "react-toastify";
+import { getStoredClientUser } from "../../utils/LS";
 
 type InputsPropT = {
   subject: string;
@@ -33,9 +33,9 @@ import { RequestForm, RequestFormPageLayout ,FormControl,Button} from "./Styles"
 
 export default function PostRequest() {
   const [isLoading, setIsLoading] = useState(false);
-  const userDataFunction = UserData();
-  const { email, merithubUserID } = userDataFunction();
 
+  const { email, merithubUserID } = getStoredClientUser();
+  console.log(email, "from login");
   const schema = Yup.object({
     subject: Yup.string().required("Required!"),
     desc: Yup.string()

@@ -26,7 +26,6 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { SetEmail } from "../context/userContext";
 
 type Inputs = {
   fullName: string;
@@ -35,7 +34,6 @@ type Inputs = {
   confirmpassword: string;
 };
 export default function Signup() {
-  const setEmailContext = SetEmail();
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
   const navigate = useNavigate();
@@ -80,10 +78,8 @@ export default function Signup() {
           if (res?.status === true) {
             toast.success(res?.message);
             setisLoading(false);
-            //set user email to context
-            setEmailContext(values.email);
             setTimeout(() => {
-              navigate("/otp");
+              navigate("/otp", { state: { email: values.email } });
             }, 1000);
           } else {
             toast.error(res?.message);
