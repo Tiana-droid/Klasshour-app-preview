@@ -59,6 +59,7 @@ export const usePagination = ({
       return [...leftRange, DOTS, totalPageCount];
     }
 
+    
     /*
     	Case 3: No right dots to show, but left dots to be shown
     */
