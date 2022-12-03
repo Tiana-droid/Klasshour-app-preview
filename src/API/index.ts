@@ -27,7 +27,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log("response received");
+    // console.log("response received");
     if (response?.data?.token) {
       // console.log(getStoredAuthToken());
     }

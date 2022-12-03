@@ -5,6 +5,7 @@ import Avatar from "../../Components/Avatar";
 import ArrowDown from "../../Assets/icons/ArrowDown.svg";
 import { Logout } from "../../utils/some";
 import { Link } from "react-router-dom";
+import { getStoredClientUser } from "../../utils/LS";
 
 export default function DashboardHeader() {
   const [showDropdown, setshowDropdown] = useState(false);
@@ -33,7 +34,7 @@ export default function DashboardHeader() {
           <ul>
             <li>Profile Settings</li>
             <li>Wallet</li>
-            <li>My Group</li>
+            {getStoredClientUser().userType !== "Tutor" && <li>My Group</li>}
             <li onClick={() => Logout()}>Logout</li>
           </ul>
         </DropDownContainer>

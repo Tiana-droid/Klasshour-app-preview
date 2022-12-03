@@ -1,22 +1,18 @@
 import React from "react";
 import classnames from "classnames";
-import {
-  NextButton,
-    PrevButton,
-  Dots,
-} from "./Styles";
+import { NextButton, PrevButton, Dots } from "./Styles";
 import { DOTS, usePagination } from "../../Hooks/usePagination";
-const Pagination = (props:any) => {
+const Pagination = (props: any) => {
   const {
     onPageChange,
     totalCount,
     siblingCount = 2,
     currentPage,
     pageSize,
-    className, 
+    className,
   } = props;
-    
-  const paginationRange:any = usePagination({
+
+  const paginationRange: any = usePagination({
     currentPage,
     totalCount,
     siblingCount,
@@ -47,7 +43,7 @@ const Pagination = (props:any) => {
       >
         <PrevButton>Prev</PrevButton>
       </li>
-      {paginationRange?.map((pageNumber:any) => {
+      {paginationRange?.map((pageNumber: any) => {
         if (pageNumber === DOTS) {
           return <Dots>&#8230;</Dots>;
         }
@@ -63,14 +59,14 @@ const Pagination = (props:any) => {
         );
       })}
       {/*  Right Navigation arrow */}
-      
+
       <li
         className={classnames("pagination-item", {
           disabled: currentPage === lastPage,
         })}
         onClick={onNext}
       >
-       <NextButton>Next</NextButton>
+        <NextButton>Next</NextButton>
       </li>
     </ul>
   );

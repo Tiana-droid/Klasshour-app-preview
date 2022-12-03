@@ -54,6 +54,24 @@ class USER {
       return error;
     }
   };
+
+  user_requests = async (id: any, page: number) => {
+    try {
+      const response = await api.post(`/student/my-requests?page=${page}`, id);
+      if (response?.status) return response;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  all_requests = async (page = 1) => {
+    try {
+      const response = await api.get(`/student/requests?page=${page}`);
+      if (response?.status) return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 const userOBJ = new USER();

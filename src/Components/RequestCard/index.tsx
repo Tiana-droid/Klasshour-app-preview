@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import pencil from "../../Assets/icons/pencil.svg";
 import studentRequest from "../../classes/request.class";
@@ -13,6 +14,7 @@ import {
   CardLang,
   CardStatus,
   Interactions,
+  Schedule,
   SubjectCont,
 } from "./Styles";
 
@@ -25,17 +27,20 @@ type RequestPropT = {
     description: any;
     appliedTutors: any;
     createdAt: string;
-    _id:string
+    schedule: string;
+    _id: string;
   };
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const navigate = useNavigate()
-  const getTutorApplication = (requestID:string) => {
+  const navigate = useNavigate();
+  const getTutorApplication = (requestID: string) => {
     studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate("/tutor-applications",{state:response})
-    })
-  }
+      navigate("/tutor-applications", { state: response });
+    });
+  };
+
+  const scheduleTime = data?.schedule;
   return (
     <div>
       <Card>
@@ -43,13 +48,24 @@ export default function RequestCard({ data }: RequestPropT) {
           <CardStatus isActive={data.status === "OPEN" ? true : false}>
             {data.status}
           </CardStatus>
-          <CardDate>Date Posted: {new Date(data.createdAt).toLocaleDateString()}</CardDate>
+          <CardDate>
+            Date Posted: {new Date(data.createdAt).toLocaleDateString()}
+          </CardDate>
         </CardHeader>
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem;" }} />
         <CardContent>
           <SubjectCont>
             Subject:<span>{data.subject}</span>
           </SubjectCont>
+          <Schedule>
+            Schedule:
+            {/* @ts-ignore */}
+            <span>
+              {/* {moment().format(scheduleTime)}{" "} */}
+              {moment.utc(scheduleTime).format("l LT")}
+            </span>
+          </Schedule>
+
           <CardDescription>
             {data?.description?.length > 80
               ? data.description.slice(0, 200) + "...."
@@ -64,7 +80,9 @@ export default function RequestCard({ data }: RequestPropT) {
             <img src={pencil} />
             <span>{data?.appliedTutors?.length}</span>
           </Interactions>
-          <CardButton onClick={()=>getTutorApplication(data?._id)}>View applications</CardButton>
+          <CardButton onClick={() => getTutorApplication(data?._id)}>
+            View applications
+          </CardButton>
         </CardButtonContainer>
       </Card>
     </div>

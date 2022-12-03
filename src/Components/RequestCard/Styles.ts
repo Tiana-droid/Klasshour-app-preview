@@ -83,6 +83,21 @@ export const SubjectCont = styled.div`
   }
 `;
 
+export const Schedule = styled.div`
+  position: relative;
+  margin: 1rem 0;
+  padding: 0.4 0rem;
+  font-size: 1rem;
+  color: #848484;
+
+  span {
+    color: ${AppColors.brandBlack};
+    display: inline-block;
+    margin-left: 0.2rem;
+    font-weight: 600;
+  }
+`;
+
 export const CardDescription = styled.div`
   width: 80%;
   margin-top: 1rem;
@@ -100,6 +115,7 @@ export const CardDescription = styled.div`
 export const CardLang = styled.div`
   width: 80%;
   color: #292929;
+  font-size: 1rem;
   font-weight: 300;
   margin-top: 1rem;
   span {

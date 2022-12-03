@@ -26,7 +26,7 @@ export const Button = styled.button`
   background: ${AppColors.brandRed};
   border: 0;
   outline: none;
-  width: 189px;
+  width: 100%;
   height: 47px;
   border-radius: 6px;
   font-size: 15px;

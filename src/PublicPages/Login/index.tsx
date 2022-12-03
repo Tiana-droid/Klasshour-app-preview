@@ -106,12 +106,14 @@ export default function Login() {
                 placeHolder="Enter Password"
                 validation={{ ...register("password", { required: true }) }}
               />
-              <PrimaryBtn
-                isLoading={isLoading}
-                title="Login"
-                btnType="submit"
-                onBtnClick={(e: React.FormEvent<HTMLFormElement>) => ""}
-              />
+              <div style={{ marginTop: "2rem" }}>
+                <PrimaryBtn
+                  isLoading={isLoading}
+                  title="Login"
+                  btnType="submit"
+                  onBtnClick={(e: React.FormEvent<HTMLFormElement>) => ""}
+                />
+              </div>
             </Form>
             <FormFoter>
               <Link
