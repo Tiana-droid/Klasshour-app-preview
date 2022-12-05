@@ -64,7 +64,7 @@ class USER {
     }
   };
 
-  all_requests = async (page = 1) => {
+  all_requests = async (page:any) => {
     try {
       const response = await api.get(`/student/requests?page=${page}`);
       if (response?.status) return response;
@@ -72,7 +72,19 @@ class USER {
       return error;
     }
   };
+
+  tutor_apply_request = async (payload: any) => {
+     console.log(payload)
+    try {
+      const response = await api.post(`/apply/request/${payload.requestId}`);
+      if (response?.status) return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
+
+
 
 const userOBJ = new USER();
 export default userOBJ;

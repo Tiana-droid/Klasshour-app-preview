@@ -172,7 +172,11 @@ export const CardButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-
+ :disabled{
+  background:#ccc;
+  color:#fff;
+  cursor:not-allowed
+ }
   @media (${BreakPoints.xs}) {
     padding: 0 1rem;
   }

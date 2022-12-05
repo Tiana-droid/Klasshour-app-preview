@@ -7,7 +7,7 @@ export const PageLayout = styled.div`
 
 
 export const Card = styled.div`
-width:776px;
+width:100%;
 min-height:277px;
   background: #FFFFFF;
 border: 0.2px solid #848484;

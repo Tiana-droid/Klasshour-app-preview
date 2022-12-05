@@ -35,13 +35,6 @@ export default function Index() {
                     </LeftAligned>
                     </Card>
                      <PaginationContainer>
-          {/* <Pagination
-                className="pagination-bar"
-                currentPage={currentPage} 
-                totalCount={tutorData?.length}
-                pageSize={PageSize}
-                onPageChange={(page:any) => setCurrentPage(page)}
-              /> */}
           <PrevButton>Prev</PrevButton>
           {tutorData?.length && <span>1 of {tutorData?.length}</span>}
           <NextButton>Next</NextButton>

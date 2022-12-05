@@ -11,7 +11,7 @@ import {
   PaginationContainer,
   PrevButton,
 } from "./Styles";
-import { getStoredAuthToken, getStoredClientUser } from "../../utils/LS";
+import { getStoredClientUser } from "../../utils/LS";
 import userOBJ from "../../classes/user.class";
 
 let PageSize = 6;
@@ -24,7 +24,7 @@ export default function TimeLine() {
   const { studentID, userType } = getStoredClientUser();
 
   const getStudentRequests = async (page: number) => {
-    const response: any = await userOBJ.user_requests({ studentID }, page);
+    const response: any =userType==="student" ? await userOBJ.user_requests({ studentID }, page): await userOBJ.all_requests(currentPage);
     if (response?.status) {
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);

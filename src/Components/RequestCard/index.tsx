@@ -17,15 +17,16 @@ import {
   Schedule,
   SubjectCont,
 } from "./Styles";
+import { getStoredClientUser } from "../../utils/LS";
 
 type RequestPropT = {
   data: {
     date: any;
-    status: string;
+    isOpen: boolean;
     subject: string;
     language: any;
     description: any;
-    appliedTutors: any;
+    applicants: any;
     createdAt: string;
     schedule: string;
     _id: string;
@@ -33,26 +34,32 @@ type RequestPropT = {
 };
 
 export default function RequestCard({ data }: RequestPropT) {
+  const {userType} = getStoredClientUser()
+
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
-    studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate("/tutor-applications", { state: response });
+    if (userType === "student") {
+      studentRequest.get_all_tutor_request(requestID).then((response) => {
+      navigate("/applications", { state: response });
     });
+    } else {
+        navigate(`/apply/${requestID}`);
+    }
+   
   };
-
   const scheduleTime = data?.schedule;
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardStatus isActive={data.status === "OPEN" ? true : false}>
-            {data.status}
+          <CardStatus isActive={data.isOpen? true : false}>
+            {data.isOpen ? "Open":"Closed"}
           </CardStatus>
           <CardDate>
             Date Posted: {new Date(data.createdAt).toLocaleDateString()}
           </CardDate>
         </CardHeader>
-        <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem;" }} />
+        <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem" }} />
         <CardContent>
           <SubjectCont>
             Subject:<span>{data.subject}</span>
@@ -76,12 +83,12 @@ export default function RequestCard({ data }: RequestPropT) {
           </CardLang>
         </CardContent>
         <CardButtonContainer>
-          <Interactions>
+          {userType==="student" &&<Interactions>
             <img src={pencil} />
-            <span>{data?.appliedTutors?.length}</span>
-          </Interactions>
-          <CardButton onClick={() => getTutorApplication(data?._id)}>
-            View applications
+            <span>{data?.applicants?.length}</span>
+          </Interactions>}
+          <CardButton  onClick={() => getTutorApplication(data?._id)}>
+            {userType==="student" ? "View applications" : "Apply"}
           </CardButton>
         </CardButtonContainer>
       </Card>

@@ -40,7 +40,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
 
           <CardDate isPast={isPast}>Date Posted: {data.date}</CardDate>
         </CardHeader>
-        <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem;" }} />
+        <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem" }} />
         <CardContent>
           <SubjectCont>
             Subject:<span>{data.subject}</span>

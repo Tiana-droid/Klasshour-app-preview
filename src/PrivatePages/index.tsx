@@ -7,7 +7,8 @@ import PastKlass from "./PastKlass";
 import PostRequest from "./PostRequest";
 import ErrorPage from "../ErrorPage";
 import TutorProfile from "./TutorRequest";
-import TutorApplication from "./TutorApplication";
+import TutorApply from './TutorApplyForm'
+import Application from "./TutorApplication";
 import Submissions from "./Submissions";
 import Test from "./Test";
 
@@ -18,11 +19,12 @@ export default function AuthRoutes() {
       <Route path="/post-request" element={<PostRequest />} />
       <Route path="/timeline" element={<TimeLine />} />
       <Route path="/class" element={<MyKlass />} />
-      <Route path="/tutor-applications" element={<TutorApplication />} />
+      <Route path="/applications" element={<Application />} />
       <Route path="/tutor-request" element={<TutorProfile />} />
       <Route path="/past-class" element={<PastKlass />} />
       <Route path="/submissions" element={<Submissions />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/apply/:id" element={<TutorApply/>}/>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
