@@ -12,7 +12,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (request) => {
     request.headers = {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
       Authorization: getStoredAuthToken()
         ? `Bearer ${getStoredAuthToken()}`
         : "",

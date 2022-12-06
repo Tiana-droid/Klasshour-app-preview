@@ -73,11 +73,14 @@ class USER {
     }
   };
 
-  tutor_apply_request = async (payload: any) => {
-     console.log(payload)
+  tutor_apply_request = async (payload: any,id:string) => {
     try {
-      const response = await api.post(`/apply/request/${payload.requestId}`);
-      if (response?.status) return response;
+      const response = await api.post(`/apply/request/${id}`, payload, {  headers: {
+    "content-Type": "multipart/form-data",
+  }, })
+      if (response?.status) { return response } else {
+        throw response
+      };
     } catch (error) {
       return error;
     }

@@ -42,6 +42,15 @@ export const Input = styled.input`
   padding: 10px;
   color: ${AppColors.brandBlack};
 `;
+export const Flex = styled.div`
+display:flex;
+gap:10px;
+
+input{
+  width:unset;
+  height:unset
+}
+`;
 export const TextArea = styled.textarea`
   width: 100%;
   height: 100px;

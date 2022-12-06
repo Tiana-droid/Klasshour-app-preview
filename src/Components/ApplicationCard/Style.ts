@@ -30,6 +30,10 @@ export const Button = styled.button`
   height: 47px;
   border-radius: 6px;
   font-size: 15px;
+  :disabled{
+    background-color: #a9a9a9;
+cursor:not-allowed
+  }
   &:hover {
     background-color: #a9a9a9;
   }

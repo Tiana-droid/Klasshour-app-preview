@@ -34,8 +34,7 @@ type RequestPropT = {
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const {userType} = getStoredClientUser()
-
+  const {userType,studentID} = getStoredClientUser()
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "student") {
@@ -87,8 +86,8 @@ export default function RequestCard({ data }: RequestPropT) {
             <img src={pencil} />
             <span>{data?.applicants?.length}</span>
           </Interactions>}
-          <CardButton  onClick={() => getTutorApplication(data?._id)}>
-            {userType==="student" ? "View applications" : "Apply"}
+          <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={data?.applicants?.find((el:any)=>el.userId===studentID)}>
+            {userType==="student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
           </CardButton>
         </CardButtonContainer>
       </Card>

@@ -10,7 +10,7 @@ import {
   FormInnerContainer,
   TextArea,
   FormError,
-  PickerCont,
+  Flex
 } from "./Styles";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,10 +35,10 @@ export default function TutorApplyForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
-  const [document, setDocument] = useState(null);
-  const [language, setLanguage] = useState([]);
+  const [document, setDocument] = useState<string | any>("");
+  const [language, setLanguage] = useState<string[]>([]);
   const [chargePerHour, setChargePerHour] = useState(0.00);
-const {id} = useParams()
+  const {id} = useParams()
   const navigate = useNavigate();
 
   const goto = (path: string, data?: any) => {
@@ -48,12 +48,34 @@ const {id} = useParams()
       navigate(path);
     }
   };
+  const getExtension: any = (file?: any) => {
+    if (file) {
+      let xy = file[0].name.split('.')
+      let extension = xy[xy.length - 1]
+      return extension
+    }
 
+}
   const schema = Yup.object({
     fullName: Yup.string().required("Required!"),
     chargePerHour: Yup.string().required("Required!"),
-    document: Yup.string().required("Required!"),
-    language: Yup.string().required("Required!"),
+    document:  Yup.mixed()
+  .test({
+    message: 'Please provide a supported file type,Pdf only allowed',
+    test: (document, context) => {
+      const isValid = ['pdf'].includes(getExtension(document));
+      if (!isValid) context?.createError();
+      return isValid;
+    }
+  })
+  .test({
+    message: `File too big, can't exceed 1mb`,
+    test: () => {
+      const isValid = document?.size < 1000000;
+      return isValid;
+    }
+  }),
+    language: Yup.array().required("Required!"),
     bio: Yup.string()
       .required("Required!")
       .min(30, "description is too short - should be 30 chars minimum."),
@@ -67,20 +89,37 @@ const {id} = useParams()
   } = useForm<InputsPropT>({
     resolver: yupResolver(schema),
   });
-
-  const handlePostRequst:SubmitHandler<InputsPropT> = async (values:any) => {
+  const languageHandler = (event: any) => {
+    if (event.checked) {
+      if (language.includes(event.value)){
+        return
+      }
+      console.log('✅ Checkbox is checked');
+        setLanguage( language.concat(event.value))
+    }  else {
+      console.log('⛔️ Checkbox is NOT checked');
+     for( var i = 0; i < language.length; i++){ 
+        if ( language[i] === event.value) { 
+            language.splice(i, 1); 
+        }
+    }
+      return language
+      }
+  }
+  
+  const handlePostRequst = async (e: any) => {
+  const formData =  new FormData()
     setIsLoading(true);
-    console.log(values)
-    const RqData = {
-      document,
+    const payload:any = {
       bio,
-      language,
+      language:language.join(","),
       requestId:id,
         chargePerHour,
-        fullName,
+      fullName,
     };
-    console.log(RqData)
-    await TutorOBJ.tutor_apply_request(RqData).then((res: any) => {
+    formData.append('payload',JSON.stringify(payload))
+    formData.append('document',document)
+    await TutorOBJ.tutor_apply_request(formData,payload.requestId).then((res: any) => {
       if (res) {
         if (res?.status === true) {
           toast.success(res?.message);
@@ -99,12 +138,11 @@ const {id} = useParams()
   };
 
 
-
   return (
     <UserLayout>
       <RequestFormPageLayout>
         <h2>Request Form</h2>
-        <RequestForm onSubmit={handleSubmit(handlePostRequst)}>
+        <RequestForm onSubmit={handleSubmit(handlePostRequst)} encType="multipart/form-data">
           <FormInnerContainer>
             <FormContainer>
               <label>Full Name</label>
@@ -115,6 +153,7 @@ const {id} = useParams()
                 {...register("fullName", { required: true })}
                 placeholder="John doe"
                 type="text"
+                onChange={(e)=>setFullName(e.target.value)}
               />
             </FormContainer>
         <FormContainer>
@@ -126,7 +165,44 @@ const {id} = useParams()
                 {...register("chargePerHour", { required: true })}
                 placeholder="200"
                 type="number"
+                 onChange={(e:any)=>setChargePerHour(e.target.value)}
               />
+            </FormContainer>
+            <FormContainer>
+              <label>Language</label>
+              {errors.language && (
+                <FormError>{errors.language.message}</FormError>
+              )}
+              <Flex>
+                <Input
+                {...register("language", { required: true })}
+                placeholder="200"
+                  type="checkbox"
+                  value={"English"}
+                 onChange={(e:any)=>languageHandler(e.target)}
+              />
+              <label>English</label>
+              </Flex>
+              <Flex>
+                <Input
+                {...register("language", { required: true })}
+                placeholder="200"
+                  type="checkbox"
+                  value={"French"}
+                 onChange={(e:any)=>languageHandler(e.target)}
+              />
+              <label>French</label>
+              </Flex>
+              <Flex>
+                <Input
+                {...register("language", { required: true })}
+                  placeholder="200"
+                  value={"Chinese"}
+                type="checkbox"
+                 onChange={(e:any)=>languageHandler(e.target)}
+              />
+              <label>Chinese</label>
+              </Flex>
             </FormContainer>
             <FormContainer>
               <label>Upload Cover Letter</label>
@@ -136,16 +212,17 @@ const {id} = useParams()
               <Input
                 {...register("document", { required: true })}
                 type="file"
+                name="document"
+                 onChange={(e:any)=>setDocument(e.target.files[0])}
               />
                       </FormContainer>
                           <FormContainer>
               <label>About Self</label>
               {errors.bio && <FormError>{errors. bio.message}</FormError>}
-              <TextArea {...register("bio", { required: true })} />
+              <TextArea {...register("bio", { required: true })}  onChange={(e)=>setBio(e.target.value)}/>
             </FormContainer>
          
-            
-            <Button type="submit">
+            <Button disabled={isLoading}>
               {isLoading ? <Spinner isLoading={isLoading} /> : "Post Request"}
             </Button>
           </FormInnerContainer>
