@@ -32,7 +32,7 @@ class REQUESTS {
 
     get_all_tutor_request = async (params: any) => {
         try {
-            const response: any = await api.get(`/student/get-requests/${params}`);
+            const response: any = await api.get(`/student/get-requests/${params}/?page=${1}`);
             console.log(response)
             if (response?.status && response?.payload) {
                 // storeAuthToken(response.token);

@@ -23,29 +23,36 @@ type RequestPropT = {
   data: {
     date: any;
     isOpen: boolean;
+    isClass: boolean;
     subject: string;
     language: any;
     description: any;
     applicants: any;
     createdAt: string;
     schedule: string;
+    merithubTutorID:string,
     _id: string;
   };
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const {userType,studentID} = getStoredClientUser()
+  const { userType, studentID, merithubUserID } = getStoredClientUser()
+ 
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "student") {
       studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate("/applications", { state: response });
+      navigate("/tutor-applications", { state: {response,requestID} , });
     });
     } else {
         navigate(`/apply/${requestID}`);
     }
    
   };
+  console.log(data)
+  const ScheduleClass = (request:any) => {
+    navigate("/schedule-class", { state: request });
+  }
   const scheduleTime = data?.schedule;
   return (
     <div>
@@ -86,9 +93,14 @@ export default function RequestCard({ data }: RequestPropT) {
             <img src={pencil} />
             <span>{data?.applicants?.length}</span>
           </Interactions>}
-          <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={data?.applicants?.find((el:any)=>el.userId===studentID) ||!data?.applicants?.length}>
+          <div style={{display:"flex",gap:20}}>
+            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="student" ?data?.applicants?.find((el:any)=>el.userId===studentID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
             {userType==="student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
           </CardButton>
+          {data?.merithubTutorID === merithubUserID && !data.isClass &&<CardButton onClick={()=>ScheduleClass(data)}>
+            Schedule Class
+          </CardButton>}
+          </div>
         </CardButtonContainer>
       </Card>
     </div>

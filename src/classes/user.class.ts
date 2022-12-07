@@ -1,6 +1,7 @@
 import api from "../API";
-import { storeAuthToken, storeClientUser } from "../utils/LS";
+import { storeAuthToken, storeClientUser,getStoredClientUser } from "../utils/LS";
 
+const {merithubUserID} = getStoredClientUser()
 class USER {
   //login user
   user_login = async (data: any) => {
@@ -72,12 +73,22 @@ class USER {
       return error;
     }
   };
-
   tutor_apply_request = async (payload: any,id:string) => {
     try {
       const response = await api.post(`/apply/request/${id}`, payload, {  headers: {
     "content-Type": "multipart/form-data",
   }, })
+      if (response?.status) { return response } else {
+        throw response
+      };
+    } catch (error) {
+      return error;
+    }
+  };
+
+   tutor_schedule_class = async (payload: any) => {
+    try {
+      const response = await api.post(`/schedule-class/${merithubUserID}`, payload)
       if (response?.status) { return response } else {
         throw response
       };
