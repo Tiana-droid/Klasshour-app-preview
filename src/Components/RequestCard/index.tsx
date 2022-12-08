@@ -89,13 +89,13 @@ export default function RequestCard({ data }: RequestPropT) {
           </CardLang>
         </CardContent>
         <CardButtonContainer>
-          {userType==="student" &&<Interactions>
+          {userType==="Student" &&<Interactions>
             <img src={pencil} />
             <span>{data?.applicants?.length}</span>
           </Interactions>}
           <div style={{display:"flex",gap:20}}>
             <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="student" ?data?.applicants?.find((el:any)=>el.userId===studentID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
-            {userType==="student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
+            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
           </CardButton>
           {data?.merithubTutorID === merithubUserID && !data.isClass &&<CardButton onClick={()=>ScheduleClass(data)}>
             Schedule Class

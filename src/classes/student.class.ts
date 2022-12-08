@@ -19,6 +19,15 @@ class Student {
       return error
     }
   }
+
+  student_all_classes = async (merithubStudentID: string,page:number) => {
+     try {
+   const response = await api.get(`/class/${merithubStudentID}?page=${page}`,);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
 }
 
 const StudentOBJ = new Student();

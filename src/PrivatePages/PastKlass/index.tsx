@@ -20,7 +20,7 @@ export default function PastKlass() {
         {ClassData.map((obj, index) => {
           return (
             <React.Fragment key={index}>
-              <ClassCard data={obj} isPast={true} />
+              {/* <ClassCard data={obj} isPast={true} /> */}
             </React.Fragment>
           );
         })}

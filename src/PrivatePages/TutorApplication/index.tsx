@@ -20,8 +20,9 @@ export default function Index() {
   const navigate = useNavigate()
   let tutorData = location?.state?.response?.payload || []
   
-  console.log(tutorData)
-  const applicationHandler = async(tutorId:string) => {
+
+  const applicationHandler = async (tutorId: string) => {
+    setIsLoading(true)
     let payload: any = {
       tutorId,
       studentId: studentID,

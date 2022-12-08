@@ -16,11 +16,11 @@ import {
 
 type RequestPropT = {
   data: {
-    date: any;
+    createdAt: any;
     status: string;
     subject: string;
     language: any;
-    desc: any;
+    description: any;
     tutor: any;
   };
   isPast?: boolean;
@@ -38,7 +38,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
           )}
           {isPast && <CardStatus isActive={false}>Closed</CardStatus>}
 
-          <CardDate isPast={isPast}>Date Posted: {data.date}</CardDate>
+          <CardDate isPast={isPast}>Date Posted: {new Date(data?.createdAt).toLocaleDateString()}</CardDate>
         </CardHeader>
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem" }} />
         <CardContent>
@@ -46,9 +46,9 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
             Subject:<span>{data.subject}</span>
           </SubjectCont>
           <CardDescription>
-            {data.desc.length > 80
-              ? data.desc.slice(0, 200) + "...."
-              : data.desc}
+            {data?.description?.length > 80
+              ? data.description.slice(0, 200) + "...."
+              : data.description}
           </CardDescription>
           <CardLang>
             Language: <span>{data.language}</span>
