@@ -7,10 +7,10 @@ import PastKlass from "./PastKlass";
 import PostRequest from "./PostRequest";
 import ErrorPage from "../ErrorPage";
 import TutorProfile from "./TutorRequest";
-import TutorApply from './TutorApplyForm'
+import TutorApply from "./TutorApplyForm";
 import Application from "./TutorApplication";
 import Submissions from "./Submissions";
-import ScheduleClass from './ScheduleClass'
+import ScheduleClass from "./ScheduleClass";
 import Test from "./Test";
 
 export default function AuthRoutes() {
@@ -26,8 +26,8 @@ export default function AuthRoutes() {
       <Route path="/submissions" element={<Submissions />} />
       <Route path="/test" element={<Test />} />
       <Route path="/schedule-class" element={<ScheduleClass />} />
-      
-      <Route path="/apply/:id" element={<TutorApply/>}/>
+
+      <Route path="/apply/:id" element={<TutorApply />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
