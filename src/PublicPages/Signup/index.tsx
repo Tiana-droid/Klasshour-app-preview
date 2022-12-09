@@ -81,7 +81,14 @@ export default function Signup() {
             setTimeout(() => {
               navigate("/otp", { state: { email: values.email } });
             }, 1000);
-          } else {
+          } else if (!res?.status && res?.needVerification) {
+             toast.error(res?.message);
+            setisLoading(false)
+           setTimeout(() => {
+              navigate("/otp", { state: { email: values.email } });
+            }, 1000);
+          }
+          else {
             toast.error(res?.message);
             setisLoading(false);
           }
