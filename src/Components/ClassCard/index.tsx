@@ -20,13 +20,17 @@ type RequestPropT = {
     status: string;
     subject: string;
     language: any;
-    description: any;
+    description: string;
+    classInfo:any,
     tutor: any;
+    applicants: any,
+    merithubTutorID:string
   };
   isPast?: boolean;
 };
-
 export default function ClassCard({ data, isPast }: RequestPropT) {
+const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithubTutorID)
+
   return (
     <div>
       <Card isPast={isPast}>
@@ -51,16 +55,16 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
               : data.description}
           </CardDescription>
           <CardLang>
-            Language: <span>{data.language}</span>
+            Language: <span>{tutor.language}</span>
           </CardLang>
         </CardContent>
         <CardButtonContainer>
           <Interactions>
             <img src={teacher} />
-            <span>{data.tutor}</span>
+            <span>{tutor.fullName}</span>
           </Interactions>
-          {}
-          {!isPast && <CardButton>Join Class</CardButton>}
+         
+          {!isPast &&  <a href={data?.classInfo?.preLink +"/"+ data?.classInfo?.classData?.commonLinks?.commonParticipantLink+"?devicetest=true"} target="_blank"> <CardButton>Join Class</CardButton></a>}
         </CardButtonContainer>
       </Card>
     </div>
