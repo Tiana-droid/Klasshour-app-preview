@@ -140,7 +140,7 @@ export default function ScheduleClass() {
               <Input type={"checkbox"} value={ "Yes"} /></FormFlex>
             </FormContainer>
             <FormContainer>
-              <label>Duration</label>
+              <label>Duration(in mins)</label>
                {errors.duration && (
                 <FormError>{errors.duration.message}</FormError>
               )}

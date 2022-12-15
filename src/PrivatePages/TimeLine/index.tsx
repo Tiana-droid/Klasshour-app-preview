@@ -24,7 +24,7 @@ export default function TimeLine() {
   const { studentID, userType } = getStoredClientUser();
 
   const getStudentRequests = async (page: number) => {
-    const response: any =userType==="student" ? await userOBJ.user_requests({ studentID }, page): await userOBJ.all_requests(currentPage);
+    const response: any =userType==="Student" ? await userOBJ.user_requests({ studentID }, page): await userOBJ.all_requests(currentPage);
     if (response?.status) {
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);

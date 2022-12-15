@@ -16,17 +16,21 @@ import {
 
 type RequestPropT = {
   data: {
-    date: any;
+    createdAt: any;
     status: string;
     subject: string;
     language: any;
-    desc: any;
+    description: string;
+    classInfo:any,
     tutor: any;
+    applicants: any,
+    merithubTutorID:string
   };
   isPast?: boolean;
 };
-
 export default function ClassCard({ data, isPast }: RequestPropT) {
+const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithubTutorID)
+
   return (
     <div>
       <Card isPast={isPast}>
@@ -38,7 +42,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
           )}
           {isPast && <CardStatus isActive={false}>Closed</CardStatus>}
 
-          <CardDate isPast={isPast}>Date Posted: {data.date}</CardDate>
+          <CardDate isPast={isPast}>Date Posted: {new Date(data?.createdAt).toLocaleDateString()}</CardDate>
         </CardHeader>
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem" }} />
         <CardContent>
@@ -46,21 +50,21 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
             Subject:<span>{data.subject}</span>
           </SubjectCont>
           <CardDescription>
-            {data.desc.length > 80
-              ? data.desc.slice(0, 200) + "...."
-              : data.desc}
+            {data?.description?.length > 80
+              ? data.description.slice(0, 200) + "...."
+              : data.description}
           </CardDescription>
           <CardLang>
-            Language: <span>{data.language}</span>
+            Language: <span>{tutor.language}</span>
           </CardLang>
         </CardContent>
         <CardButtonContainer>
           <Interactions>
             <img src={teacher} />
-            <span>{data.tutor}</span>
+            <span>{tutor.fullName}</span>
           </Interactions>
-          {}
-          {!isPast && <CardButton>Join Class</CardButton>}
+         
+          {!isPast &&  <a href={data?.classInfo?.preLink +"/"+ data?.classInfo?.classData?.commonLinks?.commonParticipantLink+"?devicetest=true"} target="_blank"> <CardButton>Join Class</CardButton></a>}
         </CardButtonContainer>
       </Card>
     </div>
