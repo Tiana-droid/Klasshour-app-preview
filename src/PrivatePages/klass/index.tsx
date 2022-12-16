@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
-import RequestCard from "../../Components/RequestCard";
+import EmptyState from '../../Components/EmptyData'
 import ClassCard from "../../Components/ClassCard";
 
 import {
@@ -35,13 +35,13 @@ useEffect(() => {
     <UserLayout>
       <PageNav isActive={true} title="Class" />
       <PageLayout>
-        {requestData.map((obj, index) => {
+        {requestData?.length ? requestData.map((obj, index) => {
           return (
             <React.Fragment key={index}>
               <ClassCard data={obj} />
             </React.Fragment>
           );
-        })}
+        }):<EmptyState data="Class"/>}
 
         {!requestData && <h3>Loading...</h3>}
         {requestData?.length > 0 && (

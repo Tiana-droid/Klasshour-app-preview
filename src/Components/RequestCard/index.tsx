@@ -42,14 +42,13 @@ export default function RequestCard({ data }: RequestPropT) {
   const getTutorApplication = (requestID: string) => {
     if (userType === "Student") {
       studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate("/tutor-applications", { state: {response,requestID} , });
+      navigate(`/request/${requestID}/tutor-applications`, { state: {response,requestID} , });
     });
     } else {
         navigate(`/apply/${requestID}`);
     }
    
   };
-  console.log(data)
   const ScheduleClass = (request:any) => {
     navigate("/schedule-class", { state: request });
   }

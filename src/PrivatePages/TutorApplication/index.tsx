@@ -1,32 +1,36 @@
-import React, { useState } from "react";
-import PageNav from "../../Layouts/UserLayout/PageNav";
+import React, { useEffect, useState } from "react";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StudentOBJ from "../../classes/student.class";
 import { toast } from "react-toastify";
-
 import Avatar from "../../Assets/icons/Image.png";
-
-
-import {   ButtonLeft, ButtonRight, Card, LeftAligned, NextButton, PaginationContainer, PrevButton } from "./Styles";
+import {   ButtonLeft, ButtonRight, Card, LeftAligned} from "./Styles";
 import { truncateText } from "../../utils/some";
 import { getStoredClientUser } from "../../utils/LS";
 import Spinner from "../../Components/Spinner";
+import Pagination from "../../Components/Pagination";
 
 export default function Index() {
-  const location = useLocation();
+  const {id} =  useParams()
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const { studentID } = getStoredClientUser()
   const navigate = useNavigate()
-  let tutorData = location?.state?.response?.payload || []
-  
+  const [tutorData,setTutorData] = useState([])
+    useEffect(() => {
+      StudentOBJ.get_tutors_applications(id, currentPage).then((res: any) => {
+        setTutorData(res.payload)
+        setTotalPages(res.totalPages)
+      })
+    }, [])
 
   const applicationHandler = async (tutorId: string) => {
     setIsLoading(true)
     let payload: any = {
       tutorId,
       studentId: studentID,
-      requestId:location?.state?.requestID
+      requestId:id
     }
     await StudentOBJ.accept_tutor_request(payload).then((res: any) => {
        if (res) {
@@ -43,12 +47,14 @@ export default function Index() {
         setIsLoading(false);
       }
     })
-    }
+  }
+  const getTutorProfile = async (data:any) => {
+    navigate('/tutor-request',{state:data})
+  }
   return (
       <UserLayout>
-              {  tutorData?.map((el:any,i:number)=>{
+              { tutorData?.length >0 ? tutorData?.map((el:any,i:number)=>{
             return (
-                
                 <React.Fragment key={i}>
                      <Card >
                     <div className="header">
@@ -62,19 +68,23 @@ export default function Index() {
                     <div>Language : {el.language}</div>
                     
                     <LeftAligned>
-                        <ButtonLeft>View Profile</ButtonLeft>
+                        <ButtonLeft onClick={()=>
+                          getTutorProfile(el)}>View Profile</ButtonLeft>
                         <ButtonRight disabled={isLoading} onClick={()=>applicationHandler(el?.userId)}> {isLoading ? <Spinner isLoading={isLoading} /> :"Accept Application"}</ButtonRight>
                     </LeftAligned>
                     </Card>
-                     <PaginationContainer>
-          <PrevButton>Prev</PrevButton>
-          {tutorData?.length && <span>1 of {tutorData?.length}</span>}
-          <NextButton>Next</NextButton>
-        </PaginationContainer>
+              
                      </React.Fragment>
               )
-          })}
-        
+          }):"Loading..."}
+       {tutorData?.length>0 &&  <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            callBack={(value: any) => {
+              setCurrentPage(value);
+              // getStudentRequests(value);
+            }}
+          />}
     </UserLayout>
   );
 }

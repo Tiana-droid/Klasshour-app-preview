@@ -47,7 +47,7 @@ justify-content: end;
 export const ButtonLeft = styled.button`
 outline:none;
 border:none;
-cursor:pointer
+cursor:pointer;
 padding:30px 
 left: calc(50% - 258px/2 + 261px);
 top: 340px;

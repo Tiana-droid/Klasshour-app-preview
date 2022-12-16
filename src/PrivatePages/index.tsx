@@ -20,7 +20,7 @@ export default function AuthRoutes() {
       <Route path="/post-request" element={<PostRequest />} />
       <Route path="/timeline" element={<TimeLine />} />
       <Route path="/class" element={<MyKlass />} />
-      <Route path="/tutor-applications" element={<Application />} />
+      <Route path="/request/:id/tutor-applications" element={<Application />} />
       <Route path="/tutor-request" element={<TutorProfile />} />
       <Route path="/past-class" element={<PastKlass />} />
       <Route path="/submissions" element={<Submissions />} />
