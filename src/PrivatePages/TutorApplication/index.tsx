@@ -12,7 +12,7 @@ import Pagination from "../../Components/Pagination";
 
 export default function Index() {
   const {id} =  useParams()
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<string|boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const { studentID } = getStoredClientUser()
@@ -26,7 +26,7 @@ export default function Index() {
     }, [])
 
   const applicationHandler = async (tutorId: string) => {
-    setIsLoading(true)
+    setIsLoading(tutorId)
     let payload: any = {
       tutorId,
       studentId: studentID,
@@ -70,7 +70,7 @@ export default function Index() {
                     <LeftAligned>
                         <ButtonLeft onClick={()=>
                           getTutorProfile(el)}>View Profile</ButtonLeft>
-                        <ButtonRight disabled={isLoading} onClick={()=>applicationHandler(el?.userId)}> {isLoading ? <Spinner isLoading={isLoading} /> :"Accept Application"}</ButtonRight>
+                        <ButtonRight disabled={isLoading===el.userId} onClick={()=>applicationHandler(el?.userId)}> {isLoading===el?.userId ? <Spinner isLoading={isLoading ===el?.userId} /> :"Accept Application"}</ButtonRight>
                     </LeftAligned>
                     </Card>
               

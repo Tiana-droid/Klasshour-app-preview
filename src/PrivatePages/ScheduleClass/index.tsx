@@ -1,6 +1,4 @@
-import React, { forwardRef, useState, useEffect } from "react";
-import DatePicker, { CalendarContainer } from "react-datepicker";
-import Datetime from "react-datetime";
+import React, {  useState } from "react";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import {
   RequestForm,
@@ -9,9 +7,7 @@ import {
   Input,
   FormInnerContainer,
   FormFlex,
-  TextArea,
   FormError,
-  Flex
 } from "./Styles"
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,7 +41,9 @@ export default function ScheduleClass() {
   const [allowEditVideo,setAllowEditVideo] = useState(false)
   const [allowRecordingDownload, setAllowRecordingDownload] = useState(false);
   const [duration, setDuration] = useState(0);
-  const {state} = useLocation()
+  const { state } = useLocation()
+  
+ 
   const navigate = useNavigate();
   const goto = (path: string, data?: any) => {
     if (data) {
@@ -72,7 +70,8 @@ export default function ScheduleClass() {
   const handlePostRequst = async (e: any) => {
     setIsLoading(true);
     const payload:any = {
-      recording:[record,autoRecord,allowRecordControl],
+      recording: [record, autoRecord, allowRecordControl],
+      StudentRequest:state,
       requestId:state._id,
       duration,
         recordingDownload:allowRecordingDownload,
@@ -119,25 +118,25 @@ export default function ScheduleClass() {
               </FormContainer>
               <FormContainer>
                <FormFlex> <label>Allow Recording Control</label>
-              <Input type={"checkbox"}/></FormFlex>
+              <Input type={"checkbox"} onChange={(e)=>setAllowRecordControl(!allowRecordControl) }/></FormFlex>
             </FormContainer>
               <FormContainer>
               <FormFlex>  <label>Allow Participants to Edit class</label>
-              <Input type={"checkbox"}/></FormFlex>
+                <Input type={"checkbox"} onChange={(e)=>setAllowEdit(!allowEdit) } /></FormFlex>
               </FormContainer>
               <FormContainer>
               <FormFlex>
                  <label>Allow Participants to control class audio</label>
-              <Input type={"checkbox"}/>
+              <Input type={"checkbox"} onChange={(e)=>setAllowEditAudio(!allowEditAudio) }/>
                </FormFlex>
               </FormContainer>
               <FormContainer>
                <FormFlex> <label>Allow participants to control class Video</label>
-              <Input type={"checkbox"}/></FormFlex>
+              <Input type={"checkbox"} onChange={(e)=>setAllowEditVideo(!allowEditVideo) }/></FormFlex>
             </FormContainer>
             <FormContainer>
                <FormFlex> <label>Allow Participants to download record</label>
-              <Input type={"checkbox"} value={ "Yes"} /></FormFlex>
+              <Input type={"checkbox"} value={ "Yes"} onChange={(e)=>setAllowRecordingDownload(!allowRecordingDownload) }/></FormFlex>
             </FormContainer>
             <FormContainer>
               <label>Duration(in mins)</label>
