@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import teacher from "../../Assets/icons/teacher.svg";
+import StudentOBJ from "../../classes/student.class";
 import {
   Card,
   CardButton,
@@ -13,6 +14,7 @@ import {
   Interactions,
   SubjectCont,
 } from "./Styles";
+import { toast } from "react-toastify";
 
 type RequestPropT = {
   data: {
@@ -29,8 +31,26 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithubTutorID)
-
+  const tutor = data?.applicants.find((el: any) => el.merithubUserId === data.merithubTutorID)
+  const [isLoading, setIsLoading] = useState(false);
+  const joinClassHandler = async () => {
+    setIsLoading(true)
+    await StudentOBJ.student_join_class(data).then((res: any) => {
+        if (res) {
+        if (res?.status === true) {
+          // toast.success(res?.message);
+          window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.commonLinks?.commonParticipantLink}?devicetest=true`)
+          setIsLoading(false);
+        } else {
+          toast.error(res?.message);
+          setIsLoading(false);
+        }
+      } else {
+        toast.error(res?.message);
+        setIsLoading(false);
+      }
+     })
+}
   return (
     <div>
       <Card isPast={isPast}>
@@ -64,7 +84,7 @@ const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithub
             <span>{tutor.fullName}</span>
           </Interactions>
          
-          {!isPast &&  <a href={data?.classInfo?.preLink +"/"+ data?.classInfo?.classData?.commonLinks?.commonParticipantLink+"?devicetest=true"} target="_blank"> <CardButton>Join Class</CardButton></a>}
+          {!isPast &&  <CardButton onClick={joinClassHandler} disabled={isLoading}> Join Class </CardButton>}
         </CardButtonContainer>
       </Card>
     </div>

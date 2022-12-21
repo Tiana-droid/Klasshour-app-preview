@@ -17,3 +17,8 @@ button:disabled{
   background-color: #ccc !important;
   cursor: not-allowed !important;
 }
+
+a{
+  color:inherit;
+  text-decoration: none;
+}

@@ -27,7 +27,14 @@ class Student {
       return error
     }
   }
-
+  student_join_class = async (request:any) => {
+    try {
+      const response = await api.post(`/join-class`, request);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
   student_all_classes = async (merithubStudentID: string,page:number) => {
      try {
    const response = await api.get(`/class/${merithubStudentID}?page=${page}`);

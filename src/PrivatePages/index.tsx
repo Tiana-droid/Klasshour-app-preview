@@ -6,6 +6,9 @@ import MyKlass from "./klass";
 import PastKlass from "./PastKlass";
 import PostRequest from "./PostRequest";
 import ErrorPage from "../ErrorPage";
+import Wallet from "./Wallet";
+import FundWallet from "./Wallet/FundWallet";
+import Withdraw from "./Wallet/Withdraw";
 import TutorProfile from "./TutorRequest";
 import TutorApply from "./TutorApplyForm";
 import Application from "./TutorApplication";
@@ -26,8 +29,11 @@ export default function AuthRoutes() {
       <Route path="/submissions" element={<Submissions />} />
       <Route path="/test" element={<Test />} />
       <Route path="/schedule-class" element={<ScheduleClass />} />
-
       <Route path="/apply/:id" element={<TutorApply />} />
+       <Route path="/wallet" element={<Wallet />} />
+      <Route path="/apply/:id" element={<TutorApply />} />
+      <Route path="/withdraw" element={<Withdraw />} />
+      <Route path="/fund-wallet" element={<FundWallet />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

@@ -33,7 +33,7 @@ export default function DashboardHeader() {
         >
           <ul>
             <li>Profile Settings</li>
-            <li>Wallet</li>
+            <li><a href="/wallet">Wallet</a></li>
             {getStoredClientUser().userType !== "Tutor" && <li>My Group</li>}
             <li onClick={() => Logout()}>Logout</li>
           </ul>
