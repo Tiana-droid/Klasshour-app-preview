@@ -34,7 +34,7 @@ export default function Index() {
     WalletObj.fund_wallet(formData)
       .then((res: any) => {
         setisLoading(false);
-      window.location.replace(res.url)
+      window.open(res.url)
       })
       .catch((err) => {
         console.log(err, "err");
