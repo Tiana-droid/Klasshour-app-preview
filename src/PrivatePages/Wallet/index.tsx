@@ -130,19 +130,20 @@ console.log(getStoredClientUser())
           </BalanceContainer>
           <ButtonContainer>
             <Button
-              href="/withdraw"
+             disabled={getStoredClientUser().userType === "Student"? true : false }
+            onClick={()=> window.location.replace('/withdraw')}
               style={{
-                background:
-                  "linear-gradient(93.34deg, #EF0000 29.02%, #000000 104.1%)",
+                background:`${getStoredClientUser().userType === "Student"? '#ccc' :'linear-gradient(93.34deg, #EF0000 29.02%, #000000 104.1%)' }`
+          
               }}
             >
               Withdraw
             </Button>
             <Button
-              href="/fund-wallet"
+            disabled={getStoredClientUser().userType !== "Student"?true : false }
+            onClick={()=> window.location.replace('/fund-wallet')}
               style={{
-                background:
-                  "linear-gradient(94.06deg, #009933 33.95%, #000000 109.95%)",
+                background: `${getStoredClientUser().userType !== "Student" ? ' #ccc' : 'linear-gradient(94.06deg, #009933 33.95%, #000000 109.95%)' }`
               }}
             >
               Fund Wallet
@@ -216,110 +217,134 @@ console.log(getStoredClientUser())
           </CardStats>
         </VStack>
       </WalletLayout>
-      <WalletLayout>
-        <Box>
-          <HStack
-            style={{
-              marginTop: "20px",
-              borderBottom: "0.5px solid #E2E2E2",
-              justifyContent: "space-between",
-            }}
-          >
-            {page === "Account Details" ? (
-              <HStack>
-                <LightText
+     <WalletLayout>
+        {getStoredClientUser().userType !== "Student" ? (
+          <Box>
+            <HStack
+              style={{
+                marginTop: "20px",
+                borderBottom: "0.5px solid #E2E2E2",
+                justifyContent: "space-between",
+              }}
+            >
+              {page === "Account Details" ? (
+                <HStack>
+                  <LightText
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handlePageChange("Recent Activites")}
+                  >
+                    Recent Activites
+                  </LightText>
+                  <DarkText
+                    onClick={() => handlePageChange("Account Details")}
+                    style={{
+                      borderBottom: "1px solid ",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Account Details
+                  </DarkText>
+                </HStack>
+              ) : (
+                <HStack>
+                  <DarkText
+                    onClick={() => handlePageChange("Recent Activites")}
+                    style={{
+                      borderBottom: "1px solid ",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Recent Activites
+                  </DarkText>
+                  <LightText
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handlePageChange("Account Details")}
+                  >
+                    Account Details
+                  </LightText>
+                </HStack>
+              )}
+
+              {page === "Recent Activites" ? (
+                <HStack
                   style={{
-                    cursor: "pointer",
+                    alignItems: "center",
+                    width: "40%",
                   }}
-                  onClick={() => handlePageChange("Recent Activites")}
                 >
-                  Recent Activites
-                </LightText>
+                  <OutlinedInput
+                    placeholder="Search "
+                    style={{
+                      height: "30px",
+                    }}
+                  />
+                  <OutlinedSelect
+                    style={{
+                      borderColor: "#009933",
+                      color: "#009933",
+
+                      height: "30px",
+                    }}
+                  >
+                    <option>Filter</option>
+                    <option>SUcess</option>
+                  </OutlinedSelect>
+                </HStack>
+              ) : (
+                <HStack>
+                  <ActionButton
+                    style={{
+                      color: `${AppColors.brandRed}`,
+                    }}
+                  >
+                    Cancel
+                  </ActionButton>
+                  <ActionButton
+                    style={{
+                      background: `${AppColors.brandRed}`,
+                      color: "#fff",
+                    }}
+                  >
+                    Save
+                  </ActionButton>
+                </HStack>
+              )}
+            </HStack>
+            <VStack
+              style={{
+                padding: "10px",
+              }}
+            >
+              {page === "Recent Activites" ? <RecentActivity /> : <Account />}
+            </VStack>
+          </Box>
+        ) : (
+          <Box>
+            <HStack
+              style={{
+                marginTop: "20px",
+                borderBottom: "0.5px solid #E2E2E2",
+                justifyContent: "space-between",
+              }}
+            >
+              <HStack>
                 <DarkText
-                  onClick={() => handlePageChange("Account Details")}
                   style={{
                     borderBottom: "1px solid ",
                     cursor: "pointer",
                   }}
                 >
-                  Account Details
-                </DarkText>
-              </HStack>
-            ) : (
-              <HStack>
-                <DarkText
-                  onClick={() => handlePageChange("Recent Activites")}
-                  style={{
-                    borderBottom: "1px solid ",
-                    cursor: "pointer",
-                  }}
-                >
                   Recent Activites
                 </DarkText>
-                <LightText
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handlePageChange("Account Details")}
-                >
-                  Account Details
-                </LightText>
               </HStack>
-            )}
-
-            {page === "Recent Activites" ? (
-              <HStack
-                style={{
-                  alignItems: "center",
-                  width: "40%",
-                }}
-              >
-                <OutlinedInput
-                  placeholder="Search "
-                  style={{
-                    height: "30px",
-                  }}
-                />
-                <OutlinedSelect
-                  style={{
-                    borderColor: "#009933",
-                    color: "#009933",
-
-                    height: "30px",
-                  }}
-                >
-                  <option>Filter</option>
-                  <option>SUcess</option>
-                </OutlinedSelect>
-              </HStack>
-            ) : (
-              <HStack>
-                <ActionButton
-                  style={{
-                    color: `${AppColors.brandRed}`,
-                  }}
-                >
-                  Cancel
-                </ActionButton>
-                <ActionButton
-                  style={{
-                    background: `${AppColors.brandRed}`,
-                    color: "#fff",
-                  }}
-                >
-                  Save
-                </ActionButton>
-              </HStack>
-            )}
-          </HStack>
-          <VStack
-            style={{
-              padding: "10px",
-            }}
-          >
-            {page === "Recent Activites" ? <RecentActivity /> : <Account />}
-          </VStack>
-        </Box>
+            </HStack>
+            <RecentActivity />
+          </Box>
+        )}
       </WalletLayout>
     </UserLayout>
   );

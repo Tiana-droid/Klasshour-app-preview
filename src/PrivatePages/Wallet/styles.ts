@@ -83,7 +83,7 @@ export const ButtonContainer = styled.div`
     flex-direction: row;
   } ;
 `;
-export const Button = styled.a`
+export const Button = styled.button`
   width: 291px;
   border-radius: 20px;
   text-decoration: none;
