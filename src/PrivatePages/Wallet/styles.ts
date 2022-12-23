@@ -6,9 +6,9 @@ export const Header = styled.h3`
   color: ${AppColors.primary};
 `;
 export const WalletLayout = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction:column;
   margin-top: 10px;
-  grid-template-columns: 1.4fr 1fr;
   grid-gap: 55px;
   padding: 10px;
   @media (${BreakPoints.xs}) {
@@ -27,14 +27,17 @@ export const WalletLayout = styled.div`
     grid-template-rows: 1fr;
   } ;
 `;
-
+export const Center = styled.div`
+margin-top:20px;
+text-align:center
+`
 export const BalanceContainer = styled.div`
-  background: linear-gradient(96.85deg, #161b45 35.99%, #f15e38 97.01%);
+  background: #161b45;
   border-radius: 15px;
   width: 100%;
-  height: 100px;
+  height: 200px;
   display: flex;
-  justify-content: space-between;
+  flex-direction:column;
   color: #fff;
   padding: 20px;
   @media (${BreakPoints.xs}) {
@@ -51,20 +54,38 @@ export const HStack = styled.div`
   display: flex;
   gap: 10px;
 `;
+export const Dismiss = styled.div`
+color:red;
+font-size:16px;
+font-weight:300;
+float:right;
+position:relative;
+bottom:50px;
+cursor:pointer
+`
 export const Flex = styled.div`
   display: flex;
   gap: 10px;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
+ width:100%;
+  justify-content: space-between;
+  // height: 100%;
+  div{
+    background:#fff;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-item:center
+  }
 `;
 export const WalletHeader = styled.span`
-  font-size: 14px;
-  font-weight: 300;
+  font-size: 19px;
+  font-weight: 500;
 `;
 export const WalletAmount = styled.span`
-  font-weight: 300;
-  font-size: 19px;
+  font-weight: 600;
+  font-size: 24px;
 `;
 export const ButtonContainer = styled.div`
   display: flex;
@@ -84,23 +105,26 @@ export const ButtonContainer = styled.div`
   } ;
 `;
 export const Button = styled.button`
-  width: 291px;
+  width: 100px;
   border-radius: 20px;
+  background:;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 51px;
+  height: 30px;
   border: 0;
   outline: none;
   color: #fff;
-  font-size: 17px;
+  font-size: 14px;
+  margin:10px auto;
+  background: #E55935;
   font-weight: 100;
   @media (${BreakPoints.xs}) {
-    width: 100%;
+    // width: 100%;
   }
   @media (${BreakPoints.small}) {
-    width: 100%;
+    // width: 100%;
   } ;
 `;
 
@@ -235,7 +259,7 @@ export const Td = styled.td`
   font-family: "Manrope";
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 20px;
   /* identical to box height, or 167% */
   text-align: left;
@@ -251,7 +275,7 @@ export const Status = styled.span`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding:5px 10px;
   gap: 10px;
 `;
 
@@ -278,3 +302,68 @@ export const StatusText = styled.span`
   align-items: flex-end;
   color: #969696;
 `;
+
+export const Modal = styled.div`
+width:100%;
+height:100%;
+position:absolute;
+display:flex;
+justify-content:center;
+align-items:center;
+top:0;
+left:0;
+background:#000000b3
+`
+
+export const Container = styled.div`
+background:#fff;
+border-radius:8px;
+padding:20px;
+// display:flex;
+height:250px;
+width:500px;
+margin:0px auto;
+position:relative;
+button {
+  cursor: pointer;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  background-color:green;
+  font-weight: bold;
+  color: #e0eafc;
+  border: none;
+  border-radius: 5px;
+  width: 50%;
+  height: 45px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin: 0 auto
+}
+ @media (${BreakPoints.xs}) {
+    width:90%;
+    justify-content:center;
+    align-items:center
+  }
+  
+ 
+`
+export const Form = styled.form`
+padding:20px
+`
+export const FormControl = styled.form`
+label{
+  width:100%;
+}
+input{
+  width:100%;
+  padding:15px 20px;
+  border-radius:4px;
+  outline:none;
+  margin:10px 0pc
+
+}
+
+`

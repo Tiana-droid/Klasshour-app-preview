@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { PaystackButton } from "react-paystack"
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import {
-  Header,
   WalletLayout,
   BalanceContainer,
   Flex,
   WalletHeader,
   WalletAmount,
-  ButtonContainer,
   Button,
   VStack,
-  ATMCard,
-  ATMCardDetails,
   DarkText,
   LightText,
   Box,
@@ -19,27 +16,74 @@ import {
   ActionButton,
   OutlinedInput,
   OutlinedSelect,
-  CardStats,
-  StatusText,
+  Center,
+  Modal,
+  Container,
+  Form,
+  FormControl,
+  Dismiss
 } from "./styles";
+import userIcon from '../../Assets/icons/UserIcon.svg'
 import { AppColors } from "../../utils/constants";
 import Account from "./Account";
 import RecentActivity from "./Activity";
-import Ellipse1 from "../../Assets/icons/Ellipse 3.png";
-import Ellipse2 from "../../Assets/icons/Ellipse 4.png";
-import { PieChart, Pie, Cell } from "recharts";
 import { getStoredClientUser } from "../../utils/LS";
 import { ActivityData } from "../../Shared/ActivityData";
+import { toast } from "react-toastify";
 
+const ModalBox = (props: any) => {
+  const { email,fullname } = getStoredClientUser()
+  const publicKey = "pk_test_80b957ed664b070aa09e4a730beb4f3587016694"
+  const [amount, setAmount] = useState(0)
+   const handlePaystackSuccessAction = ({status,reference}:any) => {
+      // Implementation for whatever you want to do with reference and after success call.
+     if (status = "success") {
+       toast("Payment succesful and being processed")
+       setAmount(0)
+     }
+      console.log("Na here we dey",reference);
+    };
+   const componentProps =  {
+    email,
+    amount:amount*100,
+    metadata: {
+      name:fullname,
+      phone: "07067903042",
+      custom_fields:[]
+    },
+    publicKey,
+    text: "Pay Now",
+     onSuccess: (reference:void)=>handlePaystackSuccessAction(reference),
+    
+    onClose: () => alert("Wait! Don't leave :("),
+  }
+
+  return <React.Fragment>
+    {props.isShow   &&<Modal >
+      <Container >
+        <Dismiss onClick={props.onClick}>&times;</Dismiss>
+        <Form onSubmit={()=>alert("HI")}>
+          <FormControl>
+            <label htmlFor="">Amount</label>
+            <input type="number" value={amount} onChange={ (e:any)=>setAmount(e.target.value)} />
+          </FormControl>
+        </Form>
+        {!amount ? <button disabled>Pay Now</button>:
+            <PaystackButton {...componentProps} />}
+      </Container>
+    </Modal>}
+  </React.Fragment>
+}
 export default function Index() {
+  const {userType,fullname} = getStoredClientUser()
   const [page, setPage] = useState("Account Details");
+  const [isShow,setIsShow] = useState(false)
   const [Stats, setStats] = useState({
     sucess: 0,
     pending: 0,
     failure: 0,
   });
   const {walletBalance}  = getStoredClientUser()
-console.log(getStoredClientUser())
   // test data from activity data
   useEffect(() => {
     for (let i = 0; i < ActivityData.length; i++) {
@@ -71,64 +115,28 @@ console.log(getStoredClientUser())
     }
   }, [ActivityData]);
 
-  // pie chart Data
-  const data01 = [
-    {
-      name: "sucess",
-      value: Stats.sucess,
-    },
-    {
-      name: "faliure",
-      value: Stats.failure,
-    },
-    {
-      name: "pending",
-      value: Stats.pending,
-    },
-  ];
-  const COLORS = ["#009933", "#F33434", "#F1BF0D"];
   const handlePageChange = (page: string) => {
     setPage(page);
   };
   return (
     <UserLayout>
-      <Header>Wallet</Header>
       <WalletLayout>
         <VStack>
           <BalanceContainer>
             <Flex>
-              <WalletHeader>Amount in wallet</WalletHeader>
-              <WalletAmount>&#8358;{walletBalance}</WalletAmount>
+              <WalletHeader>{fullname}</WalletHeader>
+              <div><img src={userIcon} alt="" /></div>
             </Flex>
-            <HStack
-              style={{
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt={""}
-                style={{
-                  mixBlendMode: "overlay",
-                  transform: "rotate(-53deg)",
-                }}
-                width="100px"
-                height="87px"
-                src={Ellipse1}
-              />
-
-              <img
-                alt={""}
-                style={{
-                  mixBlendMode: "overlay",
-                  transform: "rotate(130deg)",
-                }}
-                width="90px"
-                height="107px"
-                src={Ellipse2}
-              />
-            </HStack>
+            <Center>
+              <WalletAmount>NGN {walletBalance.toLocaleString()}</WalletAmount>
+             {userType==="Student"?  <Button onClick={()=>setIsShow(!isShow)}>
+             Fund Wallet
+            </Button>: <Button>
+             Withdraw Fund
+            </Button>}
+              </Center>
           </BalanceContainer>
-          <ButtonContainer>
+          {/* <ButtonContainer>
             <Button
              disabled={getStoredClientUser().userType === "Student"? true : false }
             onClick={()=> window.location.replace('/withdraw')}
@@ -148,74 +156,9 @@ console.log(getStoredClientUser())
             >
               Fund Wallet
             </Button>
-          </ButtonContainer>
+          </ButtonContainer> */}
         </VStack>
-        <VStack
-          style={{
-            gap: "10px",
-          }}
-        >
-          <ATMCard>
-            <ATMCardDetails>567*******7890</ATMCardDetails>
-            <ATMCardDetails
-              style={{ textAlign: "center", letterSpacing: "4px" }}
-            >
-              XXXX-XXXX-XXXX
-            </ATMCardDetails>
-            <ATMCardDetails
-              style={{
-                alignSelf: "flex-end",
-              }}
-            >
-              Lawblaze
-            </ATMCardDetails>
-          </ATMCard>
-          <CardStats>
-            <PieChart width={430} height={150}>
-              <Pie
-                data={data01}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={50}
-              >
-                {data01.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-            <HStack>
-              {data01.map((_, index) => {
-                return (
-                  <HStack
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                    key={index}
-                  >
-                    <Box
-                      style={{
-                        width: "5px",
-                        height: "5px",
-                        background: `${
-                          (_.name === "pending" && "#F4BE37") ||
-                          (_.name === "faliure" && "#FF0000") ||
-                          (_.name === "sucess" && "#219653")
-                        }`,
-                        borderRadius: "100%",
-                      }}
-                    ></Box>
-                    <StatusText>{_.name}</StatusText>
-                  </HStack>
-                );
-              })}
-            </HStack>
-          </CardStats>
-        </VStack>
+        <ModalBox isShow={isShow} onClick={()=>setIsShow(!isShow)} />
       </WalletLayout>
      <WalletLayout>
         {getStoredClientUser().userType !== "Student" ? (
@@ -349,3 +292,4 @@ console.log(getStoredClientUser())
     </UserLayout>
   );
 }
+
