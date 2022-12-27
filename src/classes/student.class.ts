@@ -35,9 +35,9 @@ class Student {
       return error
     }
   }
-  student_all_classes = async (merithubStudentID: string,page:number) => {
+  student_all_classes = async (merithubStudentID: string,page:number,past?:boolean) => {
      try {
-   const response = await api.get(`/class/${merithubStudentID}?page=${page}`);
+   const response = await api.get(`/class/${merithubStudentID}?page=${page}&past=${past}`);
     return response;
     } catch (error) {
       return error

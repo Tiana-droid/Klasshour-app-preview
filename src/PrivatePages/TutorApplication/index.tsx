@@ -15,7 +15,7 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState<string|boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const { studentID } = getStoredClientUser()
+  const { userID } = getStoredClientUser()
   const navigate = useNavigate()
   const [tutorData,setTutorData] = useState([])
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function Index() {
     setIsLoading(tutorId)
     let payload: any = {
       tutorId,
-      studentId: studentID,
+      studentId: userID,
       requestId:id
     }
     await StudentOBJ.accept_tutor_request(payload).then((res: any) => {

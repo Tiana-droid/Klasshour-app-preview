@@ -36,8 +36,7 @@ type RequestPropT = {
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const { userType, studentID, merithubUserID } = getStoredClientUser()
- 
+  const { userType, userID, merithubUserID } = getStoredClientUser()
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "Student") {
@@ -93,8 +92,8 @@ export default function RequestCard({ data }: RequestPropT) {
             <span>{data?.applicants?.length}</span>
           </Interactions>}
           <div style={{display:"flex",gap:20}}>
-            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===studentID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
-            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
+            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===userID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
+            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===userID)? "Applied": "Apply"}
           </CardButton>
           {data?.merithubTutorID === merithubUserID && !data.isClass &&<CardButton onClick={()=>ScheduleClass(data)}>
             Schedule Class

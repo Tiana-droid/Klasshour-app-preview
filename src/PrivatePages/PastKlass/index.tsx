@@ -1,39 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
-import RequestCard from "../../Components/RequestCard";
 import EmptyState from '../../Components/EmptyData'
-import ClassCard from "../../Components/ClassCard";
+import TutorOBJ from "../../classes/user.class";
 import { ClassData } from "../../Shared/ClassData";
 import {
-  NextButton,
   PageLayout,
-  PaginationContainer,
-  PrevButton,
 } from "./Styles";
 import Pagination from "../../Components/Pagination";
+import { getStoredClientUser } from "../../utils/LS";
+import StudentOBJ from "../../classes/student.class";
+import ClassCard from "../../Components/ClassCard";
 
 export default function PastKlass() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, settotalPages] = useState<number>(0);
+  const [requestData, setRequestData] = useState<[]>([]);
+  const { merithubUserID,userType} = getStoredClientUser()
+   const getClass = async (page: number) => {
+    const response: any =userType==="Student"? await StudentOBJ.student_all_classes(merithubUserID,page,true) : await TutorOBJ.tutor_all_class(merithubUserID,page,true);
+    if (response?.status) {
+      setRequestData(response?.payload);
+      settotalPages(response?.totalPages);
+      console.log("response timeline", response);
+    }
+   };
+  useEffect(() => {
+ getClass(currentPage)
+  }, [currentPage])
   return (
     <UserLayout>
       <PageNav isActive={true} title="Past Class" />
       <PageLayout>
-        {ClassData?.length<0? ClassData.map((obj, index) => {
+        {requestData?.length >0 ? requestData?.map((obj, index) => {
+          
           return (
             <React.Fragment key={index}>
-              {/* <ClassCard data={obj} isPast={true} /> */}
+              <ClassCard data={obj} isPast={true} />
             </React.Fragment>
           );
         }): <EmptyState data="Past Classes"/>}
-
-     {/* {ClassData?.length>0 &&  <Pagination totalPages={ClassData?.length}
+       {!requestData && <h3>Loading...</h3>}
+        {requestData?.length > 0 && (
+          <Pagination
+            totalPages={totalPages}
             currentPage={currentPage}
             callBack={(value: any) => {
               setCurrentPage(value);
               // getStudentRequests(value);
-            }}/>} */}
+            }}
+          />
+        )}
       </PageLayout>
     </UserLayout>
   );

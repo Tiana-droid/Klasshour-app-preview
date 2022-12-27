@@ -95,7 +95,16 @@ class USER {
     } catch (error) {
       return error;
     }
-  };
+   };
+  
+  tutor_all_class = async (merithubTutorID: string, page: number,past?:boolean) => {
+     try {
+   const response = await api.get(`/tutor-class/${merithubTutorID}?page=${page}&past=${past}`);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
 }
 
 

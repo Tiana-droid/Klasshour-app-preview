@@ -105,7 +105,7 @@ export const ButtonContainer = styled.div`
   } ;
 `;
 export const Button = styled.button`
-  width: 100px;
+  min-width: 100px;
   border-radius: 20px;
   background:;
   text-decoration: none;
@@ -114,12 +114,13 @@ export const Button = styled.button`
   justify-content: center;
   height: 30px;
   border: 0;
+  padding: 0 10px;
   outline: none;
   color: #fff;
   font-size: 14px;
   margin:10px auto;
   background: #E55935;
-  font-weight: 100;
+  font-weight: 600;
   @media (${BreakPoints.xs}) {
     // width: 100%;
   }

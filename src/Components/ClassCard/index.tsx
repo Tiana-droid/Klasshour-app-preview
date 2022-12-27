@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import teacher from "../../Assets/icons/teacher.svg";
 import StudentOBJ from "../../classes/student.class";
+import { getStoredClientUser } from "../../utils/LS";
 import {
   Card,
   CardButton,
@@ -31,6 +32,7 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
+  const {userType} = getStoredClientUser()
   const tutor = data?.applicants.find((el: any) => el.merithubUserId === data.merithubTutorID)
   const [isLoading, setIsLoading] = useState(false);
   const joinClassHandler = async () => {
@@ -50,7 +52,12 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
         setIsLoading(false);
       }
      })
-}
+  }
+  const startClassHandler = async () => {
+    setIsLoading(true)
+     window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
+          setIsLoading(false);
+  }
   return (
     <div>
       <Card isPast={isPast}>
@@ -79,12 +86,12 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
           </CardLang>
         </CardContent>
         <CardButtonContainer>
-          <Interactions>
+         {userType === "Student" &&  <Interactions>
             <img src={teacher} />
             <span>{tutor.fullName}</span>
-          </Interactions>
+          </Interactions>}
          
-          {!isPast &&  <CardButton onClick={joinClassHandler} disabled={isLoading}> Join Class </CardButton>}
+          {!isPast &&  <CardButton onClick={userType ==="Student"?joinClassHandler:startClassHandler} disabled={isLoading}> {userType==="Student" ? "Join Class":"Start Class"} </CardButton>}
         </CardButtonContainer>
       </Card>
     </div>

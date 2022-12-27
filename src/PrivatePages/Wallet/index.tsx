@@ -30,16 +30,21 @@ import RecentActivity from "./Activity";
 import { getStoredClientUser } from "../../utils/LS";
 import { ActivityData } from "../../Shared/ActivityData";
 import { toast } from "react-toastify";
+import WalletObj from "../../classes/wallet.class";
 
 const ModalBox = (props: any) => {
-  const { email,fullname } = getStoredClientUser()
+  const { email, fullname } = getStoredClientUser()
+  console.log(email)
   const publicKey = "pk_test_80b957ed664b070aa09e4a730beb4f3587016694"
   const [amount, setAmount] = useState(0)
    const handlePaystackSuccessAction = ({status,reference}:any) => {
       // Implementation for whatever you want to do with reference and after success call.
-     if (status = "success") {
-       toast("Payment succesful and being processed")
-       setAmount(0)
+     if (status === "success") {
+       WalletObj.fund_wallet({ email, reference }).then((resp: any) => {
+         console.log(resp)
+           toast.success(resp.message)
+       })
+       window.location.reload()
      }
       console.log("Na here we dey",reference);
     };
@@ -129,7 +134,7 @@ export default function Index() {
             </Flex>
             <Center>
               <WalletAmount>NGN {walletBalance.toLocaleString()}</WalletAmount>
-             {userType==="Student"?  <Button onClick={()=>setIsShow(!isShow)}>
+             {userType==="Student"?  <Button  onClick={()=>setIsShow(!isShow)}>
              Fund Wallet
             </Button>: <Button>
              Withdraw Fund

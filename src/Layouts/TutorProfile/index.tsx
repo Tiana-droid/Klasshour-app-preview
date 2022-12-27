@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Card,
   Button,
-  ButtonOutline,
   BoldText,
   LightText,
   TutorContainer,
@@ -21,16 +20,16 @@ type cardProp = {
   requestId: string,
   userId:string
 };
-
 export default function Index({ price, review, desc ,requestId,userId}: cardProp) {
   const [isLoading, setIsLoading] = useState(false);
-  const { studentID } = getStoredClientUser()
   const navigate = useNavigate()
-   const applicationHandler = async () => {
+ const { userID } = getStoredClientUser()
+
+  const applicationHandler = async () => {
     setIsLoading(true)
     let payload: any = {
       tutorId:userId,
-      studentId: studentID,
+      studentId: userID,
       requestId:requestId
     }
     await StudentOBJ.accept_tutor_request(payload).then((res: any) => {

@@ -12,15 +12,16 @@ import {
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 import StudentOBJ from "../../classes/student.class";
+import TutorOBJ from "../../classes/user.class";
 import Pagination from "../../Components/Pagination";
 
 export default function MyKlass() {
   const [requestData, setRequestData] = useState<[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, settotalPages] = useState<number>(0);
-  const { merithubUserID } = getStoredClientUser()
+  const { merithubUserID,userType} = getStoredClientUser()
   const getClass = async (page: number) => {
-    const response: any = await StudentOBJ.student_all_classes(merithubUserID,page);
+    const response: any =userType==="Student"? await StudentOBJ.student_all_classes(merithubUserID,page) : await TutorOBJ.tutor_all_class(merithubUserID,page);
     if (response?.status) {
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);
