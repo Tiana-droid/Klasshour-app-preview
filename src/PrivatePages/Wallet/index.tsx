@@ -136,7 +136,7 @@ export default function Index() {
               <WalletAmount>NGN {walletBalance.toLocaleString()}</WalletAmount>
              {userType==="Student"?  <Button  onClick={()=>setIsShow(!isShow)}>
              Fund Wallet
-            </Button>: <Button>
+            </Button>: <Button disabled={walletBalance.toLocaleString() !==0}>
              Withdraw Fund
             </Button>}
               </Center>
@@ -181,6 +181,7 @@ export default function Index() {
                     style={{
                       cursor: "pointer",
                     }}
+                    
                     onClick={() => handlePageChange("Recent Activites")}
                   >
                     Recent Activites
