@@ -17,7 +17,6 @@ import Spinner from "../../Components/Spinner";
 import TutorOBJ from "../../classes/user.class"
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AppColors } from "../../utils/constants";
 
 type InputsPropT = {
   recording: any;
@@ -95,7 +94,6 @@ export default function ScheduleClass() {
     });
   };
 
-
   return (
     <UserLayout>
       <h3>Class Start at {new Date(state.schedule).toLocaleDateString() + " "+new Date(state.schedule).toLocaleTimeString()} </h3>
@@ -145,7 +143,7 @@ export default function ScheduleClass() {
               )}
                 <Input {...register("duration", { required: true })} max="360" type={"number"} placeholder="Duration in minutes"  value={duration} onChange={ (e)=>setDuration(parseInt(e.target.value))} />
               </FormContainer>
-            <Button disabled={isLoading}>
+            <Button disabled={isLoading || !duration}>
               {isLoading ? <Spinner isLoading={isLoading} /> : "Schedule"}
             </Button>
           </FormInnerContainer>
