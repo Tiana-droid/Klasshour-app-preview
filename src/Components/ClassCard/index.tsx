@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import teacher from "../../Assets/icons/teacher.svg";
+import StudentOBJ from "../../classes/student.class";
+import { getStoredClientUser } from "../../utils/LS";
 import {
   Card,
   CardButton,
@@ -13,6 +15,7 @@ import {
   Interactions,
   SubjectCont,
 } from "./Styles";
+import { toast } from "react-toastify";
 
 type RequestPropT = {
   data: {
@@ -29,8 +32,33 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithubTutorID)
-
+  const {userType,merithubUserID} = getStoredClientUser()
+  const tutor = data?.applicants.find((el: any) => el.merithubUserId === data.merithubTutorID)
+  const [isLoading, setIsLoading] = useState(false);
+  let uniqueLink = data?.classInfo?.participants?.find((el:any)=>el.userId === merithubUserID)?.userLink
+  const joinClassHandler = async () => {
+    setIsLoading(true)
+    await StudentOBJ.student_join_class(data).then((res: any) => {
+        if (res) {
+        if (res?.status === true) {
+          // toast.success(res?.message);
+          window.location.assign(`${data?.classInfo?.preLink}/${uniqueLink}?devicetest=true`)
+          setIsLoading(false);
+        } else {
+          toast.error(res?.message);
+          setIsLoading(false);
+        }
+      } else {
+        toast.error(res?.message);
+        setIsLoading(false);
+      }
+     })
+  }
+  const startClassHandler = async () => {
+    setIsLoading(true)
+     window.location.replace(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
+          setIsLoading(false);
+  }
   return (
     <div>
       <Card isPast={isPast}>
@@ -59,12 +87,12 @@ const tutor = data?.applicants.find((el:any)=>el.merithubUserId ===data.merithub
           </CardLang>
         </CardContent>
         <CardButtonContainer>
-          <Interactions>
+         {userType === "Student" &&  <Interactions>
             <img src={teacher} />
             <span>{tutor.fullName}</span>
-          </Interactions>
+          </Interactions>}
          
-          {!isPast &&  <a href={data?.classInfo?.preLink +"/"+ data?.classInfo?.classData?.commonLinks?.commonParticipantLink+"?devicetest=true"} target="_blank"> <CardButton>Join Class</CardButton></a>}
+          {!isPast &&  <CardButton onClick={userType ==="Student"?joinClassHandler:startClassHandler} disabled={isLoading}> {userType==="Student" ? "Join Class":"Start Class"} </CardButton>}
         </CardButtonContainer>
       </Card>
     </div>

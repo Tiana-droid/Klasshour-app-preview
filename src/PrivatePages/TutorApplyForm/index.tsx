@@ -15,13 +15,11 @@ import {
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/ApplicationCard/Style";
-import { useForm,SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Spinner from "../../Components/Spinner";
 import TutorOBJ from "../../classes/user.class"
 import { toast } from "react-toastify";
-import { getStoredClientUser } from "../../utils/LS";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppColors } from "../../utils/constants";
 
 type InputsPropT = {
   fullName: string;
@@ -56,7 +54,7 @@ export default function TutorApplyForm() {
     }
 
 }
-  const schema = Yup.object({
+  const schema:any = Yup.object({
     fullName: Yup.string().required("Required!"),
     chargePerHour: Yup.string().required("Required!"),
     document:  Yup.mixed()
@@ -75,7 +73,6 @@ export default function TutorApplyForm() {
       return isValid;
     }
   }),
-    language: Yup.array().required("Required!"),
     bio: Yup.string()
       .required("Required!")
       .min(30, "description is too short - should be 30 chars minimum."),
@@ -112,7 +109,7 @@ export default function TutorApplyForm() {
     setIsLoading(true);
     const payload:any = {
       bio,
-      language:language.join(","),
+      language:"English",
       requestId:id,
         chargePerHour,
       fullName,
@@ -167,42 +164,6 @@ export default function TutorApplyForm() {
                 type="number"
                  onChange={(e:any)=>setChargePerHour(e.target.value)}
               />
-            </FormContainer>
-            <FormContainer>
-              <label>Language</label>
-              {errors.language && (
-                <FormError>{errors.language.message}</FormError>
-              )}
-              <Flex>
-                <Input
-                {...register("language", { required: true })}
-                placeholder="200"
-                  type="checkbox"
-                  value={"English"}
-                 onChange={(e:any)=>languageHandler(e.target)}
-              />
-              <label>English</label>
-              </Flex>
-              <Flex>
-                <Input
-                {...register("language", { required: true })}
-                placeholder="200"
-                  type="checkbox"
-                  value={"French"}
-                 onChange={(e:any)=>languageHandler(e.target)}
-              />
-              <label>French</label>
-              </Flex>
-              <Flex>
-                <Input
-                {...register("language", { required: true })}
-                  placeholder="200"
-                  value={"Chinese"}
-                type="checkbox"
-                 onChange={(e:any)=>languageHandler(e.target)}
-              />
-              <label>Chinese</label>
-              </Flex>
             </FormContainer>
             <FormContainer>
               <label>Upload Cover Letter</label>

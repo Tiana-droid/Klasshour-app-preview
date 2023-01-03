@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
-import RequestCard from "../../Components/RequestCard";
+import EmptyState from '../../Components/EmptyData'
 import ClassCard from "../../Components/ClassCard";
 
 import {
@@ -12,17 +12,18 @@ import {
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 import StudentOBJ from "../../classes/student.class";
+import TutorOBJ from "../../classes/user.class";
 import Pagination from "../../Components/Pagination";
 
 export default function MyKlass() {
   const [requestData, setRequestData] = useState<[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, settotalPages] = useState<number>(0);
-  const { merithubUserID } = getStoredClientUser()
+  const { merithubUserID,userType} = getStoredClientUser()
   const getClass = async (page: number) => {
-    const response: any = await StudentOBJ.student_all_classes(merithubUserID,page);
+    const response: any =userType==="Student"? await StudentOBJ.student_all_classes(merithubUserID,page) : await TutorOBJ.tutor_all_class(merithubUserID,page);
     if (response?.status) {
-      setRequestData(response?.payload);
+      setRequestData(response?.payload?.filter((el:any)=>el.classInfo.isPast !==true));
       settotalPages(response?.totalPages);
       console.log("response timeline", response);
     }
@@ -35,13 +36,13 @@ useEffect(() => {
     <UserLayout>
       <PageNav isActive={true} title="Class" />
       <PageLayout>
-        {requestData.map((obj, index) => {
+        {requestData?.length ? requestData.map((obj, index) => {
           return (
             <React.Fragment key={index}>
               <ClassCard data={obj} />
             </React.Fragment>
           );
-        })}
+        }):<EmptyState data="Class"/>}
 
         {!requestData && <h3>Loading...</h3>}
         {requestData?.length > 0 && (

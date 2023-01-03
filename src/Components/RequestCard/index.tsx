@@ -36,20 +36,18 @@ type RequestPropT = {
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const { userType, studentID, merithubUserID } = getStoredClientUser()
- 
+  const { userType, userID, merithubUserID } = getStoredClientUser()
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "Student") {
       studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate("/tutor-applications", { state: {response,requestID} , });
+      navigate(`/request/${requestID}/tutor-applications`, { state: {response,requestID} , });
     });
     } else {
         navigate(`/apply/${requestID}`);
     }
    
   };
-  console.log(data)
   const ScheduleClass = (request:any) => {
     navigate("/schedule-class", { state: request });
   }
@@ -94,8 +92,8 @@ export default function RequestCard({ data }: RequestPropT) {
             <span>{data?.applicants?.length}</span>
           </Interactions>}
           <div style={{display:"flex",gap:20}}>
-            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===studentID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
-            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===studentID)? "Applied": "Apply"}
+            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===userID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
+            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===userID)? "Applied": "Apply"}
           </CardButton>
           {data?.merithubTutorID === merithubUserID && !data.isClass &&<CardButton onClick={()=>ScheduleClass(data)}>
             Schedule Class

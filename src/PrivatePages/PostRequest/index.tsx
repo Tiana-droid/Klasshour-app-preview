@@ -67,7 +67,7 @@ export default function PostRequest() {
     </PickerCont>
   ));
 
-  const { email, merithubUserID, studentID } = getStoredClientUser();
+  const { email, merithubUserID, userID } = getStoredClientUser();
   console.log(email, "from login");
   const schema = Yup.object({
     subject: Yup.string().required("Required!"),
@@ -92,7 +92,7 @@ export default function PostRequest() {
       schedule: startDate,
       description: values.desc,
       studentEmail: email,
-      studentID,
+      studentID:userID,
       merithubStudentID: merithubUserID,
     };
     StudentOBJ.post_request(RqData).then((res: any) => {
