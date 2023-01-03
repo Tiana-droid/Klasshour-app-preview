@@ -37,7 +37,7 @@ class Student {
   }
   student_all_classes = async (merithubStudentID: string,page:number,past?:boolean) => {
      try {
-   const response = await api.get(`/class/${merithubStudentID}?page=${page}&past=${past}`);
+   const response = await api.get(`/class/${merithubStudentID}?page=${page}&past=${past?past:false}`);
     return response;
     } catch (error) {
       return error

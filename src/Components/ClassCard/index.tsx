@@ -32,16 +32,17 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-  const {userType} = getStoredClientUser()
+  const {userType,merithubUserID} = getStoredClientUser()
   const tutor = data?.applicants.find((el: any) => el.merithubUserId === data.merithubTutorID)
   const [isLoading, setIsLoading] = useState(false);
+  let uniqueLink = data?.classInfo?.participants?.find((el:any)=>el.userId === merithubUserID)?.userLink
   const joinClassHandler = async () => {
     setIsLoading(true)
     await StudentOBJ.student_join_class(data).then((res: any) => {
         if (res) {
         if (res?.status === true) {
           // toast.success(res?.message);
-          window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.commonLinks?.commonParticipantLink}?devicetest=true`)
+          window.location.assign(`${data?.classInfo?.preLink}/${uniqueLink}?devicetest=true`)
           setIsLoading(false);
         } else {
           toast.error(res?.message);
@@ -55,7 +56,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
   }
   const startClassHandler = async () => {
     setIsLoading(true)
-     window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
+     window.location.replace(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
           setIsLoading(false);
   }
   return (

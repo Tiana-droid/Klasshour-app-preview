@@ -119,7 +119,6 @@ export default function Index() {
       }
     }
   }, [ActivityData]);
-
   const handlePageChange = (page: string) => {
     setPage(page);
   };
@@ -136,7 +135,7 @@ export default function Index() {
               <WalletAmount>NGN {walletBalance.toLocaleString()}</WalletAmount>
              {userType==="Student"?  <Button  onClick={()=>setIsShow(!isShow)}>
              Fund Wallet
-            </Button>: <Button disabled={walletBalance.toLocaleString() !==0}>
+            </Button>: <Button disabled={!walletBalance.toLocaleString()}>
              Withdraw Fund
             </Button>}
               </Center>
