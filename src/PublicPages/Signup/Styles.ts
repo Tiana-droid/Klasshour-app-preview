@@ -11,6 +11,7 @@ export const PageLayout = styled.div`
   display: flex;
 `;
 
+
 export const BannerCont = styled.div<LoginPropT>`
   width: 50%;
   background: url(${(prop) => prop.bg}) no-repeat;
