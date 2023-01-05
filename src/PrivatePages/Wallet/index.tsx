@@ -31,10 +31,10 @@ import { getStoredClientUser } from "../../utils/LS";
 import { ActivityData } from "../../Shared/ActivityData";
 import { toast } from "react-toastify";
 import WalletObj from "../../classes/wallet.class";
+import userOBJ from "../../classes/user.class";
 
 const ModalBox = (props: any) => {
-  const { email, fullname } = getStoredClientUser()
-  console.log(email)
+  const { email, fullname,userID } = getStoredClientUser()
   const publicKey = "pk_test_80b957ed664b070aa09e4a730beb4f3587016694"
   const [amount, setAmount] = useState(0)
    const handlePaystackSuccessAction = ({status,reference}:any) => {
@@ -42,11 +42,11 @@ const ModalBox = (props: any) => {
      if (status === "success") {
        WalletObj.fund_wallet({ email, reference }).then((resp: any) => {
          console.log(resp)
-           toast.success(resp.message)
+         toast.success(resp.message)
        })
-       window.location.reload()
      }
-      console.log("Na here we dey",reference);
+     console.log("Na here we dey", reference);
+     props.onClick()
     };
    const componentProps =  {
     email,
@@ -61,20 +61,22 @@ const ModalBox = (props: any) => {
      onSuccess: (reference:void)=>handlePaystackSuccessAction(reference),
     
     onClose: () => alert("Wait! Don't leave :("),
-  }
+   }
+
 
   return <React.Fragment>
-    {props.isShow   &&<Modal >
+    {props.isShow  &&<Modal >
       <Container >
         <Dismiss onClick={props.onClick}>&times;</Dismiss>
-        <Form onSubmit={()=>alert("HI")}>
+        <Form onSubmit={()=>alert("hi")}>
           <FormControl>
             <label htmlFor="">Amount</label>
             <input type="number" value={amount} onChange={ (e:any)=>setAmount(e.target.value)} />
           </FormControl>
         </Form>
-        {!amount ? <button disabled>Pay Now</button>:
-            <PaystackButton {...componentProps} />}
+        {!amount ? <button disabled >Pay Now</button>:
+          <PaystackButton {...componentProps} onClose={ props.onClick} />}
+        
       </Container>
     </Modal>}
   </React.Fragment>
@@ -82,13 +84,15 @@ const ModalBox = (props: any) => {
 export default function Index() {
   const {userType,fullname} = getStoredClientUser()
   const [page, setPage] = useState("Account Details");
-  const [isShow,setIsShow] = useState(false)
+  const [isShow, setIsShow] = useState(false)
+  const [wBalance,setwBalance] = useState(0)
+  
   const [Stats, setStats] = useState({
     sucess: 0,
     pending: 0,
     failure: 0,
   });
-  const {walletBalance}  = getStoredClientUser()
+  const {userID}  = getStoredClientUser()
   // test data from activity data
   useEffect(() => {
     for (let i = 0; i < ActivityData.length; i++) {
@@ -118,6 +122,11 @@ export default function Index() {
         });
       }
     }
+  userOBJ.get_user_balance(userID).then((res: any) => {
+   setwBalance( res.walletBalance)
+  })
+
+
   }, [ActivityData]);
   const handlePageChange = (page: string) => {
     setPage(page);
@@ -132,10 +141,10 @@ export default function Index() {
               <div><img src={userIcon} alt="" /></div>
             </Flex>
             <Center>
-              <WalletAmount>NGN {walletBalance.toLocaleString()}</WalletAmount>
-             {userType==="Student"?  <Button  onClick={()=>setIsShow(!isShow)}>
+              <WalletAmount>NGN {wBalance.toLocaleString()}</WalletAmount>
+             {userType==="Student"?  <Button onClick={()=>setIsShow(!isShow)}>
              Fund Wallet
-            </Button>: <Button disabled={!walletBalance.toLocaleString()}>
+            </Button>: <Button disabled={!wBalance}>
              Withdraw Fund
             </Button>}
               </Center>

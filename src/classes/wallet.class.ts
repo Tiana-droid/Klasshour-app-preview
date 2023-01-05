@@ -33,6 +33,7 @@ class Wallet {
       return err;
     }
   };
+  
 }
 
 const WalletObj = new Wallet();
