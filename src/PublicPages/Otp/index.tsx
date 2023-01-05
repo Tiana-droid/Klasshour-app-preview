@@ -19,7 +19,7 @@ import userOBJ from "../../classes/user.class";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function OTP() {
   const [isLoading, setisLoading] = useState(false);
-  const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
+  const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
   const [activeOtpIndex, setactiveOtpIndex] = useState<number>(0);
   const { state } = useLocation();
   const { email } = state; // Read values passed on state
@@ -107,7 +107,7 @@ export default function OTP() {
                 Enter OTP
               </h2>
               <OtpInstruction>
-                Enter 6 digit pin sent to your email
+                Enter 4 digit pin sent to your email
               </OtpInstruction>
               <OptButtonContainer>
                 {otp.map((value, index) => {

@@ -42,7 +42,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
         if (res) {
         if (res?.status === true) {
           // toast.success(res?.message);
-          window.location.assign(`${data?.classInfo?.preLink}/${uniqueLink}?devicetest=true`)
+          window.open(`${data?.classInfo?.preLink}/${uniqueLink}?devicetest=true`)
           setIsLoading(false);
         } else {
           toast.error(res?.message);

@@ -105,6 +105,15 @@ class USER {
       return error
     }
   }
+   //get all bank
+  get_user_balance = async (userId: string) => {
+    try {
+      const response = await api.get(`/user/account/${userId}`);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 

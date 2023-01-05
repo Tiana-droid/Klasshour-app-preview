@@ -321,7 +321,7 @@ background:#fff;
 border-radius:8px;
 padding:20px;
 // display:flex;
-height:250px;
+height:200px;
 width:500px;
 margin:0px auto;
 position:relative;
@@ -331,17 +331,18 @@ button {
   font-size: 10px;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
-  background-color:green;
-  font-weight: bold;
+  background-color:#F15E38;
+  font-weight: bolder;
   color: #e0eafc;
   border: none;
   border-radius: 5px;
-  width: 50%;
+  width: 100%;
   height: 45px;
   display:flex;
   justify-content:center;
   align-items:center;
-  margin: 0 auto
+  margin: 0 auto;
+  // margin-top:20px
 }
  @media (${BreakPoints.xs}) {
     width:90%;
@@ -352,9 +353,9 @@ button {
  
 `
 export const Form = styled.form`
-padding:20px
+// padding:20px
 `
-export const FormControl = styled.form`
+export const FormControl = styled.div`
 label{
   width:100%;
 }
