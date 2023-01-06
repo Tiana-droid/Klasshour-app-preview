@@ -26,11 +26,14 @@ import { AppColors } from "../../utils/constants";
 type InputsPropT = {
   subject: string;
   desc: string;
+  document: string,
+  emptySet:boolean
 };
 
 export default function PostRequest() {
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [document, setDocument] = useState<string | any>("");
 
   const navigate = useNavigate();
 
@@ -66,103 +69,146 @@ export default function PostRequest() {
       {value}
     </PickerCont>
   ));
+  const getExtension: any = (file?: any) => {
+    if (file.length) {
+      let xy = file[0].name.split('.')
+      let extension = xy[xy.length - 1]
+      return extension
+    }
+  }
+    const { email, merithubUserID, userID } = getStoredClientUser();
 
-  const { email, merithubUserID, userID } = getStoredClientUser();
-  console.log(email, "from login");
-  const schema = Yup.object({
-    subject: Yup.string().required("Required!"),
-    desc: Yup.string()
-      .required("Required!")
-      .min(10, "description is too short - should be 10 chars minimum."),
-  }).required();
+    let schema = Yup.object({
+      subject: Yup.string().required("Required!"),
+      // document: Yup.mixed().when('emptySet', {
+      //   is: true,
+      //   then: Yup.mixed().test({
+      //   message: 'Please provide a supported file type,Pdf only allowed',
+      //   test: (document, context) => {
+      //     const isValid = ['pdf'].includes(getExtension(document));
+      //     if (!isValid) context?.createError();
+      //     return isValid;
+      //   }
+      // })
+      //   .test({
+      //     message: `File too big, can't exceed 1mb`,
+      //     test: () => {
+      //       const isValid = document?.size < 1000000;
+      //       return isValid;
+      //     }
+      //   })
+      // }),
+      desc: Yup.string()
+        .required("Required!")
+        .min(10, "description is too short - should be 10 chars minimum."),
+    });
 
-  const {
-    register,
-    handleSubmit,
+    const {
+      register,
+      handleSubmit,
 
-    formState: { errors },
-  } = useForm<InputsPropT>({
-    resolver: yupResolver(schema),
-  });
+      formState: { errors },
+    } = useForm<InputsPropT>({
+      resolver: yupResolver(schema),
+    });
 
-  const handlePostRequst = async (values: any) => {
-    setIsLoading(true);
-    const RqData = {
-      subject: values.subject,
-      schedule: startDate,
-      description: values.desc,
-      studentEmail: email,
-      studentID:userID,
-      merithubStudentID: merithubUserID,
-    };
-    StudentOBJ.post_request(RqData).then((res: any) => {
-      if (res) {
-        if (res?.status === true) {
-          toast.success(res?.message);
-          setIsLoading(false);
-          goto("/timeline");
+    const handlePostRequst = async (values: any) => {
+      setIsLoading(true);
+      const RqData = {
+        subject: values.subject,
+        schedule: startDate,
+        description: values.desc,
+        studentEmail: email,
+        studentID: userID,
+        merithubStudentID: merithubUserID,
+      };
+      console.log("Ff")
+      StudentOBJ.post_request(RqData).then((res: any) => {
+        if (res) {
+          if (res?.status === true) {
+            toast.success(res?.message);
+            setIsLoading(false);
+            goto("/timeline");
+          } else {
+            toast.error(res?.message);
+            setIsLoading(false);
+          }
         } else {
           toast.error(res?.message);
           setIsLoading(false);
         }
-      } else {
-        toast.error(res?.message);
         setIsLoading(false);
-      }
-      setIsLoading(false);
-    });
-  };
+      });
+    };
 
-  useEffect(() => {
-    console.log(getStoredClientUser());
-  }, [startDate]);
+    useEffect(() => {
+      console.log(getStoredClientUser());
+    }, [startDate]);
 
-  return (
-    <UserLayout>
-      <RequestFormPageLayout>
-        <h2>Request Form</h2>
-        <RequestForm onSubmit={handleSubmit(handlePostRequst)}>
-          <FormInnerContainer>
-            <FormContainer>
-              <label>Subject</label>
-              {errors.subject && (
-                <FormError>{errors.subject.message}</FormError>
-              )}
-              <Input
-                {...register("subject", { required: true })}
-                placeholder="physics"
-                type="text"
-              />
-            </FormContainer>
+    return (
+      <UserLayout>
+        <RequestFormPageLayout>
+          <h2>Request Form</h2>
+          <RequestForm onSubmit={handleSubmit(handlePostRequst)}>
+            <FormInnerContainer>
+              <FormContainer>
+                <label>Subject</label>
+                {errors.subject && (
+                  <FormError>{errors.subject.message}</FormError>
+                )}
 
-            <FormContainer>
-              <label>Schedule</label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date: any) => setStartDate(date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                // dateFormat="MMMM d, yyyy h:mm aa"
-                dateFormat="MMMM d yyy, h:mm:aa"
-                customInput={<ExampleCustomInput />}
-                calendarContainer={MyContainer}
-              />
-              {/* <Datetime input={true} /> */}
-            </FormContainer>
+                <Input
+                  {...register("subject", { required: true })}
+                  placeholder="physics"
+                  type="text"
+                />
+              </FormContainer>
 
-            <FormContainer>
-              <label>Description</label>
-              {errors.desc && <FormError>{errors.desc.message}</FormError>}
-              <TextArea {...register("desc", { required: true })} />
-            </FormContainer>
-            <Button>
-              {isLoading ? <Spinner isLoading={isLoading} /> : "Post Request"}
-            </Button>
-          </FormInnerContainer>
-        </RequestForm>
-      </RequestFormPageLayout>
-    </UserLayout>
-  );
-}
+              <FormContainer>
+                <label>Schedule</label>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date: any) => setStartDate(date)}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  timeCaption="time"
+                  // dateFormat="MMMM d, yyyy h:mm aa"
+                  dateFormat="MMMM d yyy, h:mm:aa"
+                  customInput={<ExampleCustomInput />}
+                  calendarContainer={MyContainer}
+                />
+                {/* <Datetime input={true} /> */}
+              </FormContainer>
+
+              <FormContainer>
+                <label>Description</label>
+                {errors.desc && <FormError>{errors.desc.message}</FormError>}
+                <TextArea {...register("desc", { required: true })} />
+              </FormContainer>
+              <FormContainer>
+                <label>Upload(optional)</label>
+               <input type="text" hidden  {...register("emptySet", { required: true })}/>
+
+                {errors.document && (
+                  <FormError>{errors.document.message}</FormError>
+                )}
+                <Input
+                  {...register("document", { required: true })}
+                  type="file"
+                  name="document"
+                  onChange={(e: any) => 
+                    setDocument(e.target.files[0])
+                  }
+                />
+              </FormContainer>
+              <Button>
+                {isLoading ? <Spinner isLoading={isLoading} /> : "Post Request"}
+              </Button>
+            </FormInnerContainer>
+          </RequestForm>
+        </RequestFormPageLayout>
+      </UserLayout>
+    );
+  }
+

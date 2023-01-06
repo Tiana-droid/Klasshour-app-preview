@@ -114,6 +114,15 @@ class USER {
       return error;
     }
   };
+  get_user_activity = async(page:any)=>{
+    try {
+      const response = await api.get(`/user/my-activity/${merithubUserID}/?page=${page}`);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
 }
 
 
