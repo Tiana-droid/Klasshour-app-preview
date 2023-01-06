@@ -1,15 +1,31 @@
 /* eslint-disable no-mixed-operators */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Table, Th, Td, TableHeaderRow, Status } from "../styles";
-import { ActivityData } from "../../../Shared/ActivityData";
+// import { ActivityData } from "../../../Shared/ActivityData";
+import userOBJ from "../../../classes/user.class";
+import moment from "moment";
+import EmptyData from '../../../Components/EmptyData'
+import Pagination from "../../../Components/Pagination";
 
 export default function RecentActivity() {
+  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, settotalPages] = useState<number>(0);
+  const [activityData, setActivityData] = useState<[]>([])
+  // let activityData:any = []
+  useEffect(() => {
+    userOBJ.get_user_activity(currentPage).then((resp: any) => {
+      setActivityData(resp.payload)
+      settotalPages(resp?.totalPages);
+      console.log(resp)
+    })
+  }, [currentPage])
   return (
     <Box>
       <Table>
         <thead>
           <TableHeaderRow>
-            <Th>S/N</Th>
+            {/* <Th>S/N</Th> */}
             <Th>Email</Th>
             <Th>Payment Type</Th>
             <Th>Amount</Th>
@@ -18,26 +34,26 @@ export default function RecentActivity() {
           </TableHeaderRow>
         </thead>
         <tbody>
-          {ActivityData.map((_, i) => {
+          {!!activityData.length && activityData.map((_:any, i:number) => {
             return (
               <tr key={i}>
-                <Td>{i + 1}</Td>
+                {/* <Td>{i + 1}</Td> */}
                 <Td>{_.email}</Td>
                 <Td>{_.paymentType}</Td>
-                <Td>{_.amount}</Td>
-                <Td>{_.dateAndTime}</Td>
+                <Td>NGN {_.amount}</Td>
+                <Td>{moment(new Date(_.createdAt)).format('MMM Do YYYY,h:mm a')}</Td>
                 <Td>
                   <Status
                     style={{
                       backgroundColor: `${
-                        (_.status === "Failed" && "#FFD1D1") ||
-                        (_.status === "Sucess" && "#F5FBF7") ||
-                        (_.status === "Pending" && "#FBF7D9")
+                        (_.status === "failed" && "#FFD1D1") ||
+                        (_.status === "success" && "#F5FBF7") ||
+                        (_.status === "pending" && "#FBF7D9")
                       }`,
                       color: `${
-                        (_.status === "Failed" && "#EF0000") ||
-                        (_.status === "Sucess" && "#009933") ||
-                        (_.status === "Pending" && "#F0BB00")
+                        (_.status === "failed" && "#EF0000") ||
+                        (_.status === "success" && "#009933") ||
+                        (_.status === "pending" && "#F0BB00")
                       }`,
                     }}
                   >
@@ -48,7 +64,20 @@ export default function RecentActivity() {
             );
           })}
         </tbody>
+        
       </Table>
+      {!activityData.length && <EmptyData data="Activity" />}
+      {activityData?.length > 0 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            callBack={(value: any) => {
+              setCurrentPage(value);
+              // getStudentRequests(value);
+            }}
+          />
+        )}
+
     </Box>
   );
 }

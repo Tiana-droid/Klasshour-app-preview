@@ -138,7 +138,7 @@ export default function TutorApplyForm() {
   return (
     <UserLayout>
       <RequestFormPageLayout>
-        <h2>Request Form</h2>
+        <h2>Application Form</h2>
         <RequestForm onSubmit={handleSubmit(handlePostRequst)} encType="multipart/form-data">
           <FormInnerContainer>
             <FormContainer>
@@ -154,7 +154,7 @@ export default function TutorApplyForm() {
               />
             </FormContainer>
         <FormContainer>
-              <label>Charge Per Hour</label>
+              <label>Charge Per Hour(NGN)</label>
               {errors.chargePerHour && (
                 <FormError>{errors.chargePerHour.message}</FormError>
               )}
@@ -166,7 +166,7 @@ export default function TutorApplyForm() {
               />
             </FormContainer>
             <FormContainer>
-              <label>Upload Cover Letter</label>
+              <label>Upload Cover Letter(optional)</label>
               {errors.document && (
                 <FormError>{errors.document.message}</FormError>
               )}
@@ -176,15 +176,15 @@ export default function TutorApplyForm() {
                 name="document"
                  onChange={(e:any)=>setDocument(e.target.files[0])}
               />
-                      </FormContainer>
+              </FormContainer>
                           <FormContainer>
-              <label>About Self</label>
+              <label>Application note(optional)</label>
               {errors.bio && <FormError>{errors. bio.message}</FormError>}
               <TextArea {...register("bio", { required: true })}  onChange={(e)=>setBio(e.target.value)}/>
             </FormContainer>
          
             <Button disabled={isLoading}>
-              {isLoading ? <Spinner isLoading={isLoading} /> : "Post Request"}
+              {isLoading ? <Spinner isLoading={isLoading} /> : "Submit"}
             </Button>
           </FormInnerContainer>
         </RequestForm>
