@@ -57,10 +57,10 @@ export const HStack = styled.div`
 export const Dismiss = styled.div`
 color:red;
 font-size:16px;
-font-weight:300;
-float:right;
-position:relative;
-bottom:50px;
+font-weight:900;
+position:absolute;
+top:10px;
+right:20px;
 cursor:pointer
 `
 export const Flex = styled.div`
@@ -319,9 +319,11 @@ background:#000000b3
 export const Container = styled.div`
 background:#fff;
 border-radius:8px;
-padding:20px;
-// display:flex;
-height:200px;
+padding:20px 30px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+height:250px;
 width:500px;
 margin:0px auto;
 position:relative;

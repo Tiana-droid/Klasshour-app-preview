@@ -8,7 +8,7 @@ api.interceptors.request.use(
   (request) => {
     request.headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.REACT_APP_PAYSTACK_SECRET}`,
+      Authorization: `Bearer sk_test_e988ca86bb754d1b3b8f5bf50ad578ca089ddf22`,
     };
     return request;
   },

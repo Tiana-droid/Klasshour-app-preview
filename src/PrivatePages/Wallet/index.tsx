@@ -83,7 +83,7 @@ const ModalBox = (props: any) => {
 }
 export default function Index() {
   const {userType,fullname} = getStoredClientUser()
-  const [page, setPage] = useState("Account Details");
+  const [page, setPage] = useState("Recent Activites");
   const [isShow, setIsShow] = useState(false)
   const [wBalance,setwBalance] = useState(0)
   

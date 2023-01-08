@@ -10,11 +10,13 @@ export const Card = styled.div`
   position: relative;
   font-size: 1.2rem;
   font-style: normal;
+  display:block;
   font-weight: 400;
   background: #fff;
   border-radius: 5px;
   margin-bottom: 1.4rem;
-  height: 300px;
+  min-height: 340px;
+  
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   top: 0;
   transition: all ease 0.6s;
@@ -67,7 +69,7 @@ export const CardDate = styled.span`
 
 export const CardContent = styled.div`
   margin-top: 1.4rem;
-  height: 140px;
+  // height: 140px;
 `;
 
 export const SubjectCont = styled.div`
@@ -184,3 +186,16 @@ export const CardButton = styled.button`
     padding: 0 2rem;
   }
 `;
+
+export const ShowMore = styled.button`
+height: 40px;
+// padding: 0 4rem;
+color: #F15E38;
+background: transparent;
+outline-style: none;
+font-weight:500;
+font-size:16px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+`

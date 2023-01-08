@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import pencil from "../../Assets/icons/pencil.svg";
@@ -16,6 +16,7 @@ import {
   Interactions,
   Schedule,
   SubjectCont,
+  ShowMore
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 
@@ -36,7 +37,8 @@ type RequestPropT = {
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const { userType, userID, merithubUserID } = getStoredClientUser()
+  const { userType, userID } = getStoredClientUser()
+  const [showMOre, setShowMOre] = useState(false)
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "Student") {
@@ -48,9 +50,6 @@ export default function RequestCard({ data }: RequestPropT) {
     }
    
   };
-  const ScheduleClass = (request:any) => {
-    navigate("/schedule-class", { state: request });
-  }
   const scheduleTime = data?.schedule;
   return (
     <div>
@@ -73,15 +72,16 @@ export default function RequestCard({ data }: RequestPropT) {
             {/* @ts-ignore */}
             <span>
               {/* {moment().format(scheduleTime)}{" "} */}
-              {moment.utc(scheduleTime).format("l LT")}
+              {moment(scheduleTime).format("l LT")}
             </span>
           </Schedule>
 
           <CardDescription>
-            {data?.description?.length > 80
+            {data?.description?.length > 80 && !showMOre
               ? data.description.slice(0, 200) + "...."
               : data.description}
           </CardDescription>
+          {data?.description?.length > 80 && <ShowMore onClick={() => setShowMOre(!showMOre)}>{ showMOre ? "Show less" : "Show More"}</ShowMore>}
           <CardLang>
             Language: <span>{data.language || "English"}</span>
           </CardLang>
@@ -95,9 +95,6 @@ export default function RequestCard({ data }: RequestPropT) {
             <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===userID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
             {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===userID)? "Applied": "Apply"}
           </CardButton>
-          {data?.merithubTutorID === merithubUserID && !data.isClass &&<CardButton onClick={()=>ScheduleClass(data)}>
-            Schedule Class
-          </CardButton>}
           </div>
         </CardButtonContainer>
       </Card>

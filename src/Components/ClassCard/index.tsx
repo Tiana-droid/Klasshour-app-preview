@@ -56,7 +56,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
   }
   const startClassHandler = async () => {
     setIsLoading(true)
-     window.location.replace(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
+     window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
           setIsLoading(false);
   }
   return (

@@ -1,7 +1,8 @@
 import api from "../API";
 import { storeAuthToken, storeClientUser,getStoredClientUser } from "../utils/LS";
 
-const {merithubUserID} = getStoredClientUser()
+const { merithubUserID, userID } = getStoredClientUser()
+
 class USER {
   //login user
   user_login = async (data: any) => {
@@ -99,7 +100,15 @@ class USER {
   
   tutor_all_class = async (merithubTutorID: string, page: number,past?:boolean) => {
      try {
-   const response = await api.get(`/tutor-class/${merithubTutorID}?page=${page}&past=${past}`);
+   const response = await api.get(`/tutor-class/${merithubTutorID}?page=${page}&${past?past:false}`);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
+  tutor_applications = async ( page: number) => {
+     try {
+   const response = await api.get(`/get-application/${userID}?page=${page}`);
     return response;
     } catch (error) {
       return error

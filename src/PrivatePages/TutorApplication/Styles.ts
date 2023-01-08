@@ -4,8 +4,6 @@ export const PageLayout = styled.div`
   
 `;
 
-
-
 export const Card = styled.div`
 width:100%;
 min-height:277px;
@@ -26,7 +24,9 @@ color: #292929;
 .header{
 display:flex;
 justify-content:space-between;
-align-items:center
+align-items:center;
+font-weight:900;
+font-size:16px
 }
 div{
     font-family: 'Roboto';
