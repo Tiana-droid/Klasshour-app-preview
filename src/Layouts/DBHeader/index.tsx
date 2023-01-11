@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../Assets/images/Logo.svg";
+import Logo2 from "../../Assets/images/logo.png"
 import { DBHeader, DispayDesktop, DropDownContainer } from "./Styles";
 import Avatar from "../../Components/Avatar";
 import ArrowDown from "../../Assets/icons/ArrowDown.svg";
 import { Logout } from "../../utils/some";
 import { Link } from "react-router-dom";
 import { getStoredClientUser } from "../../utils/LS";
+import userOBJ from "../../classes/user.class";
 
-export default function DashboardHeader() {
+export default function DashboardHeader(props: any) {
+const  {userID}  = getStoredClientUser()
   const [showDropdown, setshowDropdown] = useState(false);
-
+const [img,setImg] = useState(null)
   const UserAvater = () => {
+    useEffect(() => {
+      if (userID) {
+        userOBJ.get_user_account().then((res:any) => {
+        setImg(res.photo)
+      })
+      }
+    }, [])
+    
     return (
       <div>
         <div
@@ -22,9 +33,9 @@ export default function DashboardHeader() {
           }}
           onClick={() => setshowDropdown(!showDropdown)}
         >
-          <Avatar size="2.4rem" />
+          <Avatar size="2.4rem" photo={img} />
           <DispayDesktop>
-            <img src={ArrowDown} style={{ width: "1rem" }} />
+            <img src={ArrowDown } style={{ width: "1rem" }} alt="" />
           </DispayDesktop>
         </div>
         <DropDownContainer
@@ -32,7 +43,7 @@ export default function DashboardHeader() {
           showDropdown={showDropdown}
         >
           <ul>
-            <li>Profile Settings</li>
+            {/* <li><a href="/settings">Profile Settings</a></li> */}
             <li><a href="/wallet">Wallet</a></li>
             {getStoredClientUser().userType !== "Tutor" && <li>My Group</li>}
             <li onClick={() => Logout()}>Logout</li>
@@ -43,10 +54,13 @@ export default function DashboardHeader() {
   };
   return (
     <>
-      <DBHeader>
+      <DBHeader style={{
+              background:props.backgroundColor === "light" ? "#fff" :"#161B45"
+            }}>
         <div>
           <Link to="/">
-            <img src={Logo} />
+            {props.backgroundColor ==="light" ?   <img src={ Logo2 } alt="logo" />:  <img src={ Logo } alt="logo" />}
+            {/* <img src={ Logo } alt="logo" /> */}
           </Link>
         </div>
         <div>{UserAvater()}</div>

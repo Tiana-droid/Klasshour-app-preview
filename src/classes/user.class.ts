@@ -132,6 +132,44 @@ class USER {
     }
   }
 
+  get_user_account = async () => {
+    try {
+      const response = await api.get(`/user/account/${userID}`);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  update_user_profile = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/update-profile`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  get_change_password_code = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/code/update-password`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+   change_password_code = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/update-password`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 
