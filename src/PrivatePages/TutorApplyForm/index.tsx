@@ -10,7 +10,6 @@ import {
   FormInnerContainer,
   TextArea,
   FormError,
-  Flex
 } from "./Styles";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,18 +22,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getStoredClientUser } from "../../utils/LS";
 
 type InputsPropT = {
-    document: string;
   chargePerHour:number,
-    language: string,
-  bio:string
 };
 
 export default function TutorApplyForm() {
+  const { fullname,currentCharge } = getStoredClientUser()
+
   const [isLoading, setIsLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [document, setDocument] = useState<string | any>("");
   const [language, setLanguage] = useState<string[]>([]);
-  const [chargePerHour, setChargePerHour] = useState(0.00);
+  const [chargePerHour, setChargePerHour] = useState(currentCharge);
   const {id} = useParams()
   const navigate = useNavigate();
 
@@ -45,35 +43,16 @@ export default function TutorApplyForm() {
       navigate(path);
     }
   };
-  const getExtension: any = (file?: any) => {
-    if (file) {
-      let xy = file[0].name.split('.')
-      let extension = xy[xy.length - 1]
-      return extension
-    }
+//   const getExtension: any = (file?: any) => {
+//     if (file) {
+//       let xy = file[0].name.split('.')
+//       let extension = xy[xy.length - 1]
+//       return extension
+//     }
 
-}
+// }
   const schema:any = Yup.object({
     chargePerHour: Yup.string().required("Required!"),
-    document:  Yup.mixed()
-  .test({
-    message: 'Please provide a supported file type,Pdf only allowed',
-    test: (document, context) => {
-      const isValid = ['pdf'].includes(getExtension(document));
-      if (!isValid) context?.createError();
-      return isValid;
-    }
-  })
-  .test({
-    message: `File too big, can't exceed 1mb`,
-    test: () => {
-      const isValid = document?.size < 1000000;
-      return isValid;
-    }
-  }),
-    bio: Yup.string()
-      .required("Required!")
-      .min(30, "description is too short - should be 30 chars minimum."),
   }).required();
 
   const {
@@ -101,7 +80,6 @@ export default function TutorApplyForm() {
       return language
       }
   }
-  const { fullname } = getStoredClientUser()
   const handlePostRequst = async (e: any) => {
   const formData =  new FormData()
     setIsLoading(true);
@@ -115,7 +93,7 @@ export default function TutorApplyForm() {
     formData.append('payload',JSON.stringify(payload))
     formData.append('document',document)
     await TutorOBJ.tutor_apply_request(formData,payload.requestId).then((res: any) => {
-      if (res) {
+      
         if (res?.status === true) {
           toast.success(res?.message);
           setIsLoading(false);
@@ -124,10 +102,7 @@ export default function TutorApplyForm() {
           toast.error(res?.message);
           setIsLoading(false);
         }
-      } else {
-        toast.error(res?.message);
-        setIsLoading(false);
-      }
+      
       setIsLoading(false);
     });
   };
@@ -137,7 +112,7 @@ export default function TutorApplyForm() {
     <UserLayout>
       <RequestFormPageLayout>
         <h2>Application Form</h2>
-        <RequestForm onSubmit={handleSubmit(handlePostRequst)} encType="multipart/form-data">
+        <RequestForm encType="multipart/form-data" onSubmit={handleSubmit(handlePostRequst)} >
           <FormInnerContainer>
             <FormContainer>
               <label>Full Name</label>
@@ -156,17 +131,14 @@ export default function TutorApplyForm() {
               <Input
                 {...register("chargePerHour", { required: true })}
                 placeholder="200"
+                value={chargePerHour}
                 type="number"
                  onChange={(e:any)=>setChargePerHour(e.target.value)}
               />
             </FormContainer>
             <FormContainer>
               <label>Upload Cover Letter(optional)</label>
-              {errors.document && (
-                <FormError>{errors.document.message}</FormError>
-              )}
               <Input
-                {...register("document", { required: true })}
                 type="file"
                 name="document"
                  onChange={(e:any)=>setDocument(e.target.files[0])}
@@ -174,8 +146,7 @@ export default function TutorApplyForm() {
               </FormContainer>
                           <FormContainer>
               <label>Application note(optional)</label>
-              {errors.bio && <FormError>{errors. bio.message}</FormError>}
-              <TextArea {...register("bio", { required: true })}  onChange={(e)=>setBio(e.target.value)}/>
+              <TextArea  onChange={(e)=>setBio(e.target.value)}/>
             </FormContainer>
          
             <Button disabled={isLoading}>
