@@ -258,7 +258,26 @@ setFirstName(res.fullname.split(' ')[1])
           <option value={"French"}>French</option>
           <option value={"Pidgin"}>Pidgin</option>
         </Select>
-      </Flex>
+          </Flex>
+          {language?.length >0 && <Flex
+        style={{
+          gap: "10px",
+          color: "#000",
+          alignItems: "center",
+          padding: "10px 0",
+        }}
+      >
+        <label style={{visibility:'hidden'}}>output</label>
+         {language?.map((el:string, i:number) => {
+           return <Identifier>
+             {el}
+             <span onClick={() => {
+               setLanguage(language.filter((ele: any) => ele !== el))
+               language.splice(language.indexOf(el),1)
+             }}>&times;</span>
+           </Identifier>
+      })}
+      </Flex>}
       <Flex
         style={{
           gap: "10px",
