@@ -36,7 +36,7 @@ api.interceptors.response.use(
   (error) => {
     if (error?.response?.data?.authStatus === 403) {
       removeStoredAuthToken();
-      window.location.assign("/login");
+      window.location.assign("/");
     }
     return Promise.reject(error);
   }

@@ -20,9 +20,9 @@ import Spinner from "../../Components/Spinner";
 import TutorOBJ from "../../classes/user.class"
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { getStoredClientUser } from "../../utils/LS";
 
 type InputsPropT = {
-  fullName: string;
     document: string;
   chargePerHour:number,
     language: string,
@@ -31,7 +31,6 @@ type InputsPropT = {
 
 export default function TutorApplyForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
   const [document, setDocument] = useState<string | any>("");
   const [language, setLanguage] = useState<string[]>([]);
@@ -55,7 +54,6 @@ export default function TutorApplyForm() {
 
 }
   const schema:any = Yup.object({
-    fullName: Yup.string().required("Required!"),
     chargePerHour: Yup.string().required("Required!"),
     document:  Yup.mixed()
   .test({
@@ -103,7 +101,7 @@ export default function TutorApplyForm() {
       return language
       }
   }
-  
+  const { fullname } = getStoredClientUser()
   const handlePostRequst = async (e: any) => {
   const formData =  new FormData()
     setIsLoading(true);
@@ -112,7 +110,7 @@ export default function TutorApplyForm() {
       language:"English",
       requestId:id,
         chargePerHour,
-      fullName,
+    fullName:fullname,
     };
     formData.append('payload',JSON.stringify(payload))
     formData.append('document',document)
@@ -143,14 +141,11 @@ export default function TutorApplyForm() {
           <FormInnerContainer>
             <FormContainer>
               <label>Full Name</label>
-              {errors.fullName && (
-                <FormError>{errors.fullName.message}</FormError>
-              )}
               <Input
-                {...register("fullName", { required: true })}
                 placeholder="John doe"
                 type="text"
-                onChange={(e)=>setFullName(e.target.value)}
+                value={fullname}
+                readOnly
               />
             </FormContainer>
         <FormContainer>

@@ -70,8 +70,8 @@ export default function ScheduleClass() {
     setIsLoading(true);
     const payload:any = {
       recording: [record, autoRecord, allowRecordControl],
-      StudentRequest:state,
-      requestId:state._id,
+      StudentRequest:state.requestId,
+      requestId:state.requestId._id,
       duration,
         recordingDownload:allowRecordingDownload,
       participantControl:[allowEdit,allowEditAudio,allowEditVideo],
@@ -96,7 +96,7 @@ export default function ScheduleClass() {
 
   return (
     <UserLayout>
-      <h3>Class Start at {new Date(state.schedule).toLocaleDateString() + " "+new Date(state.schedule).toLocaleTimeString()} </h3>
+      <h3>Class Start at {new Date(state.requestId.schedule).toLocaleDateString() + " "+new Date(state.requestId.schedule).toLocaleTimeString()} </h3>
       <RequestFormPageLayout>
         <h2>Set Class Control</h2>
         <RequestForm onSubmit={handleSubmit(handlePostRequst)}>

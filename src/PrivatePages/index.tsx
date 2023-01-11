@@ -15,6 +15,7 @@ import Application from "./TutorApplication";
 import Submissions from "./Submissions";
 import ScheduleClass from "./ScheduleClass";
 import Test from "./Test";
+import Settings from "./settings";
 
 export default function AuthRoutes() {
   return (
@@ -34,6 +35,7 @@ export default function AuthRoutes() {
       <Route path="/apply/:id" element={<TutorApply />} />
       <Route path="/withdraw" element={<Withdraw />} />
       <Route path="/fund-wallet" element={<FundWallet />} />
+      <Route path="/settings" element={<Settings />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

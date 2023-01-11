@@ -4,7 +4,6 @@ import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import RequestCard from "../../Components/RequestCard";
 import Pagination from "../../Components/Pagination";
 import EmptyState from '../../Components/EmptyData'
-import studentRequest from "../../classes/request.class";
 import {
   PageLayout,
 } from "./Styles";
@@ -18,9 +17,9 @@ export default function TimeLine() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, settotalPages] = useState<number>(0);
 
-  const { userID, userType } = getStoredClientUser();
+  const {  userType } = getStoredClientUser();
   const getStudentRequests = async (page: number) => {
-    const response: any =userType==="Student" ? await userOBJ.user_requests({ studentID:userID }, page): await userOBJ.all_requests(currentPage);
+    const response: any = await userOBJ.all_requests(currentPage);
     if (response?.status) {
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);

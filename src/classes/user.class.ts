@@ -1,7 +1,8 @@
 import api from "../API";
 import { storeAuthToken, storeClientUser,getStoredClientUser } from "../utils/LS";
 
-const {merithubUserID} = getStoredClientUser()
+const { merithubUserID, userID } = getStoredClientUser()
+
 class USER {
   //login user
   user_login = async (data: any) => {
@@ -99,7 +100,15 @@ class USER {
   
   tutor_all_class = async (merithubTutorID: string, page: number,past?:boolean) => {
      try {
-   const response = await api.get(`/tutor-class/${merithubTutorID}?page=${page}&past=${past}`);
+   const response = await api.get(`/tutor-class/${merithubTutorID}?page=${page}&${past?past:false}`);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
+  tutor_applications = async ( page: number) => {
+     try {
+   const response = await api.get(`/get-application/${userID}?page=${page}`);
     return response;
     } catch (error) {
       return error
@@ -123,6 +132,44 @@ class USER {
     }
   }
 
+  get_user_account = async () => {
+    try {
+      const response = await api.get(`/user/account/${userID}`);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  update_user_profile = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/update-profile`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  get_change_password_code = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/code/update-password`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+   change_password_code = async (payload:any) => {
+     try {
+       const response = await api.post(`/user/update-password`, payload, {headers:{"content-type":"multipart/form-data"}},
+       );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 

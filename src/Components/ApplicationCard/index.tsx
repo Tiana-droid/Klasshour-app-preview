@@ -12,37 +12,24 @@ import Avatar from "../../Assets/icons/Image.png";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner";
 
-type cardProp = {
-  price: string;
-  name: string;
-  desc: string;
-  subject: string;
-  language: string;
-  tutorId: any;
-};
+
 export default function Index({
-  price,
-  name,
-  desc,
-  subject,
-  language,
-  tutorId,
-}: cardProp) {
+ data
+}: any) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleOnclickEvent = () => {
-    // fake request to tutor page
+  const handleOnclickEvent = (request:any) => {
     setIsLoading(true);
     setTimeout(() => {
-      navigate("/tutor-request");
+    navigate("/schedule-class", { state: request });
     }, 3000);
   };
+  console.log(data)
   return (
     <Card>
       <FlexHeader>
         <img src={Avatar} alt="image" />
-        <div>NGN{price} perhour</div>
+        <div>NGN{data.chargePerHour} perhour</div>
       </FlexHeader>
       <h3
         style={{
@@ -50,24 +37,25 @@ export default function Index({
           fontWeight: 400,
         }}
       >
-        {name}
+        {data.fullName}
       </h3>
-      <LightText>{desc}</LightText>
+      <LightText>{data.bio}</LightText>
       <Flex>
         <LightText>subject: </LightText>
-        <BoldText>{subject}</BoldText>
+        <BoldText>{data.subject}</BoldText>
       </Flex>
       <Flex>
         <LightText>language:</LightText>
-        <BoldText>{language}</BoldText>
+        <BoldText>{data.language}</BoldText>
       </Flex>
       <ButtonContainer>
         <Button
+          disabled={!data.isAccepted}
           onClick={() => {
-            handleOnclickEvent();
+            handleOnclickEvent(data);
           }}
         >
-          {isLoading ? <Spinner isLoading={isLoading} /> : "veiw profile"}
+          {isLoading ? <Spinner isLoading={isLoading} /> : "Schedule Class"}
         </Button>
       </ButtonContainer>
     </Card>
