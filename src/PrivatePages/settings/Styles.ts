@@ -32,7 +32,15 @@ color: #292929;
     padding: 1rem 8rem;
   }
 `;
-
+export const AddBtn = styled.button`
+width:100px;
+border:unset;
+outline:unset;
+padding:10px;
+color:#fff;
+border-radius:10px;
+background:rgb(241, 94, 56)
+`
 export const ContentContainer = styled.div`
   width: 1005;
   background-color: #fff;

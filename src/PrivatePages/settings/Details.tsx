@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Input, Select, TextArea, Box, ActionButton,Identifier } from "./Styles";
+import { Flex, Input, Select, TextArea, Box, ActionButton,Identifier, AddBtn } from "./Styles";
 import { toast } from "react-toastify";
 import { getStoredClientUser } from "../../utils/LS";
 import { FileUploader } from "react-drag-drop-files";
@@ -217,11 +217,11 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Add Subject</label>
-            <Input value={text}/>
-            <button type="button" onClick={() => {
+            <Input value={text} onChange={(e)=>setText(e.target.value)}/>
+            <AddBtn type="button" onClick={() => {
               setText("")
               return subject.includes(text.toLowerCase()) ? null : setSubject(subject.concat(text.toLowerCase()))
-            }}>Add</button>
+            }}>Add</AddBtn>
       </Flex>
       {subject?.length >0 && <Flex
         style={{
