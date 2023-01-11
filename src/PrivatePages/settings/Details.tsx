@@ -18,6 +18,7 @@ export default function Details(props: any) {
   const [imageUrl, setImageUrl] = useState("");
   const [bio, setBio] = useState("");
   const [firstName,setFirstName] = useState("")
+  const [text,setText] = useState("")
   const [lastName,setLastName] = useState("")
   const [phone,setPhone] = useState("")
   const [subject,setSubject] = useState<[] | string |any>([])
@@ -27,6 +28,8 @@ export default function Details(props: any) {
   const [chargePerHour,setChargePerHour] = useState("")
   const [email, setEmail] = useState("")
   const [educationLevel, setEducationLevel] = useState("Tertiary")
+  const [enrolled, setEnrrolled] = useState("")
+  const [institution, setInstitution] = useState("")
   const [wordCount, setWordCount] = useState(0);
   const [isLoading,setIsLoading] = useState(false)
   let countryList = countryCodes.customList('countryNameEn')
@@ -56,10 +59,11 @@ setFirstName(res.fullname.split(' ')[1])
     setPhone(res.phone)
     setSubject(res.subject.split(','))
     setLanguage(res.language.split(','))
+    setInstitution(res.institution)
+    setEnrrolled(res.enrolled)
     // console.log(res)
  })
 }, [])
-
   const handleWordChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setBio(newText);
@@ -74,7 +78,7 @@ setFirstName(res.fullname.split(' ')[1])
     setIsLoading(!isLoading)
     const payload:any = {
       email, fullname: `${lastName} ${firstName}`, subject:subject.join(','), language:language.join(','), countryCode, country,
-      educationLevel,chargePerHour,bio,phone,image
+      educationLevel,chargePerHour,bio,phone,imageUrl
     }
     formData.append('payload', JSON.stringify(payload))
     formData.append('document', image)
@@ -89,6 +93,7 @@ setFirstName(res.fullname.split(' ')[1])
       }
     })
   }
+  
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}  style={{ flexDirection: "column", width: "100%" }} >
       <Flex
@@ -158,44 +163,7 @@ setFirstName(res.fullname.split(' ')[1])
           label="Click to upload or drag and drop .jpeg,.png (30mb file size)"
       />
       </Flex>
-      <Flex
-        style={{
-          gap: "10px",
-          color: "#000",
-          alignItems: "center",
-          padding: "10px 0",
-        
-        }}
-      >
-        <label>Subject</label>
-        <Select value={subject.join(',')} onChange={(e:any)=>subject.includes(e.target.value) ? null: setSubject(subject.concat(e.target.value))}>
-          <option selected>{subject.length <1 ?"Select one or more subject":subject.length <3? subject?.join(',') : `${subject[0]} and other ${subject.length -1} selected`}</option>
-          <option value={"English"}>English</option>
-          <option value={"Mathematics"}>Mathematics</option>
-          <option value={"Physics"}>Physics</option>
-          <option value={"Chemistry"}>Chemistry</option>
-          <option value={"French"}>French</option>
-        </Select>
-      </Flex>
-      {subject?.length >0 && <Flex
-        style={{
-          gap: "10px",
-          color: "#000",
-          alignItems: "center",
-          padding: "10px 0",
-        }}
-      >
-        <label style={{visibility:'hidden'}}>output</label>
-         {subject?.map((el:string, i:number) => {
-           return <Identifier>
-             {el}
-             <span onClick={() => {
-               setSubject(subject.filter((ele: any) => ele !== el))
-               subject.splice(subject.indexOf(el),1)
-             }}>&times;</span>
-           </Identifier>
-      })}
-      </Flex>}
+     
       <Flex
         style={{
           gap: "10px",
@@ -239,6 +207,41 @@ setFirstName(res.fullname.split(' ')[1])
       
       {
         getStoredClientUser().userType == "Tutor" ? <>
+           <Flex
+        style={{
+          gap: "10px",
+          color: "#000",
+          alignItems: "center",
+          padding: "10px 0",
+        
+        }}
+      >
+        <label>Add Subject</label>
+            <Input value={text}/>
+            <button type="button" onClick={() => {
+              setText("")
+              return subject.includes(text.toLowerCase()) ? null : setSubject(subject.concat(text.toLowerCase()))
+            }}>Add</button>
+      </Flex>
+      {subject?.length >0 && <Flex
+        style={{
+          gap: "10px",
+          color: "#000",
+          alignItems: "center",
+          padding: "10px 0",
+        }}
+      >
+        <label style={{visibility:'hidden'}}>output</label>
+         {subject?.map((el:string, i:number) => {
+           return <Identifier>
+             {el}
+             <span onClick={() => {
+               setSubject(subject.filter((ele: any) => ele !== el))
+               subject.splice(subject.indexOf(el),1)
+             }}>&times;</span>
+           </Identifier>
+      })}
+      </Flex>}
         <Flex
         style={{
           gap: "10px",
@@ -305,14 +308,160 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Education Level</label>
-              <Select onClick={(e: any) =>  setEducationLevel(e.target.value) } value={educationLevel}>
+              <Select onChange={(e: any) =>  setEducationLevel(e.target.value) } value={educationLevel}>
           <option value={"Tertiary"}>Tertiary</option>
           <option value={"Secondary"}>Secondary</option>
         </Select>
+        </Flex>
+            <Flex
+        style={{
+          gap: "10px",
+          color: "#000",
+          alignItems: "center",
+          padding: "10px 0",
+        }}
+      >
+        <label>Are you enrolled in an instution?</label>
+              <Select onChange={(e: any) => setEnrrolled(e.target.value)} value={enrolled}>
+          <option value={"No"} >No</option>
+          <option value={"Yes"}>Yes</option>
+        </Select>
+            </Flex> 
+            {enrolled==="Yes" &&   <Flex
+        style={{
+          gap: "10px",
+          color: "#000",
+          alignItems: "center",
+                padding: "10px 0",
+          display: enrolled==="Yes" ? "flex":"none"
+        }}
+      >
+              <label >Institution:</label>
+              {/* <Input  onChange={(e: any) =>  setEnrrolled(e.target.value) } value={enrolled} /> */}
+                <Input className="form-control" name="university" list="university" onChange={(e: any) =>  setInstitution(e.target.value) } value={institution} / >
+                    <datalist id="university">
+                      <option value="Abia State University"/>
+                      <option value="Abubakar Tafawa Balewa University"/>
+                      <option value="Achievers University, Owo"/>
+                      <option value="Adamawa State University"/>
+                      <option value="Adekunle Ajasin University"/>
+                      <option value="Adeleke University"/>
+                      <option value="Afe Babalola University"/>
+                     
+                      <option value="Ahmadu Bello University"/>
+                      <option value="Ajayi Crowther University"/>
+                      <option value="Akwa Ibom State University"/>
+                      <option value="Al-Hikmah University"/>
+                      <option value="Al-Qalam University, Katsina"/>
+                      <option value="Ambrose Alli University"/>
+                      <option value="American University of Nigeria"/>
+                  
+                    
+                      <option value="Babcock University"/>
+                      <option value="Bauchi State University"/>
+                      <option value="Bayero University Kano"/>
+                      <option value="Baze University"/>
+                      <option value="Bells University of Technology"/>
+                      <option value="Benson Idahosa University"/>
+                      <option value="Benue State University"/>
+                      <option value="Bingham University"/>
+                      <option value="Borno State University"/>
+                      <option value="Bowen University"/>
+                      <option value="Caleb University"/>
+                      <option value="Caritas University"/>
+                      <option value="Chrisland University"/>
+                      <option value="Chukwuemeka Odumegwu Ojukwu University"/>
+                      <option value="Clifford University"/>
+                      <option value="Coal City University"/>
+                      <option value="Covenant University"/>
+                      <option value="Crawford University"/>
+                      <option value="Crescent University, Abeokuta"/>
+                      <option value="Cross River University of Technology"/>
+                      <option value="Crown Hill University"/>
+                      <option value="Delta State University, Abraka"/>
+                      <option value="Dominican University, Ibadan"/>
+                      <option value="Eastern Palm University"/>
+                      <option value="Ebonyi State University"/>
+                      <option value="Edo University"/>
+                      <option value="Edwin Clark University"/>
+                      <option value="Ekiti State University, Ado Ekiti"/>
+                      <option value="Eko University of Medical and Health Sciences"/>
+                      <option value="Elizade University"/>
+                      <option value="Enugu State University of Science and Technology"/>
+                      <option value="Evangel University Akaeze"/>
+                      <option value="Federal University of Agriculture, Abeokuta"/>
+                      <option value="Federal University of Petroleum Resources"/>
+                      <option value="Federal University of Technology, Akure"/>
+                      <option value="Federal University of Technology, Minna"/>
+                      <option value="Federal University of Technology, Owerri"/>
+                      <option value=" Federal University, Birnin Kebbi"/>
+                      <option value="Federal University, Dutse"/>
+                      <option value="Federal University, Dutsin-Ma"/> 
+                      <option value="Federal University, Gashua"/>
+                      <option value="Federal University, Gusau"/>
+                      <option value="Federal University, Kashere"/>
+                      <option value="Federal University, Lafia"/>
+                      <option value="Federal University, Lokoja"/>
+                      <option value="Federal University, Ndufu-Alike "/>  
+                      <option value="Federal University, Otuoke"/>
+                      <option value="Federal University, Oye-Ekiti"/>
+                      <option value="Federal University, Wukari"/>
+                      <option value="Fountain University"/>
+                      <option value=" Gombe State University"/>
+                      <option value="Gombe State University of Science and Technology"/>
+                      <option value="brahim Badamasi Babangida University"/>
+                      <option value="Igbinedion University Okada"/>
+                      <option value=" Imo State University"/>
+                      <option value=" Kaduna State University"/>
+                      <option value="Kano University of Science and Technology"/>
+                      <option value="Kebbi State University of Science and Technology"/>
+                      <option value=" Kings University"/>
+                      <option value="Kogi State University"/>
+                      <option value="Kwara State University"/>
+                      <option value="Ladoke Akintola University of Technology"/>  
+                      <option value=" Lagos State University"/>
+                      <option value=" Landmark University"/>
+                      <option value=" Lead City University"/>
+                      <option value="Madonna University, Okija"/>
+                      <option value="Nasarawa State University"/>
+                      <option value=" Niger Delta University"/>
+                      <option value="Nile University of Nigeria"/>
+                      <option value="Nnamdi Azikiwe University"/>
+                      <option value="Northwest University Kano"/>
+                      <option value="Obafemi Awolowo University"/>
+                      <option value="Ondo State University of Science and Technology"/>
+                      <option value="Osun State University"/>
+                      <option value="Pan African University"/>
+                      <option value="Plateau State University"/>
+                      <option value=" Redeemer's University"/>
+                      <option value="Rivers State University of Science and Technology"/>
+                      <option value="Sokoto State University"/>
+                      <option value=" Taraba State University"/>  
+                      <option value="Umaru Musa Yar'Adua University"/>
+                      <option value="University of Abuja"/>
+                      <option value=" University of Africa"/>
+                      <option value="University of Agriculture, Makurdi"/>
+                      <option value="University of Benin"/>  
+                      <option value="University of Calabar"/>
+                      <option value="University of Ibadan"/>
+                      <option value="University of Ilorin"/>
+                      <option value="University of Jos"/>
+                      <option value="University of Lagos"/>
+                      <option value="University of Maiduguri"/>
+                      <option value="University of Medical Sciences"/>
+                      <option value="University of Nigeria"/>
+                      <option value="University of Port Harcourt"/>
+                      <option value="University of Uyo"/>
+                      <option value="Usmanu Danfodio University"/>
+                      <option value="Veritas University"/>
+                      <option value="Western Delta University"/>
+                      <option value="Yobe State University"/>
+                    </datalist>
             </Flex>
-            
+            }
         </>
       }
+      
       <Flex
               style={{
                 gap: "10px",
