@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getStoredAuthToken, removeStoredAuthToken } from "../utils/LS";
 
-// const baseurl = "https://kh-backend.herokuapp.com";
+const baseurl = "https://kh-backend.herokuapp.com";
 
-const baseurl = "http://localhost:5000"; //localhost
+// const baseurl = "http://localhost:5000"; //localhost
 
 const api = axios.create({
   baseURL: `${baseurl}/KH/api/v1/client`,
