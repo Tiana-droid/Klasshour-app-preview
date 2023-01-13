@@ -10,17 +10,18 @@ import { getStoredClientUser } from "../../utils/LS";
 import userOBJ from "../../classes/user.class";
 
 export default function DashboardHeader(props: any) {
-const  {userID}  = getStoredClientUser()
+const  {userID,avatar}  = getStoredClientUser()
   const [showDropdown, setshowDropdown] = useState(false);
+  console.log(getStoredClientUser())
 const [img,setImg] = useState(null)
   const UserAvater = () => {
-    useEffect(() => {
-      if (userID) {
-        userOBJ.get_user_account().then((res:any) => {
-        setImg(res.photo)
-      })
-      }
-    }, [])
+    // useEffect(() => {
+    //   if (userID) {
+    //     userOBJ.get_user_account().then((res:any) => {
+    //     setImg(res.photo)
+    //   })
+    //   }
+    // }, [])
     
     return (
       <div>
@@ -33,7 +34,7 @@ const [img,setImg] = useState(null)
           }}
           onClick={() => setshowDropdown(!showDropdown)}
         >
-          <Avatar size="2.4rem" photo={img} />
+          <Avatar size="2.4rem" photo={avatar} />
           <DispayDesktop>
             <img src={ArrowDown } style={{ width: "1rem" }} alt="" />
           </DispayDesktop>

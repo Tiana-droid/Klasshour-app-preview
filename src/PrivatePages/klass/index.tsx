@@ -5,10 +5,7 @@ import EmptyState from '../../Components/EmptyData'
 import ClassCard from "../../Components/ClassCard";
 
 import {
-  NextButton,
   PageLayout,
-  PaginationContainer,
-  PrevButton,
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 import StudentOBJ from "../../classes/student.class";
@@ -23,11 +20,12 @@ export default function MyKlass() {
   const getClass = async (page: number) => {
     const response: any =userType==="Student"? await StudentOBJ.student_all_classes(merithubUserID,page) : await TutorOBJ.tutor_all_class(merithubUserID,page);
     if (response?.status) {
-      setRequestData(response?.payload?.filter((el:any)=>el.classInfo.isPast !==true));
+      setRequestData(response?.payload?.filter((el: any) => el.classInfo.isPast !== true));
       settotalPages(response?.totalPages);
       console.log("response timeline", response);
     }
   };
+  console.log(requestData)
 useEffect(() => {
  getClass(currentPage)
 }, [currentPage])

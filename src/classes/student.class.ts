@@ -18,10 +18,26 @@ class Student {
     console.log("BE-Error",error)
       return error
   }
-}
+  }
+  all_requests = async (page:any,id:string) => {
+    try {
+      const response = await api.get(`/student/requests/${id}?page=${page}`);
+      if (response?.status) return response;
+    } catch (error) {
+      return error;
+    }
+  };
   accept_tutor_request = async (data: any)=>{
     try {
    const response = await api.post(`/request/?action=accept`, data);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
+  getTutorapplication = async (data: any) => {
+    try {
+   const response = await api.get(`/tutor/profile/${data.fullName}`);
     return response;
     } catch (error) {
       return error

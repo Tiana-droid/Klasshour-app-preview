@@ -149,6 +149,8 @@ export const Interactions = styled.div`
   cursor: pointer;
   img {
     width: 18px;
+    height:18px;
+    border-radius:50%
   }
   span {
     font-size: 0.8rem;
