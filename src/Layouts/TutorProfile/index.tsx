@@ -12,7 +12,6 @@ import StudentOBJ from "../../classes/student.class";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../Components/Spinner";
-import userOBJ from "../../classes/user.class";
 
 type cardProp = {
   price: string;
@@ -22,7 +21,6 @@ type cardProp = {
   userId:string
 };
 export default function Index({payload}:any) {
-  console.log(payload)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
  const { userID } = getStoredClientUser()
@@ -35,10 +33,11 @@ useEffect(() => {
       }
     })
   }
-  return () => {
     fetchData()
+
+  return () => {
   }
-}, [])
+}, [payload])
   console.log(data)
   const applicationHandler = async () => {
     setIsLoading(true)

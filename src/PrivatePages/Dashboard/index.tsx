@@ -43,13 +43,13 @@ export default function Dashboard() {
 
   const tutorCardList = tutorModules.map((obj: any, index: number) => (
     <Card key={index} onClick={() => goto(obj.path)}>
-      <img src={obj.icon} />
+      <img src={obj.icon} alt=""/>
       <span>{obj.name}</span>
     </Card>
   ));
 
   useEffect(() => {
-    console.log("data", getStoredClientUser());
+    // console.log("data", getStoredClientUser());
   }, []);
 
   return (

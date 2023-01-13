@@ -25,7 +25,6 @@ class Wallet {
 
   // fund student wallet
   fund_wallet = async (data: any) => {
-    console.log(data)
     try {
       const response = baseapi.post("/pay", data);
       return response;

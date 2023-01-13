@@ -17,7 +17,6 @@ export default function RecentActivity() {
     userOBJ.get_user_activity(currentPage).then((resp: any) => {
       setActivityData(resp.payload)
       settotalPages(resp?.totalPages);
-      console.log(resp)
     })
   }, [currentPage])
   return (

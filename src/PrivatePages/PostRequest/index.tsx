@@ -122,7 +122,6 @@ export default function PostRequest() {
         studentID: userID,
         merithubStudentID: merithubUserID,
       };
-      console.log("Ff")
       StudentOBJ.post_request(RqData).then((res: any) => {
         if (res) {
           if (res?.status === true) {
