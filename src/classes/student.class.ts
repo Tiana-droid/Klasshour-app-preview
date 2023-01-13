@@ -35,9 +35,9 @@ class Student {
       return error
     }
   }
-  getTutorapplication = async (data: any) => {
+  getTutorapplication = async ({name,requestId}: any) => {
     try {
-   const response = await api.get(`/tutor/profile/${data.fullName}`);
+   const response = await api.get(`/tutor/profile?name=${name}&requestId=${requestId}`);
     return response;
     } catch (error) {
       return error

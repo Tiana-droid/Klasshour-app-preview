@@ -33,9 +33,9 @@ export default function TutorApplyForm() {
   const [document, setDocument] = useState<string | any>("");
   const [language, setLanguage] = useState<string[]>([]);
   const [chargePerHour, setChargePerHour] = useState(currentCharge);
-  const {id} = useParams()
+  const { id } = useParams()
+  
   const navigate = useNavigate();
-
   const goto = (path: string, data?: any) => {
     if (data) {
       navigate(path, data);
