@@ -47,10 +47,8 @@ export default function Index() {
       }
     })
   }
-  
-  const getTutorProfile = async (name: string) => {
-    console.log(name)
-    navigate('/tutor-request',{state:name})
+  const getTutorProfile = async (data: any) => {
+    navigate('/tutor-request',{state:data})
   }
   return (
       <UserLayout>
@@ -70,7 +68,7 @@ export default function Index() {
                     
                     <LeftAligned>
                         <ButtonLeft onClick={()=>
-                          getTutorProfile(el.fullName)}>View Profile</ButtonLeft>
+                          getTutorProfile({name:el.fullName,requestId:el.requestId})}>View Profile</ButtonLeft>
                         <ButtonRight disabled={isLoading===el.userId} onClick={()=>applicationHandler(el?.userId)}> {isLoading===el?.userId ? <Spinner isLoading={isLoading ===el?.userId} /> :"Accept Application"}</ButtonRight>
                     </LeftAligned>
                     </Card>

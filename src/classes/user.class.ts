@@ -74,9 +74,9 @@ class USER {
       return error;
     }
   };
-  tutor_apply_request = async (payload: any,id:string) => {
+  tutor_apply_request = async (payload: any,requestID:string) => {
     try {
-      const response = await api.post(`/apply/request/${id}`, payload, {  headers: {
+      const response = await api.post(`/apply/request/${requestID}`, payload, {  headers: {
     
   }, })
       if (response?.status) { return response } else {

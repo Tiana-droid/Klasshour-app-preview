@@ -46,7 +46,7 @@ export default function RequestCard({ data }: RequestPropT) {
       navigate(`/request/${requestID}/tutor-applications`, { state: {response,requestID} , });
     });
     } else {
-        navigate(`/apply/${requestID}`);
+        navigate(`/apply/${requestID}`,{state:requestID});
     }
    
   };

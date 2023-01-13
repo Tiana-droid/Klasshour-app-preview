@@ -21,14 +21,15 @@ type cardProp = {
   requestId: string,
   userId:string
 };
-export default function Index(fullName:any) {
+export default function Index({payload}:any) {
+  console.log(payload)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
  const { userID } = getStoredClientUser()
-  const [data, setData] = useState<cardProp | any>([])
+  const [data, setData] = useState<cardProp | any>({})
 useEffect(() => {
   async function fetchData() {
-    await StudentOBJ.getTutorapplication(fullName).then((resp: any) => {
+    await StudentOBJ.getTutorapplication(payload).then((resp: any) => {
       if (resp.status) {
         setData(resp.payload)
       }
@@ -37,8 +38,7 @@ useEffect(() => {
   return () => {
     fetchData()
   }
-}, [fullName])
-
+}, [])
   console.log(data)
   const applicationHandler = async () => {
     setIsLoading(true)
@@ -63,12 +63,13 @@ useEffect(() => {
       }
     })
   }
+
   return (
-    <Card>
+    JSON.stringify(data) !== '{}' ? <Card>
       <img width={60} height={60} style={{ borderRadius: "50%" }} src={data.avatar || Avatar} alt="...." />
       <div>{data?.fullName}</div>
       <div>NGN {data?.chargePerHour} per/hour</div>
-      <div> {data?.userId?.bio} per/hour</div>
+      <div> {data?.userId?.bio} </div>
       {data?.review?.length ? <React.Fragment>
           <h3
         style={{
@@ -101,6 +102,6 @@ useEffect(() => {
 
       {/* <Button>Book tutor</Button> */}
       {/* <ButtonOutline>Message tutor</ButtonOutline> */}
-    </Card>
-  );
+    </Card>: <div>Loading...</div>
+  ) ;
 }
