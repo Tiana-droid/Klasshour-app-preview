@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PageNav from "../../Layouts/UserLayout/PageNav";
+// import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import EmptyState from '../../Components/EmptyData'
 import ApplicationCard from "../../Components/ApplicationCard";
 
 
-import { getStoredClientUser } from "../../utils/LS";
-import StudentOBJ from "../../classes/student.class";
+// import { getStoredClientUser } from "../../utils/LS";
+// import StudentOBJ from "../../classes/student.class";
 import TutorOBJ from "../../classes/user.class";
 import Pagination from "../../Components/Pagination";
 import { PageLayout } from "./Styles";

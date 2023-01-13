@@ -24,7 +24,6 @@ export default function Index() {
         setTotalPages(res.totalPages)
       })
     }, [])
-
   const applicationHandler = async (tutorId: string) => {
     setIsLoading(tutorId)
     let payload: any = {
@@ -48,8 +47,10 @@ export default function Index() {
       }
     })
   }
-  const getTutorProfile = async (data:any) => {
-    navigate('/tutor-request',{state:data})
+  
+  const getTutorProfile = async (name: string) => {
+    console.log(name)
+    navigate('/tutor-request',{state:name})
   }
   return (
       <UserLayout>
@@ -58,7 +59,7 @@ export default function Index() {
                 <React.Fragment key={i}>
                      <Card >
                     <div className="header">
-                         <img width={60} src={Avatar} alt="image" />
+                         <img width={60} height={60} style={{borderRadius:"50%"}} src={ el?.avatar || Avatar} alt="..." />
                     <p>NGN {el.chargePerHour} per/hour</p>
                     </div>
                   <h1>{el.fullName}</h1>
@@ -69,7 +70,7 @@ export default function Index() {
                     
                     <LeftAligned>
                         <ButtonLeft onClick={()=>
-                          getTutorProfile(el)}>View Profile</ButtonLeft>
+                          getTutorProfile(el.fullName)}>View Profile</ButtonLeft>
                         <ButtonRight disabled={isLoading===el.userId} onClick={()=>applicationHandler(el?.userId)}> {isLoading===el?.userId ? <Spinner isLoading={isLoading ===el?.userId} /> :"Accept Application"}</ButtonRight>
                     </LeftAligned>
                     </Card>

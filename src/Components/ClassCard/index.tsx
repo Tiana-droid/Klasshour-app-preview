@@ -32,8 +32,9 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-  const {userType,merithubUserID} = getStoredClientUser()
-  const tutor = data?.applicants.find((el: any) => el.merithubUserId === data.merithubTutorID)
+  const {userType,merithubUserID,avatar} = getStoredClientUser()
+  const tutor = data?.applicants.find((el: any) => el.merithubUserId === data?.merithubTutorID)
+  console.log(data)
   const [isLoading, setIsLoading] = useState(false);
   let uniqueLink = data?.classInfo?.participants?.find((el:any)=>el.userId === merithubUserID)?.userLink
   const joinClassHandler = async () => {
@@ -65,7 +66,7 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
         <CardHeader>
           {!isPast && (
             <CardStatus isActive={data.status === "OPEN" ? true : false}>
-              {data.status}
+              {data?.status}
             </CardStatus>
           )}
           {isPast && <CardStatus isActive={false}>Closed</CardStatus>}
@@ -75,20 +76,20 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
         <hr style={{ border: "0.55px solid #E5E7E8", marginBottom: "1rem" }} />
         <CardContent>
           <SubjectCont>
-            Subject:<span>{data.subject}</span>
+            Subject:<span>{data?.subject}</span>
           </SubjectCont>
           <CardDescription>
             {data?.description?.length > 80
-              ? data.description.slice(0, 200) + "...."
-              : data.description}
+              ? data?.description.slice(0, 200) + "...."
+              : data?.description}
           </CardDescription>
-          <CardLang>
+         {userType==="Student" &&  <CardLang>
             Language: <span>{tutor.language}</span>
-          </CardLang>
+          </CardLang>}
         </CardContent>
         <CardButtonContainer>
          {userType === "Student" &&  <Interactions>
-            <img src={teacher} />
+            <img src={avatar || teacher} alt="" />
             <span>{tutor.fullName}</span>
           </Interactions>}
          

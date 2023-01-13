@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Button,
@@ -12,6 +12,7 @@ import StudentOBJ from "../../classes/student.class";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../Components/Spinner";
+import userOBJ from "../../classes/user.class";
 
 type cardProp = {
   price: string;
@@ -20,17 +21,31 @@ type cardProp = {
   requestId: string,
   userId:string
 };
-export default function Index({ price, review, desc ,requestId,userId}: cardProp) {
+export default function Index(fullName:any) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
  const { userID } = getStoredClientUser()
+  const [data, setData] = useState<cardProp | any>([])
+useEffect(() => {
+  async function fetchData() {
+    await StudentOBJ.getTutorapplication(fullName).then((resp: any) => {
+      if (resp.status) {
+        setData(resp.payload)
+      }
+    })
+  }
+  return () => {
+    fetchData()
+  }
+}, [fullName])
 
+  console.log(data)
   const applicationHandler = async () => {
     setIsLoading(true)
     let payload: any = {
-      tutorId:userId,
+      tutorId:data.userId._id,
       studentId: userID,
-      requestId:requestId
+      requestId:data.requestId
     }
     await StudentOBJ.accept_tutor_request(payload).then((res: any) => {
        if (res) {
@@ -50,10 +65,11 @@ export default function Index({ price, review, desc ,requestId,userId}: cardProp
   }
   return (
     <Card>
-      <img width={60} src={Avatar} alt="image" />
-      <div>NGN {price} per/hour</div>
-      <div>{desc}</div>
-      {review?.length ? <React.Fragment>
+      <img width={60} height={60} style={{ borderRadius: "50%" }} src={data.avatar || Avatar} alt="...." />
+      <div>{data?.fullName}</div>
+      <div>NGN {data?.chargePerHour} per/hour</div>
+      <div> {data?.userId?.bio} per/hour</div>
+      {data?.review?.length ? <React.Fragment>
           <h3
         style={{
           fontSize: "20px",
@@ -62,8 +78,8 @@ export default function Index({ price, review, desc ,requestId,userId}: cardProp
       >
         Review and feedback
       </h3>
-      {review &&
-        review.map((review: any, index: number) => {
+      {data?.userId?.review?.length &&
+        data?.userId?.review.map((review: any, index: number) => {
           return (
             <TutorContainer key="index">
               <BoldText>{review.title}</BoldText>

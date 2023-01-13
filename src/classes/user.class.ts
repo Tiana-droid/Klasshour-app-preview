@@ -68,7 +68,7 @@ class USER {
 
   all_requests = async (page:any) => {
     try {
-      const response = await api.get(`/student/requests?page=${page}`);
+      const response = await api.get(`/tutor/requests?page=${page}`);
       if (response?.status) return response;
     } catch (error) {
       return error;

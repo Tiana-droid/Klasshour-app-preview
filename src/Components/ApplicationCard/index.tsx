@@ -24,11 +24,10 @@ export default function Index({
     navigate("/schedule-class", { state: request });
     }, 3000);
   };
-  console.log(data)
   return (
     <Card>
       <FlexHeader>
-        <img src={Avatar} alt="image" />
+        <img src={Avatar} alt="..." />
         <div>NGN{data.chargePerHour} perhour</div>
       </FlexHeader>
       <h3

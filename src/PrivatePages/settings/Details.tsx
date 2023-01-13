@@ -11,7 +11,7 @@ function getCountryCode(object: any, value: any) {
   const output =  Object.keys(object).find((key:any) =>object[key].includes(value))
   return output;
 }
-export default function Details(props: any) {
+export default function Details() {
   const countryCodes = require('country-codes-list')
   let cCode = countryCodes.customList('countryCallingCode')
   const [image, setImage] = useState<File | null |any>(null);
@@ -42,7 +42,6 @@ export default function Details(props: any) {
       setImage(event);
     }
   };
-// console.log(cCode)
 
   const fileTypes = ["JPEG", "PNG", "GIF"];
 useEffect(() => {
@@ -204,7 +203,6 @@ setFirstName(res.fullname.split(' ')[1])
         <label>Phone Number</label>
         <Input required placeholder="" value={phone} onChange={ (e)=>setPhone(e.target.value)} />
       </Flex>
-      
       {
         getStoredClientUser().userType == "Tutor" ? <>
            <Flex

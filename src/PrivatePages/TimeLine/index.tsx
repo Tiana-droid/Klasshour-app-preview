@@ -9,6 +9,7 @@ import {
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 import userOBJ from "../../classes/user.class";
+import StudentOBJ from "../../classes/student.class";
 
 
 
@@ -17,13 +18,13 @@ export default function TimeLine() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, settotalPages] = useState<number>(0);
 
-  const {  userType } = getStoredClientUser();
+  const {  userType ,merithubUserID} = getStoredClientUser();
+ 
   const getStudentRequests = async (page: number) => {
-    const response: any = await userOBJ.all_requests(currentPage);
+    const response: any = await StudentOBJ.all_requests(currentPage,merithubUserID)
     if (response?.status) {
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);
-      console.log("response timeline", response);
     }
   };
 
