@@ -56,7 +56,6 @@ export default function AccountDetail() {
         account_number: formDetails.accountNumber,
         bank_code: formDetails.bankName,
       }).then((res: any) => {
-        console.log(res, "res");
         if (res?.message === "Account number resolved") {
           setFormDetails((_) => {
             return {

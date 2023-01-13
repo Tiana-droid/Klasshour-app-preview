@@ -41,11 +41,9 @@ const ModalBox = (props: any) => {
       // Implementation for whatever you want to do with reference and after success call.
      if (status === "success") {
        WalletObj.fund_wallet({ email, reference }).then((resp: any) => {
-         console.log(resp)
          toast.success(resp.message)
        })
      }
-     console.log("Na here we dey", reference);
      props.onClick()
     };
    const componentProps =  {

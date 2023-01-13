@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Logo from "../../Assets/images/Logo.svg";
 import Logo2 from "../../Assets/images/logo.png"
 import { DBHeader, DispayDesktop, DropDownContainer } from "./Styles";
@@ -7,13 +7,9 @@ import ArrowDown from "../../Assets/icons/ArrowDown.svg";
 import { Logout } from "../../utils/some";
 import { Link } from "react-router-dom";
 import { getStoredClientUser } from "../../utils/LS";
-import userOBJ from "../../classes/user.class";
-
 export default function DashboardHeader(props: any) {
-const  {userID,avatar}  = getStoredClientUser()
+const  {avatar}  = getStoredClientUser()
   const [showDropdown, setshowDropdown] = useState(false);
-  console.log(getStoredClientUser())
-const [img,setImg] = useState(null)
   const UserAvater = () => {
     // useEffect(() => {
     //   if (userID) {

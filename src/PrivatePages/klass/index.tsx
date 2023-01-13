@@ -22,10 +22,10 @@ export default function MyKlass() {
     if (response?.status) {
       setRequestData(response?.payload?.filter((el: any) => el.classInfo.isPast !== true));
       settotalPages(response?.totalPages);
-      console.log("response timeline", response);
+      // console.log("response timeline", response);
     }
   };
-  console.log(requestData)
+  // console.log(requestData)
 useEffect(() => {
  getClass(currentPage)
 }, [currentPage])

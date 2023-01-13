@@ -22,7 +22,7 @@ export default function PastKlass() {
     if (response?.status) {
             setRequestData(response?.payload?.filter((el:any)=>el.classInfo.isPast ===true));
       settotalPages(response?.totalPages);
-      console.log("response timeline", response);
+      // console.log("response timeline", response);
     }
    };
   useEffect(() => {

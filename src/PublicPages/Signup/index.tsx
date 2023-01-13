@@ -62,7 +62,6 @@ export default function Signup() {
   });
 
   const handleRegistration = async (values: any) => {
-    console.log(values, "from submoitted form");
 
     setisLoading(true);
     userOBJ
@@ -73,7 +72,6 @@ export default function Signup() {
         userType: userRole,
       })
       .then((res: any) => {
-        console.log(res, "response");
         if (res) {
           if (res?.status === true) {
             toast.success(res?.message);
@@ -101,7 +99,6 @@ export default function Signup() {
   };
   //handle Role Selection
   const handleRoleSelection = (role: string) => {
-    console.log(role, "from role selection");
     setuserRole(role);
   };
 
@@ -116,7 +113,7 @@ export default function Signup() {
         <BannerCont bg={SignupBanner}></BannerCont>
         <FormCont>
           <FormHeader>
-            <img src={Logo} />
+            <img src={Logo} alt=""/>
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}

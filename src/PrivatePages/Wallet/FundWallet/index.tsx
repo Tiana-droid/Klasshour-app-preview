@@ -37,7 +37,6 @@ export default function Index() {
       window.open(res.url)
       })
       .catch((err) => {
-        console.log(err, "err");
         toast.error(err?.data?.message);
         setisLoading(false);
       });
