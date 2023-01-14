@@ -35,7 +35,7 @@ import userOBJ from "../../classes/user.class";
 
 const ModalBox = (props: any) => {
   const { email, fullname,userID } = getStoredClientUser()
-  const publicKey = "pk_test_80b957ed664b070aa09e4a730beb4f3587016694"
+  const publicKey = "pk_live_e05506cfbfe9a85fa668d2f34b16ea74cbf48795"
   const [amount, setAmount] = useState(0)
    const handlePaystackSuccessAction = ({status,reference}:any) => {
       // Implementation for whatever you want to do with reference and after success call.
