@@ -33,7 +33,7 @@ export default function Avatar({ photo, size }: any) {
     <Container size={size}>
       <img
         src={photo ? photo : avatar}
-        style={{ width: "60px", height: "100%", objectFit: "cover",borderRadius:"50%" }}
+        style={{ width: "46px", height: "46px", objectFit: "cover",borderRadius:"50%" }}
         alt=""
       />
     </Container>
