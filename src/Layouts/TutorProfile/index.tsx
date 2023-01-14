@@ -38,7 +38,6 @@ useEffect(() => {
   return () => {
   }
 }, [payload])
-  console.log(data)
   const applicationHandler = async () => {
     setIsLoading(true)
     let payload: any = {

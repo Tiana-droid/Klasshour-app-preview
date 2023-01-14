@@ -34,7 +34,7 @@ import WalletObj from "../../classes/wallet.class";
 import userOBJ from "../../classes/user.class";
 
 const ModalBox = (props: any) => {
-  const { email, fullname,userID } = getStoredClientUser()
+  const { email, fullname } = getStoredClientUser()
   const publicKey = "pk_live_e05506cfbfe9a85fa668d2f34b16ea74cbf48795"
   const [amount, setAmount] = useState(0)
    const handlePaystackSuccessAction = ({status,reference}:any) => {

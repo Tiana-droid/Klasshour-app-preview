@@ -104,8 +104,8 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Name</label>
-        <Input required placeholder="First Name" value={firstName} onChange={ (e)=>setFirstName(e.target.value)} />
-        <Input required placeholder="Last Name"  value={lastName} onChange={ (e)=>setLastName(e.target.value)}/>
+        <Input required placeholder="First Name" value={firstName} readOnly />
+        <Input required placeholder="Last Name"  value={lastName} readOnly/>
       </Flex>
       <Flex
         style={{
@@ -116,7 +116,7 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Email</label>
-        <Input required placeholder="" type={email}  value={email} onChange={ (e)=>setEmail(e.target.value)} />
+        <Input required placeholder="" type={email}  value={email} readOnly />
       </Flex>
       <Flex
         style={{
