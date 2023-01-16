@@ -6,6 +6,8 @@ import { FileUploader } from "react-drag-drop-files";
 import userOBJ from "../../classes/user.class";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../Components/Spinner";
+import './index.css'
+
 
 function getCountryCode(object: any, value: any) {
   const output =  Object.keys(object).find((key:any) =>object[key].includes(value))
@@ -95,7 +97,7 @@ setFirstName(res.fullname.split(' ')[1])
   
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}  style={{ flexDirection: "column", width: "100%" }} >
-      <Flex
+      <Flex id="name"
         style={{
           gap: "10px",
           color: "#000",
@@ -104,8 +106,8 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Name</label>
-        <Input required placeholder="First Name" value={firstName} readOnly />
-        <Input required placeholder="Last Name"  value={lastName} readOnly/>
+        <Input required placeholder="First Name" value={firstName} readOnly id="-name"/>
+        <Input required placeholder="Last Name"  value={lastName} readOnly id="-name"/>
       </Flex>
       <Flex
         style={{
@@ -124,6 +126,7 @@ setFirstName(res.fullname.split(' ')[1])
           color: "#000",
           alignItems: "center",
           padding: "10px 0",
+          maxWidth: '90%' 
         }}
       >
         <label>
@@ -159,7 +162,7 @@ setFirstName(res.fullname.split(' ')[1])
           maxSize={5242880}
         name="file"
           types={fileTypes}
-          label="Click to upload or drag and drop .jpeg,.png (30mb file size)"
+          label="Click to upload or drag and drop .jpeg,.png (30mb file size)" 
       />
       </Flex>
      

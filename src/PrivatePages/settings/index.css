@@ -1,0 +1,16 @@
+#name {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 550px) and (min-width: 320px) {
+    #name label {
+        min-width: 80px;
+    }
+}
+@media screen and (max-width: 319px) {
+    #name {
+        flex-wrap: wrap !important;
+    }
+}
