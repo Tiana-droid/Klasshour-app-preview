@@ -51,12 +51,13 @@ export const FAB = styled.div`
   background: ${AppColors.brandRed};
   border-radius: 20rem;
   position: fixed;
-  bottom: 4rem;
+  bottom: 1rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   img {
     width: 40%;
   }

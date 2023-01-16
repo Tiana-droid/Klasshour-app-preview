@@ -10,7 +10,7 @@ export default function UserLayout({ children }: any) {
       <PageLayout>
         <Link to="/">
           <FAB>
-            <img src={DashboardIcon} />
+            <img src={DashboardIcon} alt=""/>
           </FAB>
         </Link>
         <LayoutHead>

@@ -113,7 +113,7 @@ export default function Signup() {
         <BannerCont bg={SignupBanner}></BannerCont>
         <FormCont>
           <FormHeader>
-            <img src={Logo} alt=""/>
+            <img src={Logo} alt="..." onClick={()=>navigate(-1)} style={{cursor:'pointer'}}/>
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
