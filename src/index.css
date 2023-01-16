@@ -23,7 +23,7 @@ a{
   text-decoration: none;
 }
 
-select,input{
+select{
   background: transparent;
   outline: none;
 }
