@@ -143,14 +143,14 @@ export const Input = styled.input`
   padding: 10px;
   height: 50px;
   border-radius: 5px;
-  border: 0.3px solid #eee;
+  border: 2px solid #eee;
 `;
 export const Select = styled.select`
   width: 100%;
   padding: 10px;
   height: 50px;
   border-radius: 5px;
-  border: 0.3px solid #eee;
+  border: 2px solid #eee;
 `;
 
 export const TextArea = styled.textarea`

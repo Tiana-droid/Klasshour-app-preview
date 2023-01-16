@@ -21,9 +21,9 @@ import {
   Container,
   Form,
   FormControl,
-  Dismiss
+  Dismiss,
+  AvailableBalance
 } from "./styles";
-import userIcon from '../../Assets/icons/UserIcon.svg'
 import { AppColors } from "../../utils/constants";
 import Account from "./Account";
 import RecentActivity from "./Activity";
@@ -134,11 +134,9 @@ export default function Index() {
       <WalletLayout>
         <VStack>
           <BalanceContainer>
-            <Flex>
-              <WalletHeader>{fullname}</WalletHeader>
-              <div><img src={userIcon} alt="" /></div>
-            </Flex>
+            <WalletHeader>{fullname}</WalletHeader>
             <Center>
+            <AvailableBalance>Available Balance</AvailableBalance>
               <WalletAmount>NGN {wBalance.toLocaleString()}</WalletAmount>
              {userType==="Student"?  <Button onClick={()=>setIsShow(!isShow)}>
              Fund Wallet
@@ -147,27 +145,6 @@ export default function Index() {
             </Button>}
               </Center>
           </BalanceContainer>
-          {/* <ButtonContainer>
-            <Button
-             disabled={getStoredClientUser().userType === "Student"? true : false }
-            onClick={()=> window.location.replace('/withdraw')}
-              style={{
-                background:`${getStoredClientUser().userType === "Student"? '#ccc' :'linear-gradient(93.34deg, #EF0000 29.02%, #000000 104.1%)' }`
-          
-              }}
-            >
-              Withdraw
-            </Button>
-            <Button
-            disabled={getStoredClientUser().userType !== "Student"?true : false }
-            onClick={()=> window.location.replace('/fund-wallet')}
-              style={{
-                background: `${getStoredClientUser().userType !== "Student" ? ' #ccc' : 'linear-gradient(94.06deg, #009933 33.95%, #000000 109.95%)' }`
-              }}
-            >
-              Fund Wallet
-            </Button>
-          </ButtonContainer> */}
         </VStack>
         <ModalBox isShow={isShow} onClick={()=>setIsShow(!isShow)} />
       </WalletLayout>

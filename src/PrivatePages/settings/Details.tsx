@@ -60,14 +60,12 @@ setFirstName(res.fullname.split(' ')[1])
     setLanguage(res.language.split(','))
     setInstitution(res.institution)
     setEnrrolled(res.enrolled)
-    // console.log(res)
  })
 }, [])
   const handleWordChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setBio(newText);
     setWordCount(newText.split("").length);
-    // set
   };
 
   const navigate = useNavigate()
@@ -77,7 +75,7 @@ setFirstName(res.fullname.split(' ')[1])
     setIsLoading(!isLoading)
     const payload:any = {
       email, fullname: `${lastName} ${firstName}`, subject:subject.join(','), language:language.join(','), countryCode, country,
-      educationLevel,chargePerHour,bio,phone,imageUrl
+      educationLevel,chargePerHour,bio,phone,imageUrl,institution,enrolled
     }
     formData.append('payload', JSON.stringify(payload))
     formData.append('document', image)

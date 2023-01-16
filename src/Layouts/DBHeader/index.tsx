@@ -42,7 +42,7 @@ const  {avatar}  = getStoredClientUser()
           <ul>
             {/* <li><a href="/settings">Profile Settings</a></li> */}
             <li><a href="/wallet">Wallet</a></li>
-            {getStoredClientUser().userType !== "Tutor" && <li>My Group</li>}
+            <li><a href="/settings">My Profile</a></li>
             <li onClick={() => Logout()}>Logout</li>
           </ul>
         </DropDownContainer>
