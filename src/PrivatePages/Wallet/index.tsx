@@ -4,7 +4,6 @@ import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import {
   WalletLayout,
   BalanceContainer,
-  Flex,
   WalletHeader,
   WalletAmount,
   Button,
