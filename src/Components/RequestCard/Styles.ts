@@ -27,7 +27,8 @@ export const Card = styled.div`
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    height: 320px;
+    // height: 320px;
+    min-height:unset
   }
   @media (${BreakPoints.large}) {
     width: 100%;
@@ -65,6 +66,9 @@ export const CardDate = styled.span`
   display: flex;
   justify-content: end;
   width: 45%;
+  @media (${BreakPoints.xs}) {
+width:unset
+  }
 `;
 
 export const CardContent = styled.div`
@@ -143,8 +147,9 @@ export const CardButtonContainer = styled.div`
 
   @media (${BreakPoints.xs}) {
     bottom: 0.4rem;
-    justify-content: space-between;
-    padding: 0 1rem;
+    // justify-content: space-between;
+    padding: 0 0.7rem;
+    height:unset
   }
   @media (${BreakPoints.large}) {
     padding: 0 2rem;

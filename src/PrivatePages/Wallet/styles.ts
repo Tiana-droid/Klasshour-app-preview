@@ -14,7 +14,7 @@ export const WalletLayout = styled.div`
   @media (${BreakPoints.xs}) {
     grid-template-columns: 1fr;
     margin: auto;
-    grid-template-rows: 1fr 1fr;
+   overflow-x:auto
   }
   @media (${BreakPoints.small}) {
     grid-template-columns: 1fr;

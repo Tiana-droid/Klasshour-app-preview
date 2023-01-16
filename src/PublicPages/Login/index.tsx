@@ -20,7 +20,7 @@ import userOBJ from "../../classes/user.class";
 import { AppColors } from "../../utils/constants";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 type InputsPropT = {
@@ -30,7 +30,7 @@ type InputsPropT = {
 
 export default function Login() {
   const [isLoading, setisLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleLogin = async (values: any) => {
     setisLoading(true);
     userOBJ
@@ -83,7 +83,7 @@ export default function Login() {
         <BannerCont bg={LoginBanner}></BannerCont>
         <FormCont>
           <FormHeader>
-            <img src={Logo} />
+            <img src={Logo} alt="..." onClick={()=>navigate(-1)} style={{cursor:'pointer'}}/>
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
