@@ -53,8 +53,13 @@ export const ContentContainer = styled.div`
 
 export const Flex = styled.div`
   display: flex;
+  
   label{
     min-width:300px;
+  }
+
+  @media screen and (max-width: 550px){
+   flex-wrap : wrap;
   }
 `;
 
@@ -87,12 +92,13 @@ span{
 `
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   grid-gap: 70px;
+
   @media (${BreakPoints.xs}) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-  @media (${BreakPoints.small}) {
+  /* @media (${BreakPoints.small}) {
     grid-template-columns: 1fr;
   }
   @media (${BreakPoints.medium}) {
@@ -100,7 +106,7 @@ export const Grid = styled.div`
   }
   @media (${BreakPoints.large}) {
     grid-template-columns: 2fr 1fr;
-  }
+  } */
 `;
 export const Image = styled.img`
   @media (${BreakPoints.xs}) {
