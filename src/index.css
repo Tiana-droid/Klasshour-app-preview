@@ -27,3 +27,7 @@ select,input{
   background: transparent;
   outline: none;
 }
+
+select{
+  padding-right: 2rem !important;
+}
