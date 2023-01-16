@@ -79,9 +79,14 @@ export const Flex = styled.div`
     align-item:center
   }
 `;
-export const WalletHeader = styled.span`
-  font-size: 19px;
+export const WalletHeader = styled.div`
+  font-size: 24px;
   font-weight: 500;
+  text-align:center
+`;
+export const AvailableBalance = styled.div`
+  font-size: 19px;
+  font-weight: 300;
 `;
 export const WalletAmount = styled.span`
   font-weight: 600;
@@ -118,7 +123,7 @@ export const Button = styled.button`
   outline: none;
   color: #fff;
   font-size: 14px;
-  margin:10px auto;
+  margin:20px auto 10px auto;
   background: #E55935;
   font-weight: 600;
   @media (${BreakPoints.xs}) {

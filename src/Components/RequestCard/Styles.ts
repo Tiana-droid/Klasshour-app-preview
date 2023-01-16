@@ -105,7 +105,7 @@ export const Schedule = styled.div`
 `;
 
 export const CardDescription = styled.div`
-  width: 80%;
+  // width: 80%;
   margin-top: 1rem;
   color: #292929;
   font-weight: 300;

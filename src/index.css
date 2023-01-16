@@ -22,3 +22,8 @@ a{
   color:inherit;
   text-decoration: none;
 }
+
+select,input{
+  background: transparent;
+  outline: none;
+}
