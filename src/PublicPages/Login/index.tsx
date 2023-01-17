@@ -88,7 +88,16 @@ export default function Login() {
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
             <Form onSubmit={handleSubmit(handleLogin)}>
-              <h2>Welcome Back</h2>
+              <h2  onPaste={(e: any) => {
+          e.preventDefault();
+          return false;
+        }} onCopy={(e: any) => {
+          e.preventDefault();
+          return false;
+                }
+                
+                }
+              >Welcome Back</h2>
               {errors.email && <FormError>{errors.email.message}</FormError>}
               <Input
                 Icon={MailIcon}
