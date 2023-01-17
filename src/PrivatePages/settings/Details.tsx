@@ -45,7 +45,7 @@ export default function Details() {
     }
   };
 
-  const fileTypes = ["JPEG", "PNG", "GIF"];
+  const fileTypes = ["JPEG","JPG", "PNG", "GIF","jpeg","jpg","png","gif"];
 useEffect(() => {
   userOBJ.get_user_account().then((res:any) => {
 setLastName(res.fullname.split(' ')[0])
@@ -161,7 +161,11 @@ setFirstName(res.fullname.split(' ')[1])
           handleChange={handleChange}
           maxSize={5242880}
         name="file"
-          types={fileTypes}
+            types={fileTypes}
+            onTypeError={() => {
+              toast.error('Invalid image type...png/jpg/gif types allowed')
+              return
+            }}
           label="Click to upload or drag and drop .jpeg,.png (30mb file size)" 
       />
         </span>
