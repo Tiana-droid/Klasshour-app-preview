@@ -68,8 +68,19 @@ setFirstName(res.fullname.split(' ')[1])
     const newText = e.target.value;
     setBio(newText);
     setWordCount(newText.split("").length);
+    
   };
-
+  const handleSubjectCount = (e: any) => {
+    const newText = e.target.value;
+    setText(newText)
+}
+  const handleAddSubject = () => {
+    if (!text) {
+          return
+        }
+        setText("")
+        return subject.includes(text.toLowerCase()) ? null : setSubject(subject.concat(text.toLowerCase()))
+  }
   const navigate = useNavigate()
   const handleSubmit = async (e: any) => {
     const formData = new FormData()
@@ -223,11 +234,10 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label>Add Subject</label>
-            <Input value={text} onChange={(e)=>setText(e.target.value)}/>
-            <AddBtn type="button" onClick={() => {
-              setText("")
-              return subject.includes(text.toLowerCase()) ? null : setSubject(subject.concat(text.toLowerCase()))
-            }}>Add</AddBtn>
+            <Input value={text} onChange={handleSubjectCount} />
+            {text.split("").length >=30 && <p style={{color:"red"}}>max length:30 execeeded</p>}
+            
+            <AddBtn type="button" onClick={handleAddSubject} disabled={text.split("").length >=30}>Add</AddBtn>
       </Flex>
       {subject?.length >0 && <Flex
         style={{
@@ -238,7 +248,8 @@ setFirstName(res.fullname.split(' ')[1])
         }}
       >
         <label style={{visibility:'hidden'}}>output</label>
-         {subject?.map((el:string, i:number) => {
+            <div className="subject" style={{display:'grid',gridTemplateColumns:"repeat(3,auto)",gap:10}}>
+              {subject?.map((el:string, i:number) => {
            return <Identifier>
              {el}
              <span onClick={() => {
@@ -247,6 +258,7 @@ setFirstName(res.fullname.split(' ')[1])
              }}>&times;</span>
            </Identifier>
       })}
+         </div>
       </Flex>}
         <Flex
         style={{

@@ -45,3 +45,17 @@ select{
     border-image: initial !important;
     max-width: 100%;
 }
+.subject{
+  max-width: 600px; 
+}
+
+@media (max-width:420px) {
+  .subject{
+    max-width: 100%;
+    display: block !important;
+}
+.sc-hjsNop.hsyttD{
+    /* width: 50% */
+    margin: 20px 0;
+}
+}

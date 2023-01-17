@@ -66,6 +66,7 @@ useEffect(() => {
     JSON.stringify(data) !== '{}' ? <Card>
       <img width={60} height={60} style={{ borderRadius: "50%" }} src={data.avatar || Avatar} alt="...." />
       <div>{data?.fullName}</div>
+      <div>{data?.userId?.country}</div>
       <div>NGN {data?.chargePerHour} per/hour</div>
       <div> {data?.userId?.bio} </div>
       {data?.review?.length ? <React.Fragment>

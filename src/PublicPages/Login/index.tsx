@@ -83,7 +83,7 @@ export default function Login() {
         <BannerCont bg={LoginBanner}></BannerCont>
         <FormCont>
           <FormHeader>
-            <img src={Logo} alt="..." onClick={()=>navigate(-1)} style={{cursor:'pointer'}}/>
+            <img src={Logo} alt="..." onClick={()=>window.location.replace('https://www.klasshour.com')} style={{cursor:'pointer'}}/>
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
