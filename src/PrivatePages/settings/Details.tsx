@@ -154,7 +154,9 @@ setFirstName(res.fullname.split(' ')[1])
           maxLength={5242880}
           onChange={handleChange}
         /> */}
-        <FileUploader
+        <span className="upload">
+          <FileUploader
+          
         multiple={false}
           handleChange={handleChange}
           maxSize={5242880}
@@ -162,6 +164,7 @@ setFirstName(res.fullname.split(' ')[1])
           types={fileTypes}
           label="Click to upload or drag and drop .jpeg,.png (30mb file size)" 
       />
+        </span>
       </Flex>
      
       <Flex

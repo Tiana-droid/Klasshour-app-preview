@@ -31,3 +31,17 @@ select{
 /* select{
   padding-right: 2rem !important;
 } */
+.upload{
+  width: 100%;
+}
+.upload label{
+  width: 100% !important;
+    height: 50px !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-color: rgb(238, 238, 238) !important;
+    border-image: initial !important;
+    max-width: 100%;
+}
