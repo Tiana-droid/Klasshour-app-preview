@@ -24,23 +24,25 @@ type RequestPropT = {
     subject: string;
     language: any;
     description: string;
-    classInfo:any,
+    classInfo: any,
     tutor: any;
+    image: any;
     applicants: any,
-    merithubTutorID:string
+    merithubTutorID: string,
   };
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-  const {userType,merithubUserID,avatar} = getStoredClientUser()
+
+  const { userType, merithubUserID, avatar } = getStoredClientUser()
   const tutor = data?.applicants.find((el: any) => el.merithubUserId === data?.merithubTutorID)
-  console.log(data)
+
   const [isLoading, setIsLoading] = useState(false);
-  let uniqueLink = data?.classInfo?.participants?.find((el:any)=>el.userId === merithubUserID)?.userLink
+  let uniqueLink = data?.classInfo?.participants?.find((el: any) => el.userId === merithubUserID)?.userLink
   const joinClassHandler = async () => {
     setIsLoading(true)
     await StudentOBJ.student_join_class(data).then((res: any) => {
-        if (res) {
+      if (res) {
         if (res?.status === true) {
           // toast.success(res?.message);
           window.open(`${data?.classInfo?.preLink}/${uniqueLink}?devicetest=true`)
@@ -53,12 +55,12 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
         toast.error(res?.message);
         setIsLoading(false);
       }
-     })
+    })
   }
   const startClassHandler = async () => {
     setIsLoading(true)
-     window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
-          setIsLoading(false);
+    window.open(`${data?.classInfo?.preLink}/${data?.classInfo?.classData?.hostLink}?devicetest=true`)
+    setIsLoading(false);
   }
   return (
     <div>
@@ -83,17 +85,17 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
               ? data?.description.slice(0, 200) + "...."
               : data?.description}
           </CardDescription>
-         {userType==="Student" &&  <CardLang>
+          {userType === "Student" && <CardLang>
             Language: <span>{tutor.language}</span>
           </CardLang>}
         </CardContent>
         <CardButtonContainer>
-         {userType === "Student" &&  <Interactions>
-            <img src={avatar || teacher} alt="" />
+          {userType === "Student" && <Interactions>
+            <img src={tutor.avatar || avatar || teacher} alt="" />
             <span>{tutor.fullName}</span>
           </Interactions>}
-         
-          {!isPast &&  <CardButton onClick={userType ==="Student"?joinClassHandler:startClassHandler} disabled={isLoading}> {userType==="Student" ? "Join Class":"Start Class"} </CardButton>}
+
+          {!isPast && <CardButton onClick={userType === "Student" ? joinClassHandler : startClassHandler} disabled={isLoading}> {userType === "Student" ? "Join Class" : "Start Class"} </CardButton>}
         </CardButtonContainer>
       </Card>
     </div>

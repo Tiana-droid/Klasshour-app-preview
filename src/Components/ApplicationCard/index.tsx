@@ -18,6 +18,7 @@ export default function Index({
 }: any) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(data)
   const handleOnclickEvent = (request:any) => {
     setIsLoading(true);
     setTimeout(() => {
@@ -27,7 +28,7 @@ export default function Index({
   return (
     <Card>
       <FlexHeader>
-        <img src={Avatar} alt="..." />
+        <img src={data.avatar || Avatar} alt="..." width={40} height={40} style={{ borderRadius:'50%'}}/>
         <div>NGN{data.chargePerHour} perhour</div>
       </FlexHeader>
       <h3

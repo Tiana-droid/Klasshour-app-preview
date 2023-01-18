@@ -217,7 +217,11 @@ export const ActionButton = styled.button`
     height: 30px;
   } ;
 `;
-export const Box = styled.div``;
+export const Box = styled.div`
+ @media (${BreakPoints.xs}) {
+  overflow-x:auto
+  }
+`;
 
 export const OutlinedInput = styled.input`
   border: 0.5px solid #96969642;
@@ -257,6 +261,9 @@ export const Th = styled.th`
   text-align: left;
   padding: 8px;
   letter-spacing: 0.25px;
+   @media (${BreakPoints.xs}) {
+   min-width:200px
+  }
 `;
 export const TableHeaderRow = styled.tr`
   background-color: #f5fbf7;

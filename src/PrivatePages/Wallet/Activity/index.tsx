@@ -20,7 +20,8 @@ export default function RecentActivity() {
     })
   }, [currentPage])
   return (
-    <Box>
+    <>
+       <Box>
       <Table>
         <thead>
           <TableHeaderRow>
@@ -66,7 +67,9 @@ export default function RecentActivity() {
         
       </Table>
       {!activityData.length && <EmptyData data="Activity" />}
-      {activityData?.length > 0 && (
+     
+    </Box>
+     {activityData?.length > 0 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
@@ -76,7 +79,6 @@ export default function RecentActivity() {
             }}
           />
         )}
-
-    </Box>
+    </>
   );
 }
