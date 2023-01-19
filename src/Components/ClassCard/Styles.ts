@@ -143,17 +143,21 @@ export const CardButtonContainer = styled.div`
 
 export const Interactions = styled.div`
   width: 10%;
+  
   display: flex;
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
   img {
-    width: 18px;
-    height:18px;
+    width: 40px;
+    height:40px;
     border-radius:50%
   }
   span {
     font-size: 0.8rem;
+  }
+   @media (${BreakPoints.xs}) {
+   width:100%
   }
 `;
 
@@ -169,6 +173,7 @@ export const CardButton = styled.button`
 
   @media (${BreakPoints.xs}) {
     padding: 0 1rem;
+    width:50%
   }
   @media (${BreakPoints.large}) {
     padding: 0 2rem;
