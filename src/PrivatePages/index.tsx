@@ -16,6 +16,7 @@ import Submissions from "./Submissions";
 import ScheduleClass from "./ScheduleClass";
 import Test from "./Test";
 import Settings from "./settings";
+import Review from './Reviews/Reviews'
 
 export default function AuthRoutes() {
   return (
@@ -37,6 +38,7 @@ export default function AuthRoutes() {
       <Route path="/fund-wallet" element={<FundWallet />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="*" element={<ErrorPage />} />
+      <Route path="/review" element={<Review />} />
     </Routes>
   );
 }
