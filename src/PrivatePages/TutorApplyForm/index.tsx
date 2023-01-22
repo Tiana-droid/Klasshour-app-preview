@@ -91,8 +91,13 @@ export default function TutorApplyForm() {
     fullName:fullname,
     };
     formData.append('payload',JSON.stringify(payload))
-    formData.append('document',document)
-    await TutorOBJ.tutor_apply_request(formData,payload.requestId).then((res: any) => {
+    formData.append('document', document)
+    await TutorOBJ.get_user_account().then((res: any) => {
+      if (!res.photo || !res.chargePerHour) {
+        toast.error("Update your profile setting")
+        navigate('/settings')
+      } else {
+         TutorOBJ.tutor_apply_request(formData,payload.requestId).then((res: any) => {
       
         if (res?.status === true) {
           toast.success(res?.message);
@@ -105,6 +110,9 @@ export default function TutorApplyForm() {
       
       setIsLoading(false);
     });
+      }
+    })
+    
   };
 
 

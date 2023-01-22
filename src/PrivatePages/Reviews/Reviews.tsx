@@ -15,7 +15,7 @@ export default function App() {
   const setRate = (rate: React.SetStateAction<number>) => {
     setRating(rate);
   };
-  console.log(searchParams)
+  
   const goto = (path: string, data?: any) => {
     if (data) {
       navigate(path, data);
@@ -27,6 +27,7 @@ export default function App() {
     e.preventDefault()
     if (!rating || !title || !description) {
       toast.error("All Fields are required")
+      return
     }
     const payload = {
       rating,
@@ -41,7 +42,35 @@ export default function App() {
             setIsLoading(false);
           }
     })
- }
+  }
+  if (searchParams.get('role') === "participant") {
+    return (
+    <Container className="container">
+      <Rev className="review">
+        <h3>Add your review</h3>
+
+        <Box className="box">
+          <form onSubmit={handleReview}>
+            <FormControl>
+              <label htmlFor="">Title</label> <br />
+              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
+            </FormControl>
+
+            <FormControl>
+               <label htmlFor="">Description</label> <br />
+            <textarea name="" id="" cols={40} rows={10} value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
+            </FormControl>
+            <Rating count={setRate} />
+            <Button className="btn">
+              <button type="submit">Submit</button>
+              <button type="reset" onClick={()=>navigate('/')}>Cancel</button>
+            </Button>
+          </form>
+        </Box>
+      </Rev>
+    </Container>
+  );
+  }
   return (
     <Container className="container">
       <Rev className="review">
