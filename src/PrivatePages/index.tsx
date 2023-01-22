@@ -37,8 +37,8 @@ export default function AuthRoutes() {
       <Route path="/withdraw" element={<Withdraw />} />
       <Route path="/fund-wallet" element={<FundWallet />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/class/session-end" element={<Review />} />
       <Route path="*" element={<ErrorPage />} />
-      <Route path="/review" element={<Review />} />
     </Routes>
   );
 }

@@ -67,6 +67,7 @@ export const Button = styled.div`
   align-items: center;
   gap: 20px;
   margin-top: 20px;
+  
 
   & button {
     font-family: "Roboto";
@@ -79,5 +80,28 @@ export const Button = styled.div`
     background: #f15e38;
     border-radius: 4px;
     text-align: center;
+    outline:none;
+    border:none;
+    &[type="reset"]{
+background: transparent;
+color:#f15e38
+  }
   }
 `;
+
+export const FormControl = styled.div`
+label{
+  width:100%
+}
+input{
+width:calc(100% -  40px);
+padding:10px 20px;
+border-radius:5px;
+margin:10px 0;
+outline:none
+}
+textarea{
+margin:10px 0;
+outline:none
+}
+`
