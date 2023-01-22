@@ -5,6 +5,7 @@ import {  useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import StudentOBJ from "../../classes/student.class";
 
+
 export default function App() {
   const [rating, setRating] = React.useState(0)
   const [title, setTitle] = React.useState("")
@@ -31,6 +32,11 @@ export default function App() {
     }
     const payload = {
       rating,
+      studentId: searchParams.get('userid'),
+      title,
+      description,
+      classid:searchParams.get('classid')
+
     }  
     StudentOBJ.student_review_tutor(payload).then((res: any) => {
       if (res?.status === true) {
@@ -72,29 +78,6 @@ export default function App() {
   );
   }
   return (
-    <Container className="container">
-      <Rev className="review">
-        <h3>Add your review</h3>
-
-        <Box className="box">
-          <form onSubmit={handleReview}>
-            <FormControl>
-              <label htmlFor="">Title</label> <br />
-              <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
-            </FormControl>
-
-            <FormControl>
-               <label htmlFor="">Description</label> <br />
-            <textarea name="" id="" cols={40} rows={10} value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
-            </FormControl>
-            <Rating count={setRate} />
-            <Button className="btn">
-              <button type="submit">Submit</button>
-              <button type="reset" onClick={()=>navigate('/')}>Cancel</button>
-            </Button>
-          </form>
-        </Box>
-      </Rev>
-    </Container>
+   navigate('/timeline')
   );
 };
