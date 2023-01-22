@@ -59,7 +59,14 @@ class Student {
       return error
     }
   }
-
+ student_review_tutor = async (data:any) => {
+     try {
+   const response = await api.post(`/student/review-tutor`,data);
+    return response;
+    } catch (error) {
+      return error
+    }
+  }
 }
 
 const StudentOBJ = new Student();

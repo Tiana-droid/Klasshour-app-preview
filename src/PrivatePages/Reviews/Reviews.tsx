@@ -3,24 +3,44 @@ import {Container, Rev, Box, Button,FormControl} from './styles'
 import Rating from "../../Components/Rating";
 import {  useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import StudentOBJ from "../../classes/student.class";
 
 export default function App() {
   const [rating, setRating] = React.useState(0)
   const [title, setTitle] = React.useState("")
+  const [isLoading,setIsLoading] = React.useState(false)
   const [description, setDescription] = React.useState("")
   const navigate = useNavigate()
- let searchParams = useSearchParams();
+ let [searchParams,setSearchParams] = useSearchParams();
   const setRate = (rate: React.SetStateAction<number>) => {
     setRating(rate);
   };
   console.log(searchParams)
-  const handleReview = () => {
+  const goto = (path: string, data?: any) => {
+    if (data) {
+      navigate(path, data);
+    } else {
+      navigate(path);
+    }
+  };
+  const handleReview = (e: { preventDefault: () => void; }) => {
+    e.preventDefault()
     if (!rating || !title || !description) {
       toast.error("All Fields are required")
     }
     const payload = {
       rating,
-   }  
+    }  
+    StudentOBJ.student_review_tutor(payload).then((res: any) => {
+      if (res?.status === true) {
+            toast.success(res?.message);
+            setIsLoading(false);
+            goto("/timeline");
+          } else {
+            toast.error(res?.message);
+            setIsLoading(false);
+          }
+    })
  }
   return (
     <Container className="container">
@@ -28,7 +48,7 @@ export default function App() {
         <h3>Add your review</h3>
 
         <Box className="box">
-          <form action="">
+          <form onSubmit={handleReview}>
             <FormControl>
               <label htmlFor="">Title</label> <br />
               <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
