@@ -82,5 +82,8 @@ export default function App() {
     </Container>
   );
   }
- 
+  return <>
+    Thank you for the class
+  </>
+  
 };
