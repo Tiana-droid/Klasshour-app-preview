@@ -16,6 +16,11 @@ export default function App() {
   const setRate = (rate: React.SetStateAction<number>) => {
     setRating(rate);
   };
+  React.useEffect(() => {
+    if (searchParams.get('role') !== "participant") {
+     navigate('/')
+   }
+  }, [searchParams,navigate])
   
   const goto = (path: string, data?: any) => {
     if (data) {
@@ -77,7 +82,5 @@ export default function App() {
     </Container>
   );
   }
-  return (
-   navigate('/timeline')
-  );
+ 
 };
