@@ -4,6 +4,7 @@ import Rating from "../../Components/Rating";
 import {  useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import StudentOBJ from "../../classes/student.class";
+import Spinner from "../../Components/Spinner";
 
 
 export default function App() {
@@ -30,9 +31,11 @@ export default function App() {
     }
   };
   const handleReview = (e: { preventDefault: () => void; }) => {
+    setIsLoading(true)
     e.preventDefault()
     if (!rating || !title || !description) {
       toast.error("All Fields are required")
+      setIsLoading(false)
       return
     }
     const payload = {
@@ -73,7 +76,7 @@ export default function App() {
             </FormControl>
             <Rating count={setRate} />
             <Button className="btn">
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={isLoading}>{isLoading ? <Spinner isLoading={isLoading} /> : "Submit"}</button>
               <button type="reset" onClick={()=>navigate('/')}>Cancel</button>
             </Button>
           </form>
