@@ -47,9 +47,10 @@ export default function Details() {
 
   const fileTypes = ["JPEG","JPG", "PNG", "GIF","jpeg","jpg","png","gif"];
 useEffect(() => {
-  userOBJ.get_user_account().then((res:any) => {
-setLastName(res.fullname.split(' ')[0])
-setFirstName(res.fullname.split(' ')[1])
+  userOBJ.get_user_account().then((res: any) => {
+    console.log(res)
+setLastName(res?.fullname?.split(' ')[0])
+setFirstName(res?.fullname?.split(' ')[1])
     setEmail(res.email)
     setChargePerHour(res.chargePerHour)
     setCountryCode(res.countryCode)
