@@ -7,9 +7,8 @@ export default function AppLayout() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
 
   useLayoutEffect(() => {
-    if ((getStoredAuthToken() && getStoredClientUser()) || window.location.pathname.split("=").includes('/class/session-end')) setisLoggedIn(true);
+    if ((getStoredAuthToken() && getStoredClientUser()) || window.location.href.split("=").includes('participant&classid')) setisLoggedIn(true);
     console.log(isLoggedIn)
-    console.log("first",window.location.pathname.split("="))
     if (!getStoredAuthToken() && !getStoredClientUser()) setisLoggedIn(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getStoredAuthToken(), getStoredClientUser()]);
