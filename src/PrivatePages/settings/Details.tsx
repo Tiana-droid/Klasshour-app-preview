@@ -94,9 +94,8 @@ setFirstName(res?.fullname?.split(' ')[1])
     formData.append('payload', JSON.stringify(payload))
     formData.append('document', image)
     if (!image && !imageUrl) {
-      toast.error("Upload an image"){
+  toast.error("Upload an image")
         return
-  }
 }
     await userOBJ.update_user_profile(formData).then((res:any) => {
       if (res.status) {
