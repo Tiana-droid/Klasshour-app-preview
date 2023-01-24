@@ -22,7 +22,7 @@ export default function App() {
     if (searchParams.get('role') !== "participant") {
       navigate('/')
     }
-  }, [searchParams, navigate])
+  }, [searchParams])
 
   const goto = (path: string, data?: any) => {
     if (data) {
