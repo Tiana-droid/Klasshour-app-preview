@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import StudentOBJ from "../../classes/student.class";
 import Spinner from "../../Components/Spinner";
+import axios from "axios";
 
 
 export default function App() {
@@ -30,8 +31,8 @@ export default function App() {
       navigate(path);
     }
   };
-  const handleReview = (e: { preventDefault: () => void; }) => {
-    e.preventDefault()
+  const handleReview = async (e:any ) => {
+    e.preventDefault();
     setIsLoading(true)
     if (!rating || !title || !description) {
       toast.error("All Fields are required")
@@ -46,13 +47,10 @@ export default function App() {
       classid: searchParams.get('classid')
 
     }
-    StudentOBJ.student_review_tutor(payload).then((res: any) => {
-      if (res?.status === true) {
-        toast.success(res?.message);
-        // goto("/timeline");
-        setTimeout(() => {
-          window.close()
-        },);
+   await axios.post("https://kh-backend.herokuapp.com/KH/api/v1/client/student/review-tutor",payload).then((res: any) => {
+      if (res?.data?.status === true) {
+        toast.success(res?.data?.message);
+        goto('/')
 
       } else {
         toast.error(res?.message);
