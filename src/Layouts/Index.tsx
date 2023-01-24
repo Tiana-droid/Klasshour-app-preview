@@ -7,7 +7,7 @@ export default function AppLayout() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
 
   useLayoutEffect(() => {
-    if ((getStoredAuthToken() && getStoredClientUser()) || window.location.pathname.split("=").includes('participant&classid')) setisLoggedIn(true);
+    if ((getStoredAuthToken() && getStoredClientUser()) || window.location.pathname.split("=").includes('/class/session-end')) setisLoggedIn(true);
     console.log(isLoggedIn)
     console.log("first",window.location.pathname.split("="))
     if (!getStoredAuthToken() && !getStoredClientUser()) setisLoggedIn(false);
