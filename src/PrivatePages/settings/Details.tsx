@@ -93,7 +93,11 @@ setFirstName(res?.fullname?.split(' ')[1])
     }
     formData.append('payload', JSON.stringify(payload))
     formData.append('document', image)
-
+    if (!image && !imageUrl) {
+      toast.error("Upload an image"){
+        return
+  }
+}
     await userOBJ.update_user_profile(formData).then((res:any) => {
       if (res.status) {
         toast.success(res.message)
@@ -359,7 +363,7 @@ setFirstName(res?.fullname?.split(' ')[1])
           padding: "10px 0",
         }}
       >
-        <label>Are you enrolled in an instution?</label>
+        <label>Are you enrolled in an institution?</label>
               <Select onChange={(e: any) => setEnrrolled(e.target.value)} value={enrolled}>
           <option value={"No"} >No</option>
           <option value={"Yes"}>Yes</option>
