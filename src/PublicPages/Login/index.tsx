@@ -136,7 +136,7 @@ export default function Login() {
               </Link>
             </FormFoter>
             <FormFoter>
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <Link
                 style={{
                   color: `${AppColors.brandRed}`,

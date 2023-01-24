@@ -140,7 +140,6 @@ setFirstName(res?.fullname?.split(' ')[1])
           color: "#000",
           alignItems: "center",
           padding: "10px 0",
-          maxWidth: '90%' 
         }}
       >
         <label>

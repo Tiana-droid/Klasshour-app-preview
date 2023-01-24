@@ -144,14 +144,14 @@ export default function TutorApplyForm() {
                  onChange={(e:any)=>setChargePerHour(e.target.value)}
               />
             </FormContainer>
-            <FormContainer>
+            {/* <FormContainer>
               <label>Upload Cover Letter(optional)</label>
               <Input
                 type="file"
                 name="document"
                  onChange={(e:any)=>setDocument(e.target.files[0])}
               />
-              </FormContainer>
+              </FormContainer> */}
                           <FormContainer>
               <label>Application note(optional)</label>
               <TextArea  onChange={(e)=>setBio(e.target.value)}/>

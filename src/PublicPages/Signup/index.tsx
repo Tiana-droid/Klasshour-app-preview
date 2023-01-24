@@ -196,6 +196,7 @@ export default function Signup() {
                   ...register("confirmpassword", { required: true }),
                 }}
               />
+              <p style={{color:"#fff",margin:"10px 0",fontWeight:800}}>Note: You are registering as a  <span style={{color:"#F15E38"}}>{ userRole}</span></p>
               <PrimaryBtn
                 isLoading={isLoading}
                 title="Register"

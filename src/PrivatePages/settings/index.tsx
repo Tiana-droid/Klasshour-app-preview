@@ -9,9 +9,12 @@ import {
   Grid,
   Image,
 } from "./Styles";
-import profile from "../../Assets/images/profile.png";
+import DashboardIcon from "../../Assets/icons/DashboardIcon.svg";
+
 import Details from "./Details";
 import Account from "./Account";
+import { FAB } from "../../Layouts/UserLayout/Styles";
+import { Link } from "react-router-dom";
 
 export default function Index(props:any) {
   const [activeTab, setActiveTab] = React.useState<"tabA" | "tabB">("tabA");
@@ -72,8 +75,14 @@ export default function Index(props:any) {
           {activeTab === "tabA" && <Details />}
           {activeTab === "tabB" && <Account />}
         </Box>
-        <Image src={profile} />
+        {/* <Image src={profile} /> */}
+        
       </Grid>
+       <Link to="/">
+          <FAB style={{bottom:"4rem",right:'5rem'}}>
+            <img src={DashboardIcon} alt=""/>
+          </FAB>
+        </Link>
     </PageLayout>
  
   );

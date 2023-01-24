@@ -62,7 +62,7 @@ export const FAB = styled.div`
     width: 40%;
   }
   @media (${BreakPoints.xs}) {
-    right: 1rem;
+    right: 1rem !important;
   }
 
   @media (${BreakPoints.large}) {
