@@ -68,12 +68,12 @@ export default function App() {
             <form onSubmit={handleReview}>
               <FormControl>
                 <label htmlFor="">Title</label> <br />
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}></input>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Great tutor"></input>
               </FormControl>
 
               <FormControl>
                 <label htmlFor="">Description</label> <br />
-                <textarea name="" id="" cols={40} rows={10} value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <textarea name="" id="" cols={40} rows={10} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="I love your way of teaching"></textarea>
               </FormControl>
               <Rating count={setRate} />
               <Button className="btn">
