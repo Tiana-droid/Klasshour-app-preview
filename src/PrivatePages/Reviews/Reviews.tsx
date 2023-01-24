@@ -51,7 +51,6 @@ export default function App() {
       if (res?.data?.status === true) {
         toast.success(res?.data?.message);
         goto('/')
-
       } else {
         toast.error(res?.message);
         setIsLoading(false);
@@ -86,8 +85,8 @@ export default function App() {
       </Container>
     );
   }
-  return <>
+  return <div>
     Thank you for the class
-  </>
+  </div>
 
 };
