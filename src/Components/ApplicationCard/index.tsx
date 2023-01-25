@@ -37,9 +37,13 @@ export default function Index({
           fontWeight: 400,
         }}
       >
-        {data.requestId?.studentName}
+       
       </h3>
       {/* <LightText>{data.bio}</LightText> */}
+      <Flex>
+        <BoldText>Student: </BoldText>
+        <LightText> {data.requestId?.studentName}</LightText>
+      </Flex>
       <Flex>
         <BoldText>subject: </BoldText>
         <LightText>{data?.requestId?.subject}</LightText>
