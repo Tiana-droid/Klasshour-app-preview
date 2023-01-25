@@ -53,6 +53,13 @@ select{
   .subject{
     max-width: 100%;
     display: block !important;
+   
+}
+.subject >div{
+  margin: 10px 0 !important;
+}
+.nill{
+  display: none !important;
 }
 .sc-hjsNop.hsyttD{
     /* width: 50% */

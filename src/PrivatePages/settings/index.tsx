@@ -7,7 +7,6 @@ import {
   Box,
   TabPanel,
   Grid,
-  Image,
 } from "./Styles";
 import DashboardIcon from "../../Assets/icons/DashboardIcon.svg";
 

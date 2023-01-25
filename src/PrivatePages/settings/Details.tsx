@@ -251,7 +251,7 @@ setFirstName(res?.fullname?.split(' ')[1])
           padding: "10px 0",
         }}
       >
-        <label style={{visibility:'hidden'}}>output</label>
+        <label className="nill" style={{visibility:'hidden'}}>output</label>
             <div className="subject" style={{display:'grid',gridTemplateColumns:"repeat(3,auto)",gap:10}}>
               {subject?.map((el:string, i:number) => {
            return <Identifier>
@@ -289,7 +289,7 @@ setFirstName(res?.fullname?.split(' ')[1])
           padding: "10px 0",
         }}
       >
-        <label style={{visibility:'hidden'}}>output</label>
+        <label className="nill" style={{visibility:'hidden'}}>output</label>
          {language?.map((el:string, i:number) => {
            return <Identifier>
              {el}

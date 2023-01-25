@@ -8,7 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #e5e5e5;
+  // background: #e5e5e5;
 `;
 
 export const Rev = styled(Container)`
@@ -33,6 +33,7 @@ export const Rev = styled(Container)`
   }
   @media (${BreakPoints.xs}) {
     width: 90%;
+    padding:10px
   }
 `;
 
@@ -94,11 +95,14 @@ label{
   width:100%
 }
 input{
-width:calc(100% -  40px);
+width:calc(100% );
 padding:10px 20px;
 border-radius:5px;
 margin:10px 0;
-outline:none
+outline:none;
+@media (${BreakPoints.xs}) {
+    width: 100%;
+  }
 }
 textarea{
 margin:10px 0;

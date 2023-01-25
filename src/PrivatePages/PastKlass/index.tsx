@@ -3,7 +3,6 @@ import PageNav from "../../Layouts/UserLayout/PageNav";
 import UserLayout from "../../Layouts/UserLayout/UserLayout";
 import EmptyState from '../../Components/EmptyData'
 import TutorOBJ from "../../classes/user.class";
-import { ClassData } from "../../Shared/ClassData";
 import {
   PageLayout,
 } from "./Styles";

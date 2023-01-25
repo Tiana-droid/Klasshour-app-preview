@@ -16,6 +16,7 @@ import {
   SubjectCont,
 } from "./Styles";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 type RequestPropT = {
   data: {
@@ -33,7 +34,7 @@ type RequestPropT = {
   isPast?: boolean;
 };
 export default function ClassCard({ data, isPast }: RequestPropT) {
-
+const navigate = useNavigate()
   const { userType, merithubUserID, avatar } = getStoredClientUser()
   const tutor = data?.applicants.find((el: any) => el.merithubUserId === data?.merithubTutorID)
 
@@ -93,8 +94,14 @@ export default function ClassCard({ data, isPast }: RequestPropT) {
           {userType === "Student" && <Interactions>
             <img src={tutor.avatar || avatar || teacher} alt="" />
             <span>{tutor.fullName}</span>
-          </Interactions>}
-
+          </Interactions>
+          
+          }
+          {userType === "Student" && <Link to={`/class/session-end?userid=${merithubUserID}&classid=${data.classInfo.classID}`} style={{ fontSize: '0.8rem', width: 72, color: "#F15E38",cursor:"pointer"}}>
+            Give review
+          </Link>
+          
+          }
           {!isPast && <CardButton onClick={userType === "Student" ? joinClassHandler : startClassHandler} disabled={isLoading}> {userType === "Student" ? "Join Class" : "Start Class"} </CardButton>}
         </CardButtonContainer>
       </Card>

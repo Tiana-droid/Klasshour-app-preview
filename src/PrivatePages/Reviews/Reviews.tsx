@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Container, Rev, Box, Button, FormControl } from './styles'
 import Rating from "../../Components/Rating";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {  useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import StudentOBJ from "../../classes/student.class";
 import Spinner from "../../Components/Spinner";
 import axios from "axios";
+import UserLayout from "../../Layouts/UserLayout/UserLayout";
 
 
 export default function App() {
@@ -18,11 +18,7 @@ export default function App() {
   const setRate = (rate: React.SetStateAction<number>) => {
     setRating(rate);
   };
-  React.useEffect(() => {
-    if (searchParams.get('role') !== "participant") {
-      navigate('/')
-    }
-  }, [searchParams])
+  
 
   const goto = (path: string, data?: any) => {
     if (data) {
@@ -57,12 +53,12 @@ export default function App() {
       }
     })
   }
-  if (searchParams.get('role') === "participant") {
     return (
-      <Container className="container">
+      <UserLayout>
+         <Container className="container">
         <Rev className="review">
           <h3>Add your review</h3>
-
+        
           <Box className="box">
             <form onSubmit={handleReview}>
               <FormControl>
@@ -83,10 +79,8 @@ export default function App() {
           </Box>
         </Rev>
       </Container>
+     </UserLayout>
     );
-  }
-  return <div>
-    Thank you for the class
-  </div>
+ 
 
 };

@@ -7,10 +7,9 @@ type LoginPropT = {
 };
 export const PageLayout = styled.div`
   width: 100%;
-  height: 100vh;
+ min-height: 100vh;
   display: flex;
 `;
-
 
 export const BannerCont = styled.div<LoginPropT>`
   width: 50%;

@@ -124,7 +124,7 @@ export const CardButtonContainer = styled.div`
   margin-top: 1rem;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   height: 50px;
   position: absolute;
@@ -142,7 +142,7 @@ export const CardButtonContainer = styled.div`
 `;
 
 export const Interactions = styled.div`
-  width: 10%;
+  width: 80%;
   
   display: flex;
   align-items: center;
@@ -157,7 +157,7 @@ export const Interactions = styled.div`
     font-size: 0.8rem;
   }
    @media (${BreakPoints.xs}) {
-   width:100%
+  //  width:100%
   }
 `;
 
