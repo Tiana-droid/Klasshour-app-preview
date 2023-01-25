@@ -18,6 +18,7 @@ export default function MyApplication() {
   const getClass = async (page: number) => {
     const response: any = await TutorOBJ.tutor_applications(page);
     if (response?.status) {
+      console.log(response)
       setRequestData(response?.payload);
       settotalPages(response?.totalPages);
     }
