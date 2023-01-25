@@ -41,12 +41,12 @@ export default function Index({
       </h3>
       {/* <LightText>{data.bio}</LightText> */}
       <Flex>
-        <LightText>subject: </LightText>
-        <BoldText>{data?.requestId?.subject}</BoldText>
+        <BoldText>subject: </BoldText>
+        <LightText>{data?.requestId?.subject}</LightText>
       </Flex>
       <Flex>
-        <LightText>Description:</LightText>
-        <BoldText>{data.requestId?.description}</BoldText>
+        <BoldText>Description:</BoldText>
+        <LightText>{data.requestId?.description}</LightText>
       </Flex>
       <ButtonContainer>
         <Button
