@@ -28,6 +28,9 @@
   color: #61dafb;
 }
 
+input:-internal-autofill-selected{
+  background-color: transparent !important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
