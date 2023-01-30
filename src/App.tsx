@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datetime/css/react-datetime.css";
 import { BrowserRouter } from "react-router-dom";
 import AppLayout from "./Layouts/Index";
+import './App.css'
 
 function App() {
   return (

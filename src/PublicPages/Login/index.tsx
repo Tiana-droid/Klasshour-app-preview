@@ -4,6 +4,7 @@ import Logo from "../../Assets/images/Logo.svg";
 import MailIcon from "../../Assets/icons/MailIcon.svg";
 import LockIcon from "../../Assets/icons/LockIcon.svg";
 import Input from "../../Components/Input";
+
 import {
   BannerCont,
   Form,
@@ -31,6 +32,7 @@ type InputsPropT = {
 export default function Login() {
   const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
+  const [showPassword,setShowPassword] = useState(false)
   const handleLogin = async (values: any) => {
     setisLoading(true);
     userOBJ
@@ -105,15 +107,19 @@ export default function Login() {
                 placeHolder="Email"
                 validation={{ ...register("email", { required: true }) }}
               />
+
               {errors.password && (
                 <FormError>{errors.password.message}</FormError>
               )}
-              <Input
+              <div className="pwd">
+                <Input
                 Icon={LockIcon}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeHolder="Enter Password"
                 validation={{ ...register("password", { required: true }) }}
               />
+              {showPassword  ? <i className="fa fa-eye-slash" aria-hidden="true" onClick={()=>setShowPassword(!showPassword)}></i> : <i className="fa fa-eye" aria-hidden="true" onClick={()=>setShowPassword(!showPassword)}></i>}
+              </div>
               <div style={{ marginTop: "2rem" }}>
                 <PrimaryBtn
                   isLoading={isLoading}
