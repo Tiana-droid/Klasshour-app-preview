@@ -61,6 +61,16 @@ export const FormContainer = styled.div`
     width: 80%;
     margin: 5rem auto;
   }
+  .pwd{
+    position:relative;
+    .fa{
+    color:#002;
+    position:absolute;
+    top:15px;
+    right:20px;
+    cursor:pointer
+  }
+  }
 `;
 
 export const Form = styled.form`

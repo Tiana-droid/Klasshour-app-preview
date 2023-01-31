@@ -43,6 +43,13 @@ export default function OTP() {
     }
   }, [otp]);
 
+ const onPaste = async(val:any)=> {
+   const pasted = val.clipboardData.getData("text/plain")
+   if (!!parseInt(pasted)) {
+     setOtp(pasted.split("").slice(0, otp.length))
+
+   }
+ }
   const handleOTP = async (values: any) => {
     setisLoading(true);
     userOBJ.user_verify_account(values).then((res: any) => {
@@ -73,11 +80,10 @@ export default function OTP() {
     const { value } = target;
     const newOTP: string[] = [...otp];
     newOTP[index] = value.substring(value.length - 1);
-    setOtp(newOTP);
+   value.length===4?setOtp(value.split('')): setOtp(newOTP);
     if (!value) setactiveOtpIndex(index - 1);
     else setactiveOtpIndex(index + 1);
   };
-
   // add keyboard event
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -94,7 +100,7 @@ export default function OTP() {
         <BannerCont bg={LoginBanner}></BannerCont>
         <FormCont>
           <FormHeader>
-            <img src={Logo} />
+            <img src={Logo} alt="" />
           </FormHeader>
           <FormContainer>
             {/* Todo: Do input validations and connect to state */}
@@ -110,7 +116,7 @@ export default function OTP() {
                 Enter 4 digit pin sent to your email
               </OtpInstruction>
               <OptButtonContainer>
-                {otp.map((value, index) => {
+                 {otp.map((value, index) => {
                   return (
                     <React.Fragment key={index}>
                       <OtpButton
@@ -120,6 +126,8 @@ export default function OTP() {
                         onChange={(e) => {
                           handleOnChange(e, index);
                         }}
+
+                        onPaste={onPaste}
                         onKeyDown={(e) => {
                           handleKeyDown(e, index);
                         }}
@@ -128,6 +136,7 @@ export default function OTP() {
                     </React.Fragment>
                   );
                 })}
+               
               </OptButtonContainer>
             </Form>
           </FormContainer>
