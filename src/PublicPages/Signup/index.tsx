@@ -37,6 +37,8 @@ export default function Signup() {
   const [isLoading, setisLoading] = useState(false);
   const [userRole, setuserRole] = useState("Student");
   const navigate = useNavigate();
+  const [showPassword2,setShowPassword2] = useState(false)
+  const [showPassword,setShowPassword] = useState(false)
   const schema = Yup.object({
     fullName: Yup.string().required("Required!"),
     email: Yup.string().email("Invalid email format").required("Required!"),
@@ -179,23 +181,30 @@ export default function Signup() {
               {errors.password && (
                 <FormError>{errors.password.message}</FormError>
               )}
-              <Input
+              <div className="pwd">
+                <Input
                 Icon={LockIcon}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeHolder="Enter Password"
                 validation={{ ...register("password", { required: true }) }}
               />
+              {showPassword  ? <i className="fa fa-eye-slash" aria-hidden="true" onClick={()=>setShowPassword(!showPassword)}></i> : <i className="fa fa-eye" aria-hidden="true" onClick={()=>setShowPassword(!showPassword)}></i>}
+              </div>
               {errors.confirmpassword && (
                 <FormError>{errors.confirmpassword.message}</FormError>
               )}
-              <Input
+              <div className="pwd">
+                <Input
                 Icon={LockIcon}
-                type="password"
+                type={showPassword2 ? "text" : "password"}
                 placeHolder="Confirm password"
                 validation={{
                   ...register("confirmpassword", { required: true }),
                 }}
-              />
+                />
+                 {showPassword2  ? <i className="fa fa-eye-slash" aria-hidden="true" onClick={()=>setShowPassword2(!showPassword2)}></i> : <i className="fa fa-eye" aria-hidden="true" onClick={()=>setShowPassword2(!showPassword2)}></i>}
+              </div>
+              
               <p style={{color:"#fff",margin:"10px 0",fontWeight:800}}>Note: You are registering as a  <span style={{color:"#F15E38"}}>{ userRole}</span></p>
               <PrimaryBtn
                 isLoading={isLoading}
