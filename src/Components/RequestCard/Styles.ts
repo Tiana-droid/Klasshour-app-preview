@@ -27,6 +27,12 @@ export const Card = styled.div`
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
+    min-height: 280px;
+  }
+  @media (${BreakPoints.small}) {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
     // height: 320px;
     min-height:unset
   }
@@ -55,10 +61,6 @@ export const CardStatus = styled.span<CardStatusPropT>`
   display: inline-block;
   width: 20%;
   color: ${(prop) => (prop.isActive ? "#27AE60" : AppColors.brandRed)};
-  @media (${BreakPoints.xs}) {
-  }
-  @media (${BreakPoints.large}) {
-  }
 `;
 
 export const CardDate = styled.span`
@@ -114,8 +116,6 @@ export const CardDescription = styled.div`
     width: 100%;
     font-size: 1rem;
   }
-  @media (${BreakPoints.large}) {
-  }
 `;
 
 export const CardLang = styled.div`
@@ -134,7 +134,6 @@ export const CardLang = styled.div`
 `;
 
 export const CardButtonContainer = styled.div`
-  /* border: 1px solid red; */
   margin-top: 1rem;
   width: 100%;
   display: flex;
@@ -144,15 +143,11 @@ export const CardButtonContainer = styled.div`
   position: absolute;
   bottom: 1.2rem;
   left: 0;
+  padding: 0 2rem;
 
   @media (${BreakPoints.xs}) {
     bottom: 0.4rem;
-    // justify-content: space-between;
-    padding: 0 0.7rem;
     height:unset
-  }
-  @media (${BreakPoints.large}) {
-    padding: 0 2rem;
   }
 `;
 
@@ -168,11 +163,15 @@ export const Interactions = styled.div`
   span {
     font-size: 0.8rem;
   }
+
+  @media (min-width: 260px) and (max-width: 500px) {
+    width: 20%;
+  }
 `;
 
 export const CardButton = styled.button`
   height: 40px;
-  padding: 0 4rem;
+  padding: 0 2rem;
   color: #fff;
   background: ${AppColors.brandRed};
   outline-style: none;
@@ -186,9 +185,6 @@ export const CardButton = styled.button`
  }
   @media (${BreakPoints.xs}) {
     padding: 0 1rem;
-  }
-  @media (${BreakPoints.large}) {
-    padding: 0 2rem;
   }
 `;
 

@@ -88,7 +88,7 @@ export default function RequestCard({ data }: RequestPropT) {
         </CardContent>
         <CardButtonContainer>
           {userType==="Student" &&<Interactions>
-            <img src={pencil} />
+            <img src={pencil} alt=""/>
             <span>{data?.applicants?.length}</span>
           </Interactions>}
           <div style={{display:"flex",gap:20}}>

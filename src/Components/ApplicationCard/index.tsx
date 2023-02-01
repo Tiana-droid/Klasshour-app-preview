@@ -29,7 +29,7 @@ export default function Index({
     <Card>
       <FlexHeader>
         <img src={data.avatar || Avatar} alt="..." width={40} height={40} style={{ borderRadius:'50%'}}/>
-        <div>NGN{data.chargePerHour} perhour</div>
+        <div>NGN{data.chargePerHour} P/H</div>
       </FlexHeader>
       <h3
         style={{

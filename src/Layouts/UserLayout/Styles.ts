@@ -37,7 +37,11 @@ export const ContentArea = styled.div`
     width: 95%;
     margin: 4rem auto;
   }
-
+  @media (${BreakPoints.small}) {
+    width: 90%;
+    margin: 4rem auto;
+  }
+  
   @media (${BreakPoints.large}) {
     margin: 5rem auto;
     width: 70%;
@@ -81,17 +85,26 @@ export const Pagenav = styled.div`
   box-shadow: 0px 2px 50px rgba(0, 0, 0, 0.05);
   width: 100%;
   padding: 0.4rem;
-
+  height: 58px;
   margin-bottom: 4rem;
+
   @media (${BreakPoints.xs}) {
     /* border: 1px solid red; */
     top: 1rem;
     height: 50px;
   }
+  @media (${BreakPoints.small}) {
+    /* border: 1px solid red; */
+    top: 1rem;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 3rem;
+  }
 
   @media (${BreakPoints.large}) {
     height: 58px;
-    top: 2rem;
+    top: 1rem;
+    width: 100%;
   }
 `;
 
@@ -107,6 +120,10 @@ export const NavButton = styled.button<NavBtnPropT>`
   @media (${BreakPoints.xs}) {
     font-size: 1rem;
     padding: 0.4rem 1rem;
+  }
+  @media (${BreakPoints.small}) {
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
   }
 
   @media (${BreakPoints.large}) {

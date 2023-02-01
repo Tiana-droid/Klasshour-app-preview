@@ -7,7 +7,7 @@ export const PaginationContainer = styled.div`
   width: 100%;
   height: 50px;
   border: 0.2px solid #848484;
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: end;
   align-items: center;
