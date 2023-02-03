@@ -15,7 +15,7 @@ export const Card = styled.div`
   background: #fff;
   border-radius: 5px;
   margin-bottom: 1.4rem;
-  min-height: 340px;
+  height: fit-content;
   
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   top: 0;
@@ -27,14 +27,12 @@ export const Card = styled.div`
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    min-height: 280px;
   }
   @media (${BreakPoints.small}) {
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    // height: 320px;
-    min-height:unset
+
   }
   @media (${BreakPoints.large}) {
     width: 100%;
@@ -119,7 +117,7 @@ export const CardDescription = styled.div`
 `;
 
 export const CardLang = styled.div`
-  width: 80%;
+  width: 100%;
   color: #292929;
   font-size: 1rem;
   font-weight: 300;
@@ -132,7 +130,19 @@ export const CardLang = styled.div`
     font-size: 0.88rem;
   }
 `;
+export const Break = styled.div`
+width: 100%;
+display: grid;
+grid-template-columns: auto auto;
+height: fit-content;
+align-items: start;
+justify-items: end;
+gap: 1em;
 
+@media (${BreakPoints.xs}) {
+  grid-template-columns: auto;
+}
+`
 export const CardButtonContainer = styled.div`
   margin-top: 1rem;
   width: 100%;
@@ -140,9 +150,9 @@ export const CardButtonContainer = styled.div`
   justify-content: end;
   align-items: center;
   height: 50px;
-  position: absolute;
+  /* position: absolute;
   bottom: 1.2rem;
-  left: 0;
+  left: 0; */
   padding: 0 2rem;
 
   @media (${BreakPoints.xs}) {
@@ -152,7 +162,7 @@ export const CardButtonContainer = styled.div`
 `;
 
 export const Interactions = styled.div`
-  width: 10%;
+  width: 15%;
   display: flex;
   align-items: center;
   gap: 0.4rem;

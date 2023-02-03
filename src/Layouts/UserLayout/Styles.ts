@@ -44,7 +44,7 @@ export const ContentArea = styled.div`
   
   @media (${BreakPoints.large}) {
     margin: 5rem auto;
-    width: 70%;
+    width: 80%;
     /* border: 1px solid red; */
   }
 `;

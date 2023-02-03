@@ -16,7 +16,8 @@ import {
   Interactions,
   Schedule,
   SubjectCont,
-  ShowMore
+  ShowMore,
+  Break,
 } from "./Styles";
 import { getStoredClientUser } from "../../utils/LS";
 
@@ -31,32 +32,33 @@ type RequestPropT = {
     applicants: any;
     createdAt: string;
     schedule: string;
-    merithubTutorID:string,
+    merithubTutorID: string;
     _id: string;
   };
 };
 
 export default function RequestCard({ data }: RequestPropT) {
-  const { userType, userID } = getStoredClientUser()
-  const [showMOre, setShowMOre] = useState(false)
+  const { userType, userID } = getStoredClientUser();
+  const [showMOre, setShowMOre] = useState(false);
   const navigate = useNavigate();
   const getTutorApplication = (requestID: string) => {
     if (userType === "Student") {
       studentRequest.get_all_tutor_request(requestID).then((response) => {
-      navigate(`/request/${requestID}/tutor-applications`, { state: {response,requestID} , });
-    });
+        navigate(`/request/${requestID}/tutor-applications`, {
+          state: { response, requestID },
+        });
+      });
     } else {
-        navigate(`/apply/${requestID}`,{state:requestID});
+      navigate(`/apply/${requestID}`, { state: requestID });
     }
-   
   };
   const scheduleTime = data?.schedule;
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardStatus isActive={data.isOpen? true : false}>
-            {data.isOpen ? "Open":"Closed"}
+          <CardStatus isActive={data.isOpen ? true : false}>
+            {data.isOpen ? "Open" : "Closed"}
           </CardStatus>
           <CardDate>
             Date Posted: {new Date(data.createdAt).toLocaleDateString()}
@@ -78,25 +80,48 @@ export default function RequestCard({ data }: RequestPropT) {
 
           <CardDescription>
             {data?.description?.length > 80 && !showMOre
-              ? data.description.slice(0, 200) + "...."
+              ? data.description.slice(0, 200) + "..."
               : data.description}
           </CardDescription>
-          {data?.description?.length > 80 && <ShowMore onClick={() => setShowMOre(!showMOre)}>{ showMOre ? "Show less" : "Show More"}</ShowMore>}
-          <CardLang>
-            Language: <span>{data.language || "English"}</span>
-          </CardLang>
+          {data?.description?.length > 80 && (
+            <ShowMore onClick={() => setShowMOre(!showMOre)}>
+              {showMOre ? "Show less" : "Show More"}
+            </ShowMore>
+          )}
+
+          <Break>
+            <CardLang>
+              Language: <span>{data.language || "English"}</span>
+            </CardLang>
+            <CardButtonContainer>
+              {userType === "Student" && (
+                <Interactions>
+                  <img src={pencil} alt="" />
+                  <span>{data?.applicants?.length}</span>
+                </Interactions>
+              )}
+
+              <div style={{ display: "flex", gap: 20 }}>
+                <CardButton
+                  onClick={() => getTutorApplication(data?._id)}
+                  disabled={
+                    userType !== "Student"
+                      ? data?.applicants?.find(
+                          (el: any) => el.userId === userID
+                        ) || !data.isOpen
+                      : !data?.applicants?.length || !data.isOpen
+                  }
+                >
+                  {userType === "Student"
+                    ? "View applications"
+                    : data?.applicants?.find((el: any) => el.userId === userID)
+                    ? "Applied"
+                    : "Apply"}
+                </CardButton>
+              </div>
+            </CardButtonContainer>
+          </Break>
         </CardContent>
-        <CardButtonContainer>
-          {userType==="Student" &&<Interactions>
-            <img src={pencil} alt=""/>
-            <span>{data?.applicants?.length}</span>
-          </Interactions>}
-          <div style={{display:"flex",gap:20}}>
-            <CardButton  onClick={() => getTutorApplication(data?._id)} disabled={userType!=="Student" ?data?.applicants?.find((el:any)=>el.userId===userID) || !data.isOpen : !data?.applicants?.length || !data.isOpen}>
-            {userType==="Student" ? "View applications" :data?.applicants?.find((el:any)=>el.userId===userID)? "Applied": "Apply"}
-          </CardButton>
-          </div>
-        </CardButtonContainer>
       </Card>
     </div>
   );
